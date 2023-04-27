@@ -19,7 +19,7 @@
 								</picker>
 							</view>
 							<view style="width: 1px;height: 16px;background-color: #999;margin: 0 10px;"></view>
-							<uni-easyinput type="text" trim="both" :styles="styles" :placeholderStyle="placeholderStyle" v-model="loginForm.username" :inputBorder="false" placeholder="请输入手机号" />
+							<uni-easyinput type="text" trim="both" :styles="styles" :placeholderStyle="placeholderStyle" v-model="loginForm.mobile" :inputBorder="false" placeholder="请输入手机号" />
 						</view>
 					</uni-forms-item>
 					<view class="divider"></view>
