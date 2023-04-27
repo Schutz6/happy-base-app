@@ -7,7 +7,7 @@
 				</view>
 				<view class="title">欢迎来到{{params.siteName}}</view>
 				<uni-forms ref="form" label-position="top" :border="false" :modelValue="loginForm" :rules="loginRules">
-					<uni-forms-item name="mobile">
+					<uni-forms-item name="username">
 						<template v-slot:label>
 							<view class="label">账号</view>
 						</template>
@@ -23,7 +23,7 @@
 							</view>
 							<view style="width: 1px;height: 16px;background-color: #999;margin: 0 10px;"></view>
 							<uni-easyinput type="text" trim="both" :styles="styles" :placeholderStyle="placeholderStyle"
-								v-model="loginForm.mobile" :inputBorder="false" placeholder="请输入手机号" />
+								v-model="loginForm.username" :inputBorder="false" placeholder="请输入手机号" />
 						</view>
 					</uni-forms-item>
 					<view class="divider"></view>
@@ -85,13 +85,13 @@
 				loading: false,
 				loginForm: {
 					area: '',
-					mobile: '',
+					username: '',
 					password: '',
 					okpassword: '',
 					invite_code: ''
 				},
 				loginRules: {
-					mobile: {
+					username: {
 						rules: [{
 							required: true,
 							errorMessage: "请输入"
@@ -180,6 +180,10 @@
 							if (res.code == 20000) {
 								//令牌token
 								setToken(res.data.token)
+								uni.showToast({
+									title: "注册成功",
+									icon: 'success'
+								})
 								//获取用户信息
 								this.$store.dispatch('getUserInfo').then(res => {
 									//跳转首页
