@@ -8,7 +8,12 @@
 
 <script>
 	export default {
-		onLoad() {
+		async onLoad() {
+			//获取参数设置
+			let res = await this.$api.getAsync("/param/getList/")
+			if(res.code == 20000){
+				this.$store.commit('setParams', res.data)
+			}
 			//获取用户信息
 			this.$store.dispatch('getUserInfo').then(res => {
 				if (res.code == 20000) {

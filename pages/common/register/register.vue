@@ -2,8 +2,10 @@
 	<view class="overflow-hidden width-max height-max">
 		<view class="height-max">
 			<view class="login-box">
-				<view class="logo"><image src="@/static/logo.png"></image></view>
-				<view class="title">欢迎来到XXX</view>
+				<view class="logo">
+					<image src="@/static/logo.png"></image>
+				</view>
+				<view class="title">欢迎来到{{params.siteName}}</view>
 				<uni-forms ref="form" label-position="top" :border="false" :modelValue="loginForm" :rules="loginRules">
 					<uni-forms-item name="mobile">
 						<template v-slot:label>
@@ -11,7 +13,8 @@
 						</template>
 						<view class="item d-flex">
 							<view class="area-code d-flex">
-								<picker v-if="arrayAreaCode.length>0" @change="changeAreaCode" :value="indexAreaCode" :range="arrayAreaCode" range-key="text">
+								<picker v-if="arrayAreaCode.length>0" @change="changeAreaCode" :value="indexAreaCode"
+									:range="arrayAreaCode" range-key="text">
 									<view class="d-flex">
 										{{arrayAreaCode[indexAreaCode].text}}
 										<image src="@/static/login/icon-down.png"></image>
@@ -19,7 +22,8 @@
 								</picker>
 							</view>
 							<view style="width: 1px;height: 16px;background-color: #999;margin: 0 10px;"></view>
-							<uni-easyinput type="text" trim="both" :styles="styles" :placeholderStyle="placeholderStyle" v-model="loginForm.username" :inputBorder="false" placeholder="请输入手机号" />
+							<uni-easyinput type="text" trim="both" :styles="styles" :placeholderStyle="placeholderStyle"
+								v-model="loginForm.username" :inputBorder="false" placeholder="请输入手机号" />
 						</view>
 					</uni-forms-item>
 					<view class="divider"></view>
@@ -28,28 +32,33 @@
 							<view class="label">密码</view>
 						</template>
 						<view class="item d-flex">
-							<uni-easyinput type="password" trim="both" :styles="styles" :placeholderStyle="placeholderStyle" v-model="loginForm.password" :inputBorder="false" placeholder="请输入密码" />
+							<uni-easyinput type="password" trim="both" :styles="styles"
+								:placeholderStyle="placeholderStyle" v-model="loginForm.password" :inputBorder="false"
+								placeholder="请输入密码" />
 						</view>
 					</uni-forms-item>
 					<view class="divider"></view>
-					<uni-forms-item name="password">
+					<uni-forms-item name="okpassword">
 						<template v-slot:label>
 							<view class="label">确认密码</view>
 						</template>
 						<view class="item d-flex">
-							<uni-easyinput type="password" trim="both" :styles="styles" :placeholderStyle="placeholderStyle" v-model="loginForm.okpassword" :inputBorder="false" placeholder="请确认密码" />
+							<uni-easyinput type="password" trim="both" :styles="styles"
+								:placeholderStyle="placeholderStyle" v-model="loginForm.okpassword" :inputBorder="false"
+								placeholder="请确认密码" />
 						</view>
 					</uni-forms-item>
 					<view class="divider"></view>
-					<uni-forms-item name="password">
+					<uni-forms-item name="invite_code" v-if="params.isInviteCode==='1'">
 						<template v-slot:label>
 							<view class="label">邀请码</view>
 						</template>
 						<view class="item d-flex">
-							<uni-easyinput type="text" trim="both" :styles="styles" :placeholderStyle="placeholderStyle" v-model="loginForm.invite_code" :inputBorder="false" placeholder="请输入邀请码" />
+							<uni-easyinput type="text" trim="both" :styles="styles" :placeholderStyle="placeholderStyle"
+								v-model="loginForm.invite_code" :inputBorder="false" placeholder="请输入邀请码" />
 						</view>
 					</uni-forms-item>
-					<view class="divider"></view>
+					<view class="divider" v-if="params.isInviteCode==='1'"></view>
 				</uni-forms>
 				<view class="btns">
 					<view class="d-flex-center btn btn1" @click="handleLogin">注册</view>
@@ -63,7 +72,13 @@
 </template>
 
 <script>
-	import { setToken, removeToken } from '@/utils/auth'
+	import {
+		setToken,
+		removeToken
+	} from '@/utils/auth'
+	import {
+		mapGetters
+	} from 'vuex'
 	export default {
 		data() {
 			return {
@@ -90,9 +105,18 @@
 					},
 					okpassword: {
 						rules: [{
-							required: true,
-							errorMessage: "请输入"
-						}]
+								required: true,
+								errorMessage: "请输入"
+							},
+							{
+								validateFunction: (rule, value, data, callback) => {
+									if (this.loginForm.password != value) {
+										callback('密码不一致')
+									}
+									return true
+								}
+							}
+						]
 					},
 					invite_code: {
 						rules: [{
@@ -110,23 +134,33 @@
 				arrayAreaCode: []
 			}
 		},
-		onLoad() {
+		computed: {
+			...mapGetters(['params'])
+		},
+		async onLoad() {
 			let username = uni.getStorageSync("UserName")
-			if(username){
+			if (username) {
 				//初始化账号
 				this.loginForm.username = username
 			}
+			//获取参数设置
+			let res = await this.$api.getAsync("/param/getList/")
+			if(res.code == 20000){
+				this.$store.commit('setParams', res.data)
+			}
 			//获取区号列表
-			this.$api.post("/dict/getList/", {"name": "Areacode"}).then(res => {
+			this.$api.post("/dict/getList/", {
+				"name": "Areacode"
+			}).then(res => {
 				this.arrayAreaCode = res.data
-				if(this.arrayAreaCode.length > 0){
+				if (this.arrayAreaCode.length > 0) {
 					this.loginForm.area = this.arrayAreaCode[0].value
 				}
 			})
 		},
 		methods: {
 			//变更区号
-			changeAreaCode(e){
+			changeAreaCode(e) {
 				this.indexAreaCode = e.detail.value
 				this.loginForm.area = this.arrayAreaCode[this.indexAreaCode].value
 			},
@@ -183,63 +217,65 @@
 </script>
 
 <style scoped lang="scss">
-	.login-box{
+	.login-box {
 		padding: 114px 48px;
-		
-		.logo{
-			image{
+
+		.logo {
+			image {
 				width: 48px;
 				height: 48px;
 			}
 		}
-		
-		.title{
+
+		.title {
 			color: #fff;
 			font-size: 24px;
 			padding-top: 8px;
 			padding-bottom: 48px;
 		}
-		
-		.divider{
+
+		.divider {
 			width: 100%;
 			height: 1px;
-			background: rgba(255,255,255,0.2);
+			background: rgba(255, 255, 255, 0.2);
 		}
-		
-		.label{
+
+		.label {
 			font-size: 20px;
 			font-weight: 600;
 			color: #FFFFFF;
 			padding: 20px 0 10px 0;
 		}
-		
-		.item{
-			.area-code{
+
+		.item {
+			.area-code {
 				color: #fff;
 				font-size: 16px;
-				
-				image{
+
+				image {
 					width: 24px;
 					height: 24px;
 				}
 			}
 		}
-		
-		.btns{
+
+		.btns {
 			padding-top: 50px;
-			
-			.btn{
+
+			.btn {
 				height: 44px;
 				border-radius: 10px;
 				color: #fff;
 				font-size: 16px;
 				margin-bottom: 20px;
 			}
-			.btn1{
+
+			.btn1 {
 				background: linear-gradient(256deg, #007FFF 0%, #00E0FF 100%);
 			}
-			.btn2{
-				background: rgba(255,255,255,0.2);
+
+			.btn2 {
+				background: rgba(255, 255, 255, 0.2);
 			}
 		}
 	}

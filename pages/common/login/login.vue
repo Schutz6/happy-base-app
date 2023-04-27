@@ -3,7 +3,7 @@
 		<view class="height-max">
 			<view class="login-box">
 				<view class="logo"><image src="@/static/logo.png"></image></view>
-				<view class="title">欢迎来到XXX</view>
+				<view class="title">欢迎来到{{params.siteName}}</view>
 				<uni-forms ref="form" label-position="top" :border="false" :modelValue="loginForm" :rules="loginRules">
 					<uni-forms-item name="mobile">
 						<template v-slot:label>
@@ -46,6 +46,7 @@
 
 <script>
 	import { setToken, removeToken } from '@/utils/auth'
+	import { mapGetters } from 'vuex'
 	export default {
 		data() {
 			return {
@@ -79,11 +80,19 @@
 				arrayAreaCode: []
 			}
 		},
-		onLoad() {
+		computed: {
+			...mapGetters(['params'])
+		},
+		async onLoad() {
 			let username = uni.getStorageSync("UserName")
 			if(username){
 				//初始化账号
 				this.loginForm.username = username
+			}
+			//获取参数设置
+			let res = await this.$api.getAsync("/param/getList/")
+			if(res.code == 20000){
+				this.$store.commit('setParams', res.data)
 			}
 			//获取区号列表
 			this.$api.post("/dict/getList/", {"name": "Areacode"}).then(res => {
