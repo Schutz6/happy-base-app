@@ -3,11 +3,11 @@
 		<view class="height-max">
 			<view class="login-box">
 				<view class="logo">
-					<image src="@/static/logo.png"></image>
+					<image :src="params.logo"></image>
 				</view>
 				<view class="title">欢迎来到{{params.siteName}}</view>
 				<uni-forms ref="form" label-position="top" :border="false" :modelValue="loginForm" :rules="loginRules">
-					<uni-forms-item name="username">
+					<uni-forms-item name="mobile">
 						<template v-slot:label>
 							<view class="label">账号</view>
 						</template>
@@ -23,7 +23,7 @@
 							</view>
 							<view style="width: 1px;height: 16px;background-color: #999;margin: 0 10px;"></view>
 							<uni-easyinput type="text" trim="both" :styles="styles" :placeholderStyle="placeholderStyle"
-								v-model="loginForm.username" :inputBorder="false" placeholder="请输入手机号" />
+								v-model="loginForm.mobile" :inputBorder="false" placeholder="请输入手机号" />
 						</view>
 					</uni-forms-item>
 					<view class="divider"></view>
@@ -85,13 +85,13 @@
 				loading: false,
 				loginForm: {
 					area: '',
-					username: '',
+					mobile: '',
 					password: '',
 					okpassword: '',
 					invite_code: ''
 				},
 				loginRules: {
-					username: {
+					mobile: {
 						rules: [{
 							required: true,
 							errorMessage: "请输入"
@@ -141,7 +141,7 @@
 			let username = uni.getStorageSync("UserName")
 			if (username) {
 				//初始化账号
-				this.loginForm.username = username
+				this.loginForm.mobile = username
 			}
 			//获取参数设置
 			let res = await this.$api.getAsync("/param/getList/")
@@ -169,7 +169,7 @@
 				this.$refs.form.validate().then(res => {
 					if (!this.loading) {
 						//保存账号
-						uni.setStorageSync("UserName", this.loginForm.username)
+						uni.setStorageSync("UserName", this.loginForm.mobile)
 						this.loading = true
 						uni.showLoading({
 							title: '正在注册'
@@ -187,9 +187,11 @@
 								//获取用户信息
 								this.$store.dispatch('getUserInfo').then(res => {
 									//跳转首页
-									uni.reLaunch({
-										url: '/pages/index/index'
-									});
+									setTimeout(()=>{
+										uni.reLaunch({
+											url: '/pages/index/index'
+										});
+									}, 1000)
 								})
 							} else if (res.code == 10005) {
 								uni.showToast({
@@ -222,12 +224,12 @@
 
 <style scoped lang="scss">
 	.login-box {
-		padding: 114px 48px;
+		padding: 84px 48px 0 48px;
 
 		.logo {
 			image {
-				width: 48px;
-				height: 48px;
+				width: 147px;
+				height: 28px;
 			}
 		}
 
