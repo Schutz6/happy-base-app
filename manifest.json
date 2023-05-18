@@ -23,10 +23,7 @@
             "landscape-secondary"
         ],
         /* 模块配置 */
-        "modules" : {
-            "VideoPlayer" : {},
-            "Camera" : {}
-        },
+        "modules" : {},
         /* 应用发布信息 */
         "distribute" : {
             /* 重力感应、横竖屏配置 */
