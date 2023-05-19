@@ -72,19 +72,14 @@
 </template>
 
 <script>
-	import {
-		setToken,
-		removeToken
-	} from '@/utils/auth'
-	import {
-		mapGetters
-	} from 'vuex'
+	import { setToken, removeToken } from '@/utils/auth'
+	import { mapGetters } from 'vuex'
 	export default {
 		data() {
 			return {
 				loading: false,
 				loginForm: {
-					area: '',
+					area: '86',
 					mobile: '',
 					password: '',
 					okpassword: '',
@@ -131,7 +126,7 @@
 				},
 				placeholderStyle: "font-size:16px;color: #999;",
 				indexAreaCode: 0,
-				arrayAreaCode: []
+				arrayAreaCode: [{"text": "+86", "value": "86"}]
 			}
 		},
 		computed: {
@@ -149,11 +144,9 @@
 				this.$store.commit('setParams', res.data)
 			}
 			//获取区号列表
-			this.$api.post("/dict/getList/", {
-				"name": "Areacode"
-			}).then(res => {
-				this.arrayAreaCode = res.data
-				if (this.arrayAreaCode.length > 0) {
+			this.$api.post("/dict/getList/", {"name": "Areacode"}).then(res => {
+				if(res.data.length > 0){
+					this.arrayAreaCode = res.data
 					this.loginForm.area = this.arrayAreaCode[0].value
 				}
 			})
