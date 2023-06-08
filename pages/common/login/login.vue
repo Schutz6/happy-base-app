@@ -5,7 +5,7 @@
 				<view class="logo">
 					<image :src="params.logo"></image>
 				</view>
-				<view class="title">欢迎来到{{params.siteName}}</view>
+				<view class="title">欢迎来到{{params.appName}}</view>
 				<uni-forms ref="form" label-position="top" :border="false" :modelValue="loginForm" :rules="loginRules">
 					<uni-forms-item name="username">
 						<template v-slot:label>
