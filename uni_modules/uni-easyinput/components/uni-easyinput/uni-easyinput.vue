@@ -298,10 +298,10 @@ export default {
 		},
 		// input右侧样式
 		inputStyle() {
-			const paddingRight = this.type === 'password' || this.clearable || this.prefixIcon ? '' : '';
+			const paddingRight = this.type === 'password' || this.clearable || this.prefixIcon ? '' : '10px';
 			return obj2strStyle({
 				'padding-right': paddingRight,
-				'padding-left': this.prefixIcon ? '' : ''
+				'padding-left': this.prefixIcon ? '' : '10px'
 			});
 		}
 	},
@@ -571,7 +571,7 @@ $uni-border-1: #dcdfe6 !default;
 }
 
 .content-clear-icon {
-	padding: 0 5px;
+	// padding: 0 5px;
 }
 
 .label-icon {
