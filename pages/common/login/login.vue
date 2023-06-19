@@ -90,7 +90,8 @@
 						uni.setStorageSync("UserName", this.loginForm.username)
 						this.loading = true
 						uni.showLoading({
-							title: '正在登录'
+							title: '正在登录',
+							mask: true
 						})
 						this.$api.post("/login/", this.loginForm).then(res => {
 							this.loading = false
