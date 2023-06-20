@@ -28,6 +28,9 @@
 				</uni-forms>
 				<view class="btns">
 					<view class="d-flex-center btn btn1" @click="handleLogin">登录</view>
+					<navigator url="/pages/common/register/register" open-type="redirect">
+						<view class="d-flex-center btn btn2">注册</view>
+					</navigator>
 				</view>
 			</view>
 		</view>
@@ -106,19 +109,13 @@
 								//获取用户信息
 								this.$store.dispatch('getUserInfo').then(res => {
 									//判断是否有权限
-									if(res.code == 20000 && res.data.roles.includes("leader")){
+									if(res.code == 20000){
 										//跳转首页
 										setTimeout(()=>{
 											uni.reLaunch({
 												url: '/pages/index/index'
 											});
 										}, 1000)
-									}else{
-										removeToken()
-										uni.showToast({
-											title: "账号异常",
-											icon: 'error'
-										})
 									}
 								})
 							} else if (res.code == 10005) {

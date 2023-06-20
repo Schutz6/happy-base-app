@@ -12,18 +12,8 @@
 							<view class="label">账号</view>
 						</template>
 						<view class="item d-flex">
-							<view class="area-code d-flex">
-								<picker v-if="arrayAreaCode.length>0" @change="changeAreaCode" :value="indexAreaCode"
-									:range="arrayAreaCode" range-key="text">
-									<view class="d-flex">
-										{{arrayAreaCode[indexAreaCode].text}}
-										<image src="@/static/login/icon-down.png"></image>
-									</view>
-								</picker>
-							</view>
-							<view style="width: 1px;height: 16px;background-color: #999;margin: 0 10px;"></view>
-							<uni-easyinput type="text" trim="both" :styles="styles" :placeholderStyle="placeholderStyle"
-								v-model="loginForm.mobile" :inputBorder="false" placeholder="请输入手机号" />
+							<uni-easyinput type="text" trim="both" prefixIcon="a" :styles="styles" :placeholderStyle="placeholderStyle"
+								v-model="loginForm.mobile" :inputBorder="false" placeholder="请输入账号" />
 						</view>
 					</uni-forms-item>
 					<view class="divider"></view>
@@ -32,7 +22,7 @@
 							<view class="label">密码</view>
 						</template>
 						<view class="item d-flex">
-							<uni-easyinput type="password" trim="both" :styles="styles"
+							<uni-easyinput type="password" trim="both" prefixIcon="a" :styles="styles"
 								:placeholderStyle="placeholderStyle" v-model="loginForm.password" :inputBorder="false"
 								placeholder="请输入密码" />
 						</view>
@@ -43,7 +33,7 @@
 							<view class="label">确认密码</view>
 						</template>
 						<view class="item d-flex">
-							<uni-easyinput type="password" trim="both" :styles="styles"
+							<uni-easyinput type="password" trim="both" prefixIcon="a" :styles="styles"
 								:placeholderStyle="placeholderStyle" v-model="loginForm.okpassword" :inputBorder="false"
 								placeholder="请确认密码" />
 						</view>
@@ -54,7 +44,7 @@
 							<view class="label">邀请码</view>
 						</template>
 						<view class="item d-flex">
-							<uni-easyinput type="text" trim="both" :styles="styles" :placeholderStyle="placeholderStyle"
+							<uni-easyinput type="text" trim="both" prefixIcon="a" :styles="styles" :placeholderStyle="placeholderStyle"
 								v-model="loginForm.invite_code" :inputBorder="false" placeholder="请输入邀请码" />
 						</view>
 					</uni-forms-item>
@@ -79,14 +69,13 @@
 			return {
 				loading: false,
 				loginForm: {
-					area: '86',
-					mobile: '',
+					username: '',
 					password: '',
 					okpassword: '',
 					invite_code: ''
 				},
 				loginRules: {
-					mobile: {
+					username: {
 						rules: [{
 							required: true,
 							errorMessage: "请输入"
@@ -136,33 +125,16 @@
 			let username = uni.getStorageSync("UserName")
 			if (username) {
 				//初始化账号
-				this.loginForm.mobile = username
+				this.loginForm.username = username
 			}
-			//获取参数设置
-			let res = await this.$api.getAsync("/param/getList/")
-			if(res.code == 20000){
-				this.$store.commit('setParams', res.data)
-			}
-			//获取区号列表
-			this.$api.post("/dict/getList/", {"name": "Areacode"}).then(res => {
-				if(res.data.length > 0){
-					this.arrayAreaCode = res.data
-					this.loginForm.area = this.arrayAreaCode[0].value
-				}
-			})
 		},
 		methods: {
-			//变更区号
-			changeAreaCode(e) {
-				this.indexAreaCode = e.detail.value
-				this.loginForm.area = this.arrayAreaCode[this.indexAreaCode].value
-			},
 			//注册
 			handleLogin() {
 				this.$refs.form.validate().then(res => {
 					if (!this.loading) {
 						//保存账号
-						uni.setStorageSync("UserName", this.loginForm.mobile)
+						uni.setStorageSync("UserName", this.loginForm.username)
 						this.loading = true
 						uni.showLoading({
 							title: '正在注册',
@@ -180,12 +152,14 @@
 								})
 								//获取用户信息
 								this.$store.dispatch('getUserInfo').then(res => {
-									//跳转首页
-									setTimeout(()=>{
-										uni.reLaunch({
-											url: '/pages/index/index'
-										});
-									}, 1000)
+									if(res.code == 20000){
+										//跳转首页
+										setTimeout(()=>{
+											uni.reLaunch({
+												url: '/pages/index/index'
+											});
+										}, 1000)
+									}
 								})
 							} else if (res.code == 10005) {
 								uni.showToast({
