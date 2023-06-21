@@ -18,7 +18,7 @@
 							</view>
 						</view>
 						<view style="margin-right: 20px;">
-							<uni-icons type="gear" size="24" color="#fff"></uni-icons>
+							<uni-icons type="gear" size="24" color="#fff" @click="toPageLogin('/pages/me/setting')"></uni-icons>
 						</view>
 					</view>
 					<view class="tools width-max d-flex">
@@ -35,62 +35,62 @@
 				<view class="boxs">
 					<view class="box">
 						<view class="tools d-flex">
-							<view class="flex1 d-flex flex-column" @tap="toPage('/pages/kefu/kefu')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/kefu/kefu')">
 								<image src="@/static/me/icon-recharge.png"></image>
 								<view class="label">充值</view>
 							</view>
-							<view class="flex1 d-flex flex-column" @tap="toPage('/pages/me/withdrawal')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/withdrawal')">
 								<image src="@/static/me/icon-withdraw.png"></image>
 								<view class="label">提现</view>
 							</view>
-							<view class="flex1 d-flex flex-column" @tap="toPage('/pages/kefu/kefu')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/kefu/kefu')">
 								<image src="@/static/me/icon-kefu.png"></image>
 								<view class="label">客服</view>
 							</view>
 						</view>
 					</view>
 					<view style="padding: 16px 0;">
-						<image  @tap="toPage('/pages/me/invite')" src="@/static/me/banner.png" style="width: 100%;height: 80px;"></image>
+						<image  @tap="toPageLogin('/pages/me/invite')" src="@/static/me/invite.png" style="width: 100%;height: 80px;"></image>
 					</view>
 					<view class="box">
 						<view class="fast-tools d-flex">
-							<view class="flex1 d-flex flex-column" @tap="toPage('/pages/me/buyRecords')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/buyRecords')">
 								<image src="@/static/me/icon-02.png"></image>
 								<view class="label">购买记录</view>
 							</view>
-							<view class="flex1 d-flex flex-column" @tap="toPage('/pages/me/rechargeRecords')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/rechargeRecords')">
 								<image src="@/static/me/icon-03.png"></image>
 								<view class="label">充值记录</view>
 							</view>
-							<view class="flex1 d-flex flex-column" @tap="toPage('/pages/me/withdrawalRecords')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/withdrawalRecords')">
 								<image src="@/static/me/icon-04.png"></image>
 								<view class="label">提现记录</view>
 							</view>
-							<view class="flex1 d-flex flex-column" @tap="toPage('/pages/me/realname')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/realname')">
 								<image src="@/static/me/icon-06.png"></image>
 								<view class="label">实名认证</view>
 							</view>
 						</view>
 						<view class="fast-tools d-flex">
-							<view class="flex1 d-flex flex-column" @tap="toPage('/pages/bank/bank')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/bank/bank')">
 								<image src="@/static/me/icon-07.png"></image>
 								<view class="label">绑定提现卡</view>
 							</view>
-							<view class="flex1 d-flex flex-column" @tap="toPage('/pages/me/updatePayPassword')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/updatePayPassword')">
 								<image src="@/static/me/icon-08.png"></image>
 								<view class="label">修改支付密码</view>
 							</view>
-							<view class="flex1 d-flex flex-column" @tap="toPage('/pages/me/updatePassword')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/updatePassword')">
 								<image src="@/static/me/icon-09.png"></image>
 								<view class="label">修改登录密码</view>
 							</view>
-							<view class="flex1 d-flex flex-column" @tap="toPage('/pages/me/team')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/team')">
 								<image src="@/static/me/icon-10.png"></image>
 								<view class="label">我的团队</view>
 							</view>
 						</view>
 						<view class="fast-tools d-flex" style="padding-bottom: 20px;">
-							<view class="flex1 d-flex flex-column" @tap="toPage('/pages/me/agent')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/agent')">
 								<image src="@/static/me/icon-11.png"></image>
 								<view class="label">代理奖金</view>
 							</view>
@@ -136,7 +136,7 @@
 			}
 		},
 		computed: {
-		    ...mapGetters(['user', 'params'])
+		    ...mapGetters(['isLogin', 'user', 'params'])
 		},
 		filters: {
 		    //格式化日期
@@ -150,15 +150,15 @@
 			this.height = res.windowHeight
 		},
 		methods: {
-			//跳转
-			toPage(page){
-				if(page === "/pages/kefu/kefu"){
-					uni.switchTab({
+			//跳转（需登录）
+			toPageLogin(page){
+				if(this.isLogin){
+					uni.navigateTo({
 						url: page
 					})
 				}else{
-					uni.navigateTo({
-						url: page
+					uni.reLaunch({
+						url: '/pages/common/login/login'
 					})
 				}
 			},

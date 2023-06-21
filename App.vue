@@ -19,8 +19,11 @@
 			//获取用户信息*(如果不需要验证用户请注释)
 			let resUser = await this.$api.getAsync("/user/")
 			if(resUser){
-				if(resUser.code == 10010){
-					//令牌已失效
+				if(resUser.code == 20000){
+					//初始化用户信息
+					this.$store.commit('setUser', resUser.data)
+				}else if(resUser.code == 10010){
+					//令牌过期
 					uni.reLaunch({
 						url: '/pages/common/login/login'
 					})
