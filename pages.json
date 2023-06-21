@@ -7,15 +7,6 @@
 	},
 	"pages": [
 		{
-		    "path" : "pages/common/start/start",
-		    "style" :                                                                                    
-		    {
-		        "navigationBarTitleText": "启动页",
-		        "enablePullDownRefresh": false,
-				"navigationStyle": "custom"
-		    }
-		},
-		{
 		    "path" : "pages/common/login/login",
 		    "style" :                                                                                    
 		    {
@@ -40,8 +31,15 @@
 				"enablePullDownRefresh": false,
 				"navigationStyle": "custom"
 			}
-		}
-        
+		},
+        {
+        	"path": "pages/me/me",
+        	"style": {
+        		"navigationBarTitleText": "我的",
+        		"enablePullDownRefresh": false,
+				"navigationStyle": "custom"
+        	}
+        }
         
     ],
 	"globalStyle": {
@@ -50,5 +48,25 @@
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
 	},
-	"uniIdRouter": {}
+	"uniIdRouter": {},
+	"tabBar": {
+		"color": "#266CAC",
+		"selectedColor": "#00E0FF",
+		"backgroundColor": "#161C33",
+		"borderStyle": "#294D6B",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/tabbar/icon-index.png",
+				"selectedIconPath": "static/tabbar/icon-index-select.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/me/me",
+				"iconPath": "static/tabbar/icon-me.png",
+				"selectedIconPath": "static/tabbar/icon-me-select.png",
+				"text": "我的"
+			}
+		]
+	}
 }

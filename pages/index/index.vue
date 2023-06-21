@@ -1,10 +1,10 @@
 <template>
-	<view class="page">
-		
-		<scroll-view class="scroll-page-box" :scroll-y="true" :scroll-x="false">
-			<uni-card>
-				首页
-			</uni-card>
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
+		<uni-nav-bar backgroundColor="transparent" dark status-bar :border="false" height="0px"></uni-nav-bar>
+		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height+'px'}">
+			<view class="container">
+				<view style="color: #fff;">首页</view>
+			</view>
 		</scroll-view>
 	</view>
 </template>
@@ -14,10 +14,15 @@
 	export default {
 		data() {
 			return {
-				
+				width: 0,//屏幕宽度
+				height: 0,//屏幕高度
 			}
 		},
 		onLoad() {
+			const res = uni.getSystemInfoSync()
+			this.width = res.windowWidth
+			this.height = res.windowHeight
+			
 			this.init()
 		},
 		computed: {

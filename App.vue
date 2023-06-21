@@ -11,10 +11,20 @@
 			//初始化网站设置信息
 			this.$store.commit('setParams', getParams())
 			
-			//异步请求参数
+			//获取系统参数
 			let resParam = await this.$api.getAsync("/param/getList/")
 			if(resParam && resParam.code == 20000){
 				this.$store.commit('setParams', resParam.data)
+			}
+			//获取用户信息*(如果不需要验证用户请注释)
+			let resUser = await this.$api.getAsync("/user/")
+			if(resUser){
+				if(resUser.code == 10010){
+					//令牌已失效
+					uni.reLaunch({
+						url: '/pages/common/login/login'
+					})
+				}
 			}
 		},
 		onShow() {
