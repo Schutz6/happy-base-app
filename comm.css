@@ -76,5 +76,12 @@
 .border-white{
 	border: 1px solid #FFFFFF;
 }
-
-
+.btn{
+	height: 44px;
+	border-radius: 10px;
+	color: #fff;
+	font-size: 16px;
+}
+.btn1{
+	background: linear-gradient(256deg, #007FFF 0%, #00E0FF 100%);
+}

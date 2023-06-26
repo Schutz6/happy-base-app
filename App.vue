@@ -48,3 +48,55 @@
 	}
 	
 </style>
+<style lang="scss">
+	.dialog-box{
+		width: 260px;
+		background: #1B2241;
+		box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.14);
+		border-radius: 10px;
+		border: 1px solid #888;
+		
+		.head{
+			color: #fff;
+			text-align: center;
+			font-weight: 400;
+			font-size: 16px;
+			padding-top: 10px;
+		}
+		
+		.content{
+			color: #FFFFFF;
+			font-weight: 400;
+			font-size: 14px;
+			text-align: center;
+			padding: 20px 16px 20px 16px;
+		}
+		
+		.line{
+			width: 260px;
+			height: 1px;
+			background: rgba(255,255,255,0.2);
+		}
+		
+		.footer{
+			text-align: center;
+			height: 40px;
+			
+			.line{
+				width: 1px;
+				height: 26px;
+				background: rgba(255,255,255,0.2);
+			}
+			.cancel{
+				font-weight: 400;
+				color: rgba(255,255,255,0.7);
+				font-size: 14px;
+			}
+			.confirm{
+				font-weight: 400;
+				color: #00E0FF;
+				font-size: 14px;
+			}
+		}
+	}
+</style>

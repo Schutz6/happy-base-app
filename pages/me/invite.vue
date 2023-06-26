@@ -1,10 +1,5 @@
 <template>
 	<view class="width-max height-max">
-		<uni-nav-bar backgroundColor="transparent" title="邀请好友" dark status-bar fixed :border="false" height="44px" :leftWidth="60" :rightWidth="60">
-			<block slot="left">
-				<image @tap="back()" src="@/static/index/icon-left.png" style="height: 16px;width: 16px;"></image>
-			</block>
-		</uni-nav-bar>
 		<view class="container">
 			<view class="invite-box">
 				<image src="@/static/invite/box.png"></image>

@@ -35,29 +35,26 @@
 				<view class="boxs">
 					<view class="box">
 						<view class="tools d-flex">
-							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/kefu/kefu')">
-								<image src="@/static/me/icon-recharge.png"></image>
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/kefu')">
+								<view class="icon d-flex-center"><image src="@/static/me/icon-recharge.png"></image></view>
 								<view class="label">充值</view>
 							</view>
 							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/withdrawal')">
-								<image src="@/static/me/icon-withdraw.png"></image>
+								<view class="icon d-flex-center"><image src="@/static/me/icon-withdraw.png"></image></view>
 								<view class="label">提现</view>
 							</view>
-							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/kefu/kefu')">
-								<image src="@/static/me/icon-kefu.png"></image>
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/kefu')">
+								<view class="icon d-flex-center"><image src="@/static/me/icon-kefu.png"></image></view>
 								<view class="label">客服</view>
+							</view>
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/invite')">
+								<view class="icon d-flex-center"><image src="@/static/me/icon-invite.png"></image></view>
+								<view class="label">邀请</view>
 							</view>
 						</view>
 					</view>
-					<view style="padding: 16px 0;">
-						<image  @tap="toPageLogin('/pages/me/invite')" src="@/static/me/invite.png" style="width: 100%;height: 80px;"></image>
-					</view>
 					<view class="box">
 						<view class="fast-tools d-flex">
-							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/buyRecords')">
-								<image src="@/static/me/icon-02.png"></image>
-								<view class="label">购买记录</view>
-							</view>
 							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/rechargeRecords')">
 								<image src="@/static/me/icon-03.png"></image>
 								<view class="label">充值记录</view>
@@ -70,12 +67,12 @@
 								<image src="@/static/me/icon-06.png"></image>
 								<view class="label">实名认证</view>
 							</view>
-						</view>
-						<view class="fast-tools d-flex">
 							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/bank/bank')">
 								<image src="@/static/me/icon-07.png"></image>
 								<view class="label">绑定提现卡</view>
 							</view>
+						</view>
+						<view class="fast-tools d-flex">
 							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/updatePayPassword')">
 								<image src="@/static/me/icon-08.png"></image>
 								<view class="label">修改支付密码</view>
@@ -88,40 +85,15 @@
 								<image src="@/static/me/icon-10.png"></image>
 								<view class="label">我的团队</view>
 							</view>
-						</view>
-						<view class="fast-tools d-flex" style="padding-bottom: 20px;">
 							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/agent')">
 								<image src="@/static/me/icon-11.png"></image>
 								<view class="label">代理奖金</view>
 							</view>
-							<view class="flex1">
-								<uni-link :href="params.downloadUrl" :showUnderLine="false">
-									<view class="d-flex flex-column">
-										<image src="@/static/me/icon-12.png"></image>
-										<view class="label">下载APP</view>
-									</view>
-								</uni-link>
-							</view>
-							<view class="flex1 d-flex flex-column"></view>
-							<view class="flex1 d-flex flex-column"></view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</scroll-view>
-		
-		<uni-popup ref="logoutDialog" type="center" :animation="false">
-			<view class="dialog-box">
-				<view class="content">是否退出登录？</view>
-				<view class="line"></view>
-				<view class="d-flex-center footer">
-					<view class="flex1 cancel" @tap="hideDialog('logoutDialog')">取消</view>
-					<view class="line"></view>
-					<view class="flex1 confirm" @tap="logout()">确认</view>
-				</view>
-			</view>
-		</uni-popup>
-		
 	</view>
 </template>
 
@@ -162,81 +134,11 @@
 					})
 				}
 			},
-			//退出登录
-			logout(){
-				this.$api.get("/logout/").then(res => {
-					uni.reLaunch({
-						url: '/pages/common/login/login'
-					})
-				})
-			},
-			//显示弹出框
-			showDialog(id){
-				this.$refs[id].open()
-			},
-			//关闭弹出框
-			hideDialog(id){
-				this.$refs[id].close()
-			},
 		}
 	}
 </script>
 
 <style scoped lang="scss">
-	.dialog-box{
-		width: 260px;
-		height: 123px;
-		background: #1B2241;
-		box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.14);
-		border-radius: 10px;
-		border: 1px solid rgba(0, 127, 255, 1);
-		
-		.content{
-			color: #FFFFFF;
-			font-weight: 400;
-			font-size: 16px;
-			text-align: center;
-			height: 84px;
-			line-height: 84px;
-		}
-		
-		.line{
-			width: 260px;
-			height: 1px;
-			background: rgba(255,255,255,0.2);
-		}
-		
-		.footer{
-			text-align: center;
-			height: 40px;
-			
-			.line{
-				width: 1px;
-				height: 26px;
-				background: rgba(255,255,255,0.2);
-			}
-			.cancel{
-				font-weight: 400;
-				color: rgba(255,255,255,0.7);
-				font-size: 14px;
-			}
-			.confirm{
-				font-weight: 400;
-				color: #00E0FF;
-				font-size: 14px;
-			}
-		}
-	}
-	
-	.close-box{
-		padding-top: 20px;
-		
-		image{
-			width: 28px;
-			height: 28px;
-		}
-	}
-	
 	.container{
 		.user-box{
 			width: 100%;
@@ -283,6 +185,7 @@
 			padding: 16px;
 			
 			.box{
+				margin-bottom: 16px;
 				width: 100%;
 				background: #1B2241;
 				box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.24);
@@ -290,11 +193,18 @@
 				border: 1px solid #294D6B;
 				
 				.tools{
-					margin: 20px 0 10px 0;
+					margin: 16px 0;
 					
+					.icon{
+						border: 0.5px solid #66666661;
+						border-radius: 5px;
+						padding: 5px;
+						width: 30px;
+						height: 30px;
+					}
 					image{
-						width: 48px;
-						height: 48px;
+						width: 28px;
+						height: 28px;
 					}
 					
 					.label{
@@ -306,7 +216,7 @@
 				}
 				
 				.fast-tools{
-					padding-top: 20px;
+					padding-top: 16px;
 					
 					image{
 						width: 24px;
@@ -319,6 +229,9 @@
 						font-size: 12px;
 						padding-top: 8px;
 					}
+				}
+				.fast-tools:last-child{
+					padding-bottom: 16px;
 				}
 			}
 		}

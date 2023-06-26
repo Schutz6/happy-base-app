@@ -3,7 +3,7 @@
 		<uni-nav-bar backgroundColor="transparent" dark status-bar :border="false" height="0px"></uni-nav-bar>
 		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height+'px'}">
 			<view class="container">
-				<view style="color: #fff;">首页</view>
+				<view style="color: #fff;text-align: center;padding: 20px 0;">自定义首页</view>
 			</view>
 		</scroll-view>
 	</view>
