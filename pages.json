@@ -93,6 +93,35 @@
                 "navigationBarTitleText": "修改邮箱",
                 "enablePullDownRefresh": false
             }
+        },{
+            "path" : "pages/me/updatePassword",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "修改登录密码",
+                "enablePullDownRefresh": false
+            }
+        },{
+            "path" : "pages/me/updatePayPassword",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "修改支付密码",
+                "enablePullDownRefresh": false
+            }
+        }
+        ,{
+            "path" : "pages/me/bindInvite",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "绑定邀请码",
+                "enablePullDownRefresh": false
+            }
+        },{
+            "path" : "pages/me/kefu",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "在线客服",
+                "enablePullDownRefresh": false
+            }
         }
     ],
 	"globalStyle": {

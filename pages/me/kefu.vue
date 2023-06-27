@@ -1,6 +1,6 @@
 <template>
 	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
-		<iframe v-if="setting.kefuUrl" :src="setting.kefuUrl + `?uid=u${this.user.id}&name=${this.user.name}`" frameborder="0"></iframe>
+		<iframe v-if="params.kefuUrl" :src="params.kefuUrl + `?uid=u${this.user.id}&name=${this.user.name}`" frameborder="0"></iframe>
 	</view>
 </template>
 
@@ -14,7 +14,7 @@
 			}
 		},
 		computed: {
-			...mapGetters(['user', 'setting'])
+			...mapGetters(['user', 'params'])
 		},
 		onLoad() {
 			const res = uni.getSystemInfoSync()
@@ -27,16 +27,7 @@
 	}
 </script>
 <style scoped lang="scss">
-	.nav-title{
-		font-size: 16px;
-		display: flex;
-		margin: 0 auto;
-		align-items: center;
-		font-weight: 700;
-	}
-	.webviewBox{
-		width: 100%;
-		
+	.page{
 		iframe{
 			width: 100%;
 			height: 100%;

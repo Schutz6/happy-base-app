@@ -14,26 +14,26 @@
 									<view class="label">+{{formData.area}}</view>
 									<uni-icons type="bottom" size="16" color="#A2AEC8"></uni-icons>
 								</view>
-								<input type="text" v-model="formData.mobile" style="color: #fff;padding: 10px;" placeholder-style="color:rgba(255, 255, 255, 0.7);font-size:14px;" placeholder="请输入手机号" />
+								<input type="text" v-model="formData.mobile" :style="styles" :placeholderStyle="placeholderStyle" placeholder="请输入手机号" />
 							</view>
 							<view class="line"></view>
 						</uni-forms-item>
 						<uni-forms-item name="email" key="email" v-if="type==2">
 							<view class="item">
-								<input type="text" v-model="formData.email" style="color: #fff;padding: 10px;" placeholder-style="color:rgba(255, 255, 255, 0.7);font-size:14px;" placeholder="请输入邮箱" />
+								<input type="text" v-model="formData.email" :style="styles" :placeholderStyle="placeholderStyle" placeholder="请输入邮箱" />
 							</view>
 							<view class="line"></view>
 						</uni-forms-item>
 						<uni-forms-item name="code">
 							<view class="item">
-								<input type="text" v-model="formData.code" style="color: #fff;padding: 10px;" placeholder-style="color:rgba(255, 255, 255, 0.7);font-size:14px;" placeholder="请输入验证码" />
+								<input type="text" v-model="formData.code" :style="styles" :placeholderStyle="placeholderStyle" placeholder="请输入验证码" />
 								<view class="get-code" @click="getCode()">{{showCode?count+"s后重新获取": "获取验证码"}}</view>
 							</view>
 							<view class="line"></view>
 						</uni-forms-item>
 						<uni-forms-item name="password">
 							<view class="item">
-								<input type="password" v-model="formData.password" style="color: #fff;padding: 10px;" placeholder-style="color:rgba(255, 255, 255, 0.7);font-size:14px;" placeholder="请输入新密码" />
+								<input type="password" v-model="formData.password" :style="styles" :placeholderStyle="placeholderStyle" placeholder="请输入新密码" />
 							</view>
 							<view class="line"></view>
 						</uni-forms-item>
@@ -79,6 +79,12 @@
 				showCode: false,
 				count: null,
 				timer: null,
+				styles: {
+					padding: '10px',
+					color: '#fff',
+					backgroundColor: 'transparent'
+				},
+				placeholderStyle: "color:rgba(255, 255, 255, 0.7);font-size:14px;",
 			}
 		},
 		onLoad() {

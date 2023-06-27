@@ -1,16 +1,7 @@
 <template>
-	<view class="width-max height-max">
-		<uni-nav-bar backgroundColor="transparent" title="修改支付密码" dark status-bar fixed :border="false" height="44px" :leftWidth="60" :rightWidth="60">
-			<block slot="left">
-				<image @tap="back()" src="@/static/index/icon-left.png" style="height: 16px;width: 16px;"></image>
-			</block>
-		</uni-nav-bar>
-		<view class="container">
+	<view class="page overflow-hidden">
+		<view class="content">
 			<view class="form">
-				<view class="box d-flex">
-					<image src="@/static/me/tips.png" style="width: 20px;height: 20px;"></image>
-					<view style="color: #fff;font-size: 14px;padding-left: 10px;">密码修改后24小时内不得进行提现</view>
-				</view>
 				<uni-forms ref="form" :modelValue="formData" :rules="rules" label-position="top" label-width="210">
 					<uni-forms-item name="oldPassword" v-if="user.has_pay_password==1">
 						<template v-slot:label>
@@ -31,8 +22,8 @@
 						<uni-easyinput type="password" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.okpassword" placeholder="请再次确认密码" />
 					</uni-forms-item>
 				</uni-forms>
-				<view class="d-flex-center" style="margin-top: 50px;">
-					<view class="btn d-flex-center" @click="submitForm">设置</view>
+				<view class="btns">
+					<view class="d-flex-center btn btn1" @click="submitForm()">修改</view>
 				</view>
 			</view>
 		</view>
@@ -41,7 +32,6 @@
 
 <script>
 	import { mapGetters } from 'vuex'
-	import { navigateBack } from '@/utils/util'
 	export default {
 		data() {
 			return {
@@ -55,18 +45,18 @@
 				rules: {
 					oldPassword: {
 						rules: [
-							{ required: true, errorMessage: "请输入" }
+							{ required: true, errorMessage: "请输入原密码" }
 						]
 					},
 					newPassword: {
 						rules: [
-							{ required: true, errorMessage: "请输入" }
+							{ required: true, errorMessage: "请输入新密码" }
 						]
 					},
 					okpassword: {
 						rules: [{
 								required: true,
-								errorMessage: "请输入"
+								errorMessage: "请输入确认密码"
 							},
 							{
 								validateFunction: (rule, value, data, callback) => {
@@ -80,19 +70,17 @@
 					},
 				},
 				styles: {
+					padding: '10px',
 					color: '#fff',
 					backgroundColor: 'transparent'
 				},
-				placeholderStyle: "font-size:14px;color: #999;",
+				placeholderStyle: "color:rgba(255, 255, 255, 0.7);font-size:14px;",
 			}
 		},
 		computed: {
 		    ...mapGetters(['user'])
 		},
 		methods: {
-			back(){
-				navigateBack()
-			},
 			//提交
 			submitForm(){
 				this.$refs.form.validate().then(res=>{
@@ -102,15 +90,25 @@
 							this.loading = false
 							if(res.code == 20000){
 								uni.showToast({
-									title: "设置成功",
+									title: "修改成功",
 									icon: 'success'
 								});
 								setTimeout(()=>{
-									this.back()
+									uni.navigateBack()
 								}, 1500)
+							}else if(res.code == 10005){
+								uni.showToast({
+									title: "用户不存在",
+									icon: 'error'
+								});
+							}else if(res.code == 10006){
+								uni.showToast({
+									title: "原密码错误",
+									icon: 'error'
+								});
 							}else{
 								uni.showToast({
-									title: "设置失败",
+									title: "修改失败",
 									icon: 'error'
 								});
 							}
@@ -123,36 +121,19 @@
 </script>
 
 <style scoped lang="scss">
-	.container{
-		padding: 20px 16px;
+	.content{
+		padding: 16px;
 		
 		.form{
-			.box{
-				background: #215386;
-				border-radius: 6px;
-				padding: 10px;
-			}
-			
 			.label{
 				font-size: 16px;
 				color: #fff;
-				font-weight: 500;
 				padding: 20px 0 10px 0;
 			}
-			
-			.tips{
-				font-size: 12px;
-				color: #fff;
-				padding: 5px 0 0 0;
-			}
-			
-			.btn{
-				width: 279px;
-				height: 44px;
-				background: linear-gradient(256deg, #007FFF 0%, #00E0FF 100%);
-				border-radius: 10px;
-				color: #fff;
-			}
+		}
+		
+		.btns{
+			padding: 30px 0;
 		}
 	}
 </style>

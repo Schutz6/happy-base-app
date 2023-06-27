@@ -35,11 +35,11 @@
 				<view class="boxs">
 					<view class="box">
 						<view class="tools d-flex">
-							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/kefu')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/recharge')">
 								<view class="icon d-flex-center"><image src="@/static/me/icon-recharge.png"></image></view>
 								<view class="label">充值</view>
 							</view>
-							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/withdrawal')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/withdraw')">
 								<view class="icon d-flex-center"><image src="@/static/me/icon-withdraw.png"></image></view>
 								<view class="label">提现</view>
 							</view>
@@ -59,7 +59,7 @@
 								<image src="@/static/me/icon-03.png"></image>
 								<view class="label">充值记录</view>
 							</view>
-							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/withdrawalRecords')">
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/withdrawRecords')">
 								<image src="@/static/me/icon-04.png"></image>
 								<view class="label">提现记录</view>
 							</view>
@@ -73,13 +73,13 @@
 							</view>
 						</view>
 						<view class="fast-tools d-flex">
-							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/updatePayPassword')">
-								<image src="@/static/me/icon-08.png"></image>
-								<view class="label">修改支付密码</view>
-							</view>
 							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/updatePassword')">
 								<image src="@/static/me/icon-09.png"></image>
 								<view class="label">修改登录密码</view>
+							</view>
+							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/updatePayPassword')">
+								<image src="@/static/me/icon-08.png"></image>
+								<view class="label">修改支付密码</view>
 							</view>
 							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/team')">
 								<image src="@/static/me/icon-10.png"></image>

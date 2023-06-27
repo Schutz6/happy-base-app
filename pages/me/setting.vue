@@ -65,7 +65,7 @@
 					</view>
 				</view>
 				<view class="line"></view>
-				<view class="item" @click="goPage('/pages/me/invite')">
+				<view class="item" @click="goPage('/pages/me/bindInvite')">
 					<view class="icon-box">
 						<view class="label">绑定邀请码</view>
 					</view>
@@ -214,6 +214,11 @@
 			},
 			//跳转页面
 			goPage(page){
+				if(page == '/pages/me/bindInvite'){
+					if(this.user.pid){
+						return
+					}
+				}
 				uni.navigateTo({
 					url: page
 				});
