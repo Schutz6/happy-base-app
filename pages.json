@@ -34,6 +34,14 @@
 		    }
 		},
 		{
+		    "path" : "pages/common/forget/forget",
+		    "style" :                                                                                    
+		    {
+		        "navigationBarTitleText": "忘记秘密",
+		        "enablePullDownRefresh": false
+		    }
+		},
+		{
 		    "path" : "pages/common/code/code",
 		    "style" :                                                                                    
 		    {
@@ -86,7 +94,6 @@
                 "enablePullDownRefresh": false
             }
         }
-        
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "white",

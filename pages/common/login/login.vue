@@ -25,6 +25,9 @@
 						</view>
 					</uni-forms-item>
 					<view class="divider"></view>
+					<view class="d-flex end">
+						<navigator url="/pages/common/forget/forget"><text class="forget">忘记秘密?</text></navigator>
+					</view>
 				</uni-forms>
 				<view class="btns">
 					<view class="d-flex-center btn btn1" @click="handleLogin">登录</view>
@@ -169,6 +172,11 @@
 			width: 100%;
 			height: 1px;
 			background: rgba(255,255,255,0.2);
+		}
+		
+		.forget{
+			color: #0062cc;
+			font-size: 14px;
 		}
 		
 		.label{
