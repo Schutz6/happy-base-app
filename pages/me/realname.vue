@@ -68,6 +68,8 @@
 		onReady() {
 			this.formData.full_name = this.user.full_name
 			this.formData.id_number = this.user.id_number
+			//查询审核结果
+			this.$store.dispatch('getUserInfo')
 		},
 		methods: {
 			//提交

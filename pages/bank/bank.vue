@@ -9,7 +9,7 @@
 							<uni-icons type="trash" size="24" color="white" @tap="showDelete(item.id)"></uni-icons>
 						</view>
 						<view class="sub-title">储蓄卡</view>
-						<view class="card_number d-flex-center">.... .... .... {{item.card_number | formatCardnumber}}</view>
+						<view class="card_number d-flex-center">{{item.card_number | formatCardnumber}}</view>
 					</view>
 					<view class="box" v-if="item.type==2">
 						<view class="d-flex between">
@@ -17,7 +17,7 @@
 							<uni-icons type="trash" size="24" color="white" @tap="showDelete(item.id)"></uni-icons>
 						</view>
 						<view class="sub-title">区块链地址</view>
-						<view class="card_number d-flex-center">.... .... .... {{item.address_usdt | formatCardnumber}}</view>
+						<view class="card_number d-flex-center">{{item.address_usdt | formatCardnumber}}</view>
 					</view>
 				</view>
 				<uni-load-more :status="moreStatus"></uni-load-more>
@@ -67,9 +67,9 @@
 		    //格式化银行卡
 		    formatCardnumber(card_number){
 				if(card_number.length>4){
-					return card_number.substr(-4)
+					return ".... .... .... "+card_number.substr(-4)
 				}
-		    	return card_number 
+		    	return ".... .... .... "+card_number 
 		    }
 		},
 		onShow() {

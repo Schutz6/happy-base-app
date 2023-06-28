@@ -21,7 +21,6 @@
 							<view class="label">户名</view>
 						</template>
 						<uni-easyinput type="text" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.name" placeholder="请输入户名" />
-						<view class="tips">姓名需与实名认证资料相同</view>
 					</uni-forms-item>
 					<uni-forms-item name="bank_name" key="bank_name" v-if="indexType==0">
 						<template v-slot:label>

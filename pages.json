@@ -154,6 +154,36 @@
                 "navigationBarTitleText": "新增提现卡",
                 "enablePullDownRefresh": false
             }
+        },{
+            "path" : "pages/me/recharge",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "充值",
+                "enablePullDownRefresh": false
+            }
+        },{
+            "path" : "pages/me/withdraw",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "提现",
+                "enablePullDownRefresh": false
+            }
+        }
+        ,{
+            "path" : "pages/me/recharge",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "充值",
+                "enablePullDownRefresh": false
+            }
+            
+        },{
+            "path" : "pages/me/rechargeUsdt",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "USDT充值",
+                "enablePullDownRefresh": false
+            }
         }
     ],
 	"globalStyle": {

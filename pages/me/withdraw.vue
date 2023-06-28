@@ -1,19 +1,10 @@
 <template>
-	<view class="width-max height-max">
-		<uni-nav-bar backgroundColor="transparent" title="提现" dark status-bar fixed :border="false" height="44px" :leftWidth="60" :rightWidth="60">
-			<block slot="left">
-				<image @tap="back()" src="@/static/index/icon-left.png" style="height: 16px;width: 16px;"></image>
-			</block>
-		</uni-nav-bar>
-		<view class="container">
+	<view class="page overflow-hidden">
+		<view class="content">
 			<view class="form">
 				<view class="box">
-					<view style="color: #fff;font-size: 14px;">可提现余额</view>
-					<view style="font-weight: 500;color: #FFFCFC;font-size:40px;">{{user.balance}}</view>
-					<view class="d-flex between" style="padding-top: 20px;">
-						<view style="color: #fff;font-size: 14px;">可提现额度</view>
-						<view style="color: #fff;font-size:20px;">{{user.withdrawal_limit}}</view>
-					</view>
+					<view>可提现余额</view>
+					<view class="balance">{{user.balance || "0.00"}}</view>
 				</view>
 				<uni-forms ref="form" :modelValue="formData" :rules="rules" label-position="top" label-width="210">
 					<uni-forms-item name="type">
@@ -50,13 +41,13 @@
 				</uni-forms>
 				<view style="color: rgba(255,255,255,0.7);font-size: 14px;padding: 20px 0;">
 					<view>提现规则：</view>
-					<view>1、每天最高可提现一次；</view>
-					<view>2、每次提现金额需是整数，不可带小数点；</view>
-					<view>3、最少提现为100元，最多提现为500000元。</view>
+					<view>1、提现手续费率{{params.withdrawalFee}}</view>
+					<view>2、每次提现金额需是整数，不可带小数点</view>
+					<view>3、最少提现为100元，最多提现为500000元</view>
 				</view>
-				<view class="d-flex-center" style="margin-top: 50px;">
-					<view class="btn d-flex-center" @click="submitForm">提现</view>
-				</view>
+			</view>
+			<view class="btns">
+				<view class="d-flex-center btn btn1" @click="submitForm()">提现</view>
 			</view>
 		</view>
 	</view>
@@ -64,7 +55,6 @@
 
 <script>
 	import { mapGetters } from 'vuex'
-	import { navigateBack } from '@/utils/util'
 	export default {
 		data() {
 			return {
@@ -78,7 +68,7 @@
 					bank_name: null,
 					branch_name: null,
 					card_number: null,
-					address: null,
+					address_usdt: null,
 					money: null,
 					real_money: null,
 					pay_password: null
@@ -87,7 +77,7 @@
 					money: {
 						rules: [{
 								required: true,
-								errorMessage: "请输入"
+								errorMessage: "请输入提现金额"
 							},
 							{
 								validateFunction: (rule, value, data, callback) => {
@@ -103,7 +93,7 @@
 					},
 					pay_password: {
 						rules: [
-							{ required: true, errorMessage: "请输入" }
+							{ required: true, errorMessage: "请输入支付密码" }
 						]
 					},
 				},
@@ -120,15 +110,15 @@
 		},
 		onLoad() {
 			//获取银行卡列表
-			this.$api.post("/bankcard/list/", {"currentPage": 1, "pageSize": 100}).then(res => {
+			this.$api.post("/core/getList/", {"uid": this.user.id}, {"Mid": "Bankcard"}).then(res => {
 				let list = []
-				this.bankList = res.data.results
-				for(let i=0;i<res.data.results.length;i++){
-					let item = res.data.results[i]
+				this.bankList = res.data
+				for(let i=0;i<res.data.length;i++){
+					let item = res.data[i]
 					if(item.type == 1){
-						list.push({"value": i, "text": item.bank_name+" "+item.card_number})
+						list.push({"value": i, "text": item.bank_name+" "+this.formatCardnumber(item.card_number)})
 					}else if(item.type == 2){
-						list.push({"value": i, "text": "USDT "+item.address})
+						list.push({"value": i, "text": "USDT "+this.formatCardnumber(item.address_usdt)})
 					}
 				}
 				if(list.length>0){
@@ -140,15 +130,19 @@
 						this.formData.card_number = this.bankList[0].card_number
 					}else if(this.bankList[0].type == 2){
 						this.formData.type = 2
-						this.formData.address = this.bankList[0].address
+						this.formData.address_usdt = this.bankList[0].address_usdt
 					}
 				}
 				this.arrayBank = list
 			})
 		},
 		methods: {
-			back(){
-				navigateBack()
+			//格式化银行卡
+			formatCardnumber(card_number){
+				if(card_number.length>8){
+					return card_number.substr(0, 4)+" .... .... "+card_number.substr(-4)
+				}
+				return card_number 
 			},
 			//变更银行卡
 			changeBank(e){
@@ -159,14 +153,14 @@
 					this.formData.bank_name = this.bankList[this.indexBank].bank_name
 					this.formData.branch_name = this.bankList[this.indexBank].branch_name
 					this.formData.card_number = this.bankList[this.indexBank].card_number
-					this.formData.address = null
+					this.formData.address_usdt = null
 				}else if(this.bankList[this.indexBank].type == 2){
 					this.formData.type = 2
 					this.formData.name = null
 					this.formData.bank_name = null
 					this.formData.branch_name = null
 					this.formData.card_number = null
-					this.formData.address = this.bankList[this.indexBank].address
+					this.formData.address_usdt = this.bankList[this.indexBank].address_usdt
 				}
 			},
 			//提交
@@ -186,7 +180,7 @@
 									uni.redirectTo({
 										url: '/pages/me/withdrawalRecords'
 									});
-								}, 1500)
+								}, 500)
 							}else if(res.code == 10006){
 								uni.showToast({
 									title: "密码错误",
@@ -195,11 +189,6 @@
 							}else if(res.code == 11001){
 								uni.showToast({
 									title: "余额不足",
-									icon: 'error'
-								});
-							}else if(res.code == 11005){
-								uni.showToast({
-									title: "24小时后操作",
 									icon: 'error'
 								});
 							}else if(res.code == 11006){
@@ -226,22 +215,34 @@
 </script>
 
 <style scoped lang="scss">
-	.container{
-		padding: 20px 16px;
+	.content{
+		padding: 16px;
 		
 		.form{
 			.box{
-				background-image: url(../../static/bank/box-bg.png);
+				color: #fff;
+				background-image: url('../../static/login/box-bg.png');
 				background-size: 100% 100%;
-				border-radius: 6px;
-				height: 120px;
+				height: 70px;
 				padding: 20px;
+				border-radius: 10px;
+				
+				.balance{
+					font-size: 30px;
+					overflow: hidden;
+					white-space: nowrap;
+					text-overflow: ellipsis;
+					
+					text{
+						font-size: 20px;
+						padding-right: 3px;
+					}
+				}
 			}
 			
 			.label{
-				font-size: 16px;
+				font-size: 14px;
 				color: #fff;
-				font-weight: 500;
 				padding: 20px 0 10px 0;
 			}
 			
@@ -251,26 +252,12 @@
 				padding: 5px 0 0 0;
 			}
 			
-			.btn{
-				width: 279px;
-				height: 44px;
-				background: linear-gradient(256deg, #007FFF 0%, #00E0FF 100%);
-				border-radius: 10px;
-				color: #fff;
-			}
-			
 			.input-box{
 				color: #fff;
-				font-size: 16px;
+				font-size: 14px;
 				border: 1px solid #ddd;
 				border-radius: 5px;
-				padding: 10px;
-				
-				.address{
-					overflow:hidden;
-					text-overflow:ellipsis;
-					white-space:nowrap;
-				}
+				padding: 5px 10px;
 				
 				image{
 					width: 24px;
