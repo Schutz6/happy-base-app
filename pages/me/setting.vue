@@ -42,7 +42,7 @@
 					</view>
 				</view>
 				<view class="line"></view>
-				<view class="item" @click="goPage('/pages/me/mobile')">
+				<view class="item" @click="goPage('/pages/me/updateMobile')">
 					<view class="icon-box">
 						<view class="label">绑定手机</view>
 					</view>
@@ -55,7 +55,7 @@
 					</view>
 				</view>
 				<view class="line"></view>
-				<view class="item" @click="goPage('/pages/me/email')">
+				<view class="item" @click="goPage('/pages/me/updateEmail')">
 					<view class="icon-box">
 						<view class="label">绑定邮箱</view>
 					</view>

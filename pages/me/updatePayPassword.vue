@@ -93,6 +93,8 @@
 									title: "修改成功",
 									icon: 'success'
 								});
+								this.user.has_pay_password = 1
+								this.$store.commit('setUser', this.user)
 								setTimeout(()=>{
 									uni.navigateBack()
 								}, 1500)
@@ -126,7 +128,7 @@
 		
 		.form{
 			.label{
-				font-size: 16px;
+				font-size: 14px;
 				color: #fff;
 				padding: 20px 0 10px 0;
 			}

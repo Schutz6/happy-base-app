@@ -1,11 +1,6 @@
 <template>
-	<view class="width-max height-max">
-		<uni-nav-bar backgroundColor="transparent" title="新增提现卡" dark status-bar fixed :border="false" height="44px" :leftWidth="60" :rightWidth="60">
-			<block slot="left">
-				<image @tap="back()" src="@/static/index/icon-left.png" style="height: 16px;width: 16px;"></image>
-			</block>
-		</uni-nav-bar>
-		<view class="container">
+	<view class="page overflow-hidden">
+		<view class="content">
 			<view class="form">
 				<uni-forms ref="form" :modelValue="formData" :rules="rules" label-position="top" label-width="210">
 					<uni-forms-item name="type">
@@ -21,40 +16,40 @@
 							</picker>
 						</view>
 					</uni-forms-item>
-					<uni-forms-item name="name" v-if="indexType==0">
+					<uni-forms-item name="name" key="name" v-if="indexType==0">
 						<template v-slot:label>
 							<view class="label">户名</view>
 						</template>
 						<uni-easyinput type="text" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.name" placeholder="请输入户名" />
 						<view class="tips">姓名需与实名认证资料相同</view>
 					</uni-forms-item>
-					<uni-forms-item name="bank_name" v-if="indexType==0">
+					<uni-forms-item name="bank_name" key="bank_name" v-if="indexType==0">
 						<template v-slot:label>
 							<view class="label">银行名称</view>
 						</template>
 						<uni-easyinput type="text" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.bank_name" placeholder="请输入银行名称" />
 					</uni-forms-item>
-					<uni-forms-item name="branch_name" v-if="indexType==0">
+					<uni-forms-item name="branch_name" key="branch_name" v-if="indexType==0">
 						<template v-slot:label>
 							<view class="label">分行名称</view>
 						</template>
 						<uni-easyinput type="text" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.branch_name" placeholder="请输入分行名称" />
 					</uni-forms-item>
-					<uni-forms-item name="card_number" v-if="indexType==0">
+					<uni-forms-item name="card_number" key="card_number" v-if="indexType==0">
 						<template v-slot:label>
 							<view class="label">卡号</view>
 						</template>
 						<uni-easyinput type="text" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.card_number" placeholder="请输入卡号" />
 					</uni-forms-item>
-					<uni-forms-item name="address" v-if="indexType==1">
+					<uni-forms-item name="address_usdt" key="address_usdt" v-if="indexType==1">
 						<template v-slot:label>
 							<view class="label">USDT地址</view>
 						</template>
-						<uni-easyinput type="text" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.address" placeholder="请输入USDT地址" />
+						<uni-easyinput type="text" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.address_usdt" placeholder="请输入USDT地址" />
 					</uni-forms-item>
 				</uni-forms>
-				<view class="d-flex-center" style="margin-top: 50px;">
-					<view class="btn d-flex-center" @click="submitForm">确定绑定</view>
+				<view class="btns">
+					<view class="d-flex-center btn btn1" @click="submitForm()">新增</view>
 				</view>
 			</view>
 		</view>
@@ -62,7 +57,6 @@
 </template>
 
 <script>
-	import { navigateBack } from '@/utils/util'
 	export default {
 		data() {
 			return {
@@ -75,41 +69,41 @@
 					bank_name: null,
 					branch_name: null,
 					card_number: null,
-					address: null
+					address_usdt: null
 				},
 				rules: {
 					name: {
 						rules: [
-							{ required: true, errorMessage: "请输入" }
+							{ required: true, errorMessage: "请输入户名" }
 						]
 					},
 					bank_name: {
 						rules: [
-							{ required: true, errorMessage: "请输入" }
+							{ required: true, errorMessage: "请输入银行名称" }
 						]
 					},
 					branch_name: {
 						rules: [
-							{ required: true, errorMessage: "请输入" }
+							{ required: true, errorMessage: "请输入分行名称" }
 						]
 					},
 					card_number: {
 						rules: [
-							{ required: true, errorMessage: "请输入" }
+							{ required: true, errorMessage: "请输入卡号" }
 						]
 					},
-					address: {
+					address_usdt: {
 						rules: [
-							{ required: true, errorMessage: "请输入" }
+							{ required: true, errorMessage: "请输入USDT地址" }
 						]
 					}
 				},
 				styles: {
+					padding: '10px',
 					color: '#fff',
-					backgroundColor: 'transparent',
-					padding: '5px 10px'
+					backgroundColor: 'transparent'
 				},
-				placeholderStyle: "font-size:14px;color: #999;",
+				placeholderStyle: "color:rgba(255, 255, 255, 0.7);font-size:14px;",
 			}
 		},
 		methods: {
@@ -121,7 +115,7 @@
 				this.indexType = e.detail.value
 				if(this.indexType == 0){
 					this.formData.type = 1
-					this.formData.address = null
+					this.formData.address_usdt = null
 				}else if(this.indexType == 1){
 					this.formData.type = 2
 					this.formData.name = null
@@ -135,19 +129,23 @@
 				this.$refs.form.validate().then(res=>{
 					if(!this.loading){
 						this.loading = true
-						this.$api.post("/bankcard/add/", this.formData).then(res => {
+						uni.showLoading({
+							title: '正在提交'
+						})
+						this.$api.post("/core/add/", this.formData, {"Mid": "Bankcard"}).then(res => {
 							this.loading = false
+							uni.hideLoading()
 							if(res.code == 20000){
 								uni.showToast({
-									title: "绑定成功",
+									title: "新增成功",
 									icon: 'success'
 								});
 								setTimeout(()=>{
-									this.back()
-								}, 1500)
+									uni.navigateBack()
+								}, 500)
 							}else{
 								uni.showToast({
-									title: "绑定失败",
+									title: "新增失败",
 									icon: 'error'
 								});
 							}
@@ -160,14 +158,13 @@
 </script>
 
 <style scoped lang="scss">
-	.container{
-		padding: 20px 16px;
+	.content{
+		padding: 16px;
 		
 		.form{
 			.label{
-				font-size: 16px;
+				font-size: 14px;
 				color: #fff;
-				font-weight: 500;
 				padding: 20px 0 10px 0;
 			}
 			
@@ -177,25 +174,21 @@
 				padding: 5px 0 0 0;
 			}
 			
-			.btn{
-				width: 279px;
-				height: 44px;
-				background: linear-gradient(256deg, #007FFF 0%, #00E0FF 100%);
-				border-radius: 10px;
-				color: #fff;
-			}
 			.input-box{
 				color: #fff;
-				font-size: 16px;
+				font-size: 14px;
 				border: 1px solid #ddd;
 				border-radius: 5px;
-				padding: 10px;
+				padding: 5px 10px;
 				
 				image{
 					width: 24px;
 					height: 24px;
 				}
 			}
+		}
+		.btns{
+			padding: 30px 0;
 		}
 	}
 </style>

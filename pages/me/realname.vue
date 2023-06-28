@@ -1,15 +1,9 @@
 <template>
-	<view class="width-max height-max">
-		<uni-nav-bar backgroundColor="transparent" title="实名认证" dark status-bar fixed :border="false" height="44px" :leftWidth="60" :rightWidth="60">
-			<block slot="left">
-				<image @tap="back()" src="@/static/index/icon-left.png" style="height: 16px;width: 16px;"></image>
-			</block>
-		</uni-nav-bar>
-		<view class="container">
-			<view class="d-flex-center flex-column">
-				<image src="@/static/me/logo.png" style="width: 66px;height: 40px;padding: 20px 0;"></image>
-				<view class="color-white">
-					<view v-if="user.certified == 0">未认证</view>
+	<view class="page overflow-hidden">
+		<view class="content">
+			<view class="d-flex-center flex-column" style="background-color: #353535;border-radius: 10px;padding: 10px;">
+				<view class="color-white fs14">
+					<view v-if="user.certified == 0">待认证</view>
 					<view v-else-if="user.certified == 1">已认证</view>
 					<view v-else-if="user.certified == 2">审核中</view>
 					<view v-else-if="user.certified == 3">认证失败</view>
@@ -22,7 +16,6 @@
 							<view class="label">姓名</view>
 						</template>
 						<uni-easyinput type="text" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.full_name" placeholder="请输入真实姓名" />
-						<view class="tips">姓名需与提现户名相同</view>
 					</uni-forms-item>
 					<uni-forms-item name="id_number">
 						<template v-slot:label>
@@ -31,8 +24,8 @@
 						<uni-easyinput type="text" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.id_number" placeholder="请输入身份证号" />
 					</uni-forms-item>
 				</uni-forms>
-				<view class="d-flex-center" style="margin-top: 50px;" v-if="user.certified == 0 || user.certified == 3">
-					<view class="btn d-flex-center" @click="submitForm">提交</view>
+				<view class="btns" v-if="user.certified == 0 || user.certified == 3">
+					<view class="d-flex-center btn btn1" @click="submitForm()">提交</view>
 				</view>
 			</view>
 		</view>
@@ -40,7 +33,6 @@
 </template>
 
 <script>
-	import { navigateBack } from '@/utils/util'
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
@@ -53,36 +45,31 @@
 				rules: {
 					full_name: {
 						rules: [
-							{ required: true, errorMessage: "请输入" }
+							{ required: true, errorMessage: "请输入真实姓名" }
 						]
 					},
 					id_number: {
 						rules: [
-							{ required: true, errorMessage: "请输入" }
+							{ required: true, errorMessage: "请输入身份证号" }
 						]
 					}
 				},
 				styles: {
+					padding: '10px',
 					color: '#fff',
-					backgroundColor: 'transparent',
-					padding: '5px 10px'
+					backgroundColor: 'transparent'
 				},
-				placeholderStyle: "font-size:14px;color: #999;",
+				placeholderStyle: "color:rgba(255, 255, 255, 0.7);font-size:14px;",
 			}
 		},
 		computed: {
 		    ...mapGetters(['user'])
 		},
-		onLoad() {
-			this.$store.dispatch('getUserInfo').then(res => {
-				this.formData.full_name = this.user.full_name
-				this.formData.id_number = this.user.id_number
-			})
+		onReady() {
+			this.formData.full_name = this.user.full_name
+			this.formData.id_number = this.user.id_number
 		},
 		methods: {
-			back(){
-				navigateBack()
-			},
 			//提交
 			submitForm(){
 				this.$refs.form.validate().then(res=>{
@@ -101,8 +88,8 @@
 								this.user.id_number = this.formData.id_number
 								this.$store.commit('setUser', this.user)
 								setTimeout(()=>{
-									this.back()
-								}, 1500)
+									uni.navigateBack()
+								}, 500)
 							}else{
 								uni.showToast({
 									title: "提交失败",
@@ -118,30 +105,19 @@
 </script>
 
 <style scoped lang="scss">
-	.container{
-		padding: 20px 16px;
+	.content{
+		padding: 16px;
 		
 		.form{
 			.label{
-				font-size: 16px;
+				font-size: 14px;
 				color: #fff;
-				font-weight: 500;
 				padding: 20px 0 10px 0;
 			}
-			
-			.tips{
-				font-size: 12px;
-				color: #fff;
-				padding: 5px 0 0 0;
-			}
-			
-			.btn{
-				width: 279px;
-				height: 44px;
-				background: linear-gradient(256deg, #007FFF 0%, #00E0FF 100%);
-				border-radius: 10px;
-				color: #fff;
-			}
+		}
+		
+		.btns{
+			padding: 30px 0;
 		}
 	}
 </style>
