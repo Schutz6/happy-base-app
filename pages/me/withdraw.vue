@@ -63,7 +63,7 @@
 				indexBank: 0,
 				arrayBank: [],
 				formData: {
-					type: 0,
+					type: null,
 					name: null,
 					bank_name: null,
 					branch_name: null,
@@ -74,6 +74,11 @@
 					pay_password: null
 				},
 				rules: {
+					type: {
+						rules: [
+							{ required: true, errorMessage: "请选择提现卡" }
+						]
+					},
 					money: {
 						rules: [{
 								required: true,
@@ -108,6 +113,10 @@
 		computed: {
 		    ...mapGetters(['user', 'params'])
 		},
+		onShow() {
+			//获取用户信息
+			this.$store.dispatch('getUserInfo')
+		},
 		onLoad() {
 			//获取银行卡列表
 			this.$api.post("/core/getList/", {"uid": this.user.id}, {"Mid": "Bankcard"}).then(res => {
@@ -115,21 +124,21 @@
 				this.bankList = res.data
 				for(let i=0;i<res.data.length;i++){
 					let item = res.data[i]
-					if(item.type == 1){
+					if(item.type == "1"){
 						list.push({"value": i, "text": item.bank_name+" "+this.formatCardnumber(item.card_number)})
-					}else if(item.type == 2){
+					}else if(item.type == "2"){
 						list.push({"value": i, "text": "USDT "+this.formatCardnumber(item.address_usdt)})
 					}
 				}
 				if(list.length>0){
-					if(this.bankList[0].type == 1){
-						this.formData.type = 1
+					if(this.bankList[0].type == "1"){
+						this.formData.type = "1"
 						this.formData.name = this.bankList[0].name
 						this.formData.bank_name = this.bankList[0].bank_name
 						this.formData.branch_name = this.bankList[0].branch_name
 						this.formData.card_number = this.bankList[0].card_number
-					}else if(this.bankList[0].type == 2){
-						this.formData.type = 2
+					}else if(this.bankList[0].type == "2"){
+						this.formData.type = "2"
 						this.formData.address_usdt = this.bankList[0].address_usdt
 					}
 				}
@@ -147,15 +156,15 @@
 			//变更银行卡
 			changeBank(e){
 				this.indexBank = e.detail.value
-				if(this.bankList[this.indexBank].type == 1){
-					this.formData.type = 1
+				if(this.bankList[this.indexBank].type == "1"){
+					this.formData.type = "1"
 					this.formData.name = this.bankList[this.indexBank].name
 					this.formData.bank_name = this.bankList[this.indexBank].bank_name
 					this.formData.branch_name = this.bankList[this.indexBank].branch_name
 					this.formData.card_number = this.bankList[this.indexBank].card_number
 					this.formData.address_usdt = null
-				}else if(this.bankList[this.indexBank].type == 2){
-					this.formData.type = 2
+				}else if(this.bankList[this.indexBank].type == "2"){
+					this.formData.type = "2"
 					this.formData.name = null
 					this.formData.bank_name = null
 					this.formData.branch_name = null
@@ -168,11 +177,11 @@
 				this.$refs.form.validate().then(res=>{
 					if(!this.loading){
 						this.loading = true
-						this.$api.post("/withdrawal/add/", this.formData).then(res => {
+						this.$api.post("/user/withdraw/", this.formData).then(res => {
 							this.loading = false
 							if(res.code == 20000){
 								uni.showToast({
-									title: "提现成功",
+									title: "成功，等待审核",
 									icon: 'success'
 								});
 								//跳转到提现记录
@@ -183,7 +192,7 @@
 								}, 500)
 							}else if(res.code == 10006){
 								uni.showToast({
-									title: "密码错误",
+									title: "支付密码错误",
 									icon: 'error'
 								});
 							}else if(res.code == 11001){

@@ -3,7 +3,7 @@
 		<view class="content">
 			<view class="list" v-if="list.length>0">
 				<view class="item d-flex-center" v-for="(item, index) in list" :key="index">
-					<view class="box" v-if="item.type==1">
+					<view class="box" v-if="item.type=='1'">
 						<view class="d-flex between">
 							<view class="title">{{item.bank_name}}</view>
 							<uni-icons type="trash" size="24" color="white" @tap="showDelete(item.id)"></uni-icons>
@@ -11,7 +11,7 @@
 						<view class="sub-title">储蓄卡</view>
 						<view class="card_number d-flex-center">{{item.card_number | formatCardnumber}}</view>
 					</view>
-					<view class="box" v-if="item.type==2">
+					<view class="box" v-if="item.type=='2'">
 						<view class="d-flex between">
 							<view class="title">USDT-Trc20</view>
 							<uni-icons type="trash" size="24" color="white" @tap="showDelete(item.id)"></uni-icons>

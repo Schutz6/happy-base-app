@@ -172,6 +172,9 @@
 		computed: {
 			...mapGetters(['user', 'params'])
 		},
+		onShow() {
+			this.$store.dispatch('getUserInfo')
+		},
 		onReady() {
 			let self = this;
 			// #ifdef APP-PLUS

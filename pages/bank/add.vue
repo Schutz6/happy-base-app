@@ -61,9 +61,9 @@
 			return {
 				loading: false,
 				indexType: 0,
-				arrayType: [{"value": 1, "text": "银行卡"}, {"value": 2, "text": "USDT-Trc20"}],
+				arrayType: [{"value": "1", "text": "银行卡"}, {"value": "2", "text": "USDT-Trc20"}],
 				formData: {
-					type: 1,
+					type: "1",
 					name: null,
 					bank_name: null,
 					branch_name: null,
@@ -113,10 +113,10 @@
 			changeType(e){
 				this.indexType = e.detail.value
 				if(this.indexType == 0){
-					this.formData.type = 1
+					this.formData.type = "1"
 					this.formData.address_usdt = null
 				}else if(this.indexType == 1){
-					this.formData.type = 2
+					this.formData.type = "2"
 					this.formData.name = null
 					this.formData.bank_name = null
 					this.formData.branch_name = null
