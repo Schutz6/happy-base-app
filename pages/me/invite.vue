@@ -1,22 +1,22 @@
 <template>
-	<view class="width-max height-max">
+	<view class="page overflow-hidden">
 		<view class="container">
 			<view class="invite-box">
 				<image src="@/static/invite/box.png"></image>
 				<view class="qrcode-box-content d-flex-center">
 					<view class="qrcode-box">
-						<module-qrcode :qrPath.sync="qrPath" :text="params.inviteUrl+'?invite_code='+user.username" :size="size" :quality="quality" :colorDark="colorDark" :colorLight="colorLight"></module-qrcode>
+						<module-qrcode :qrPath.sync="qrPath" :text="params.inviteUrl+'?invite_code='+user.id" :size="size" :quality="quality" :colorDark="colorDark" :colorLight="colorLight"></module-qrcode>
 					</view>
 				</view>
 			</view>
 			<view class="">
-				<view class="btn btn0 flex1 d-flex-center" @tap="copy(user.username)">
-					<view style="padding-right: 5px;">{{user.username}}</view>
+				<view class="btn btn0 flex1 d-flex-center" @tap="copy(user.id)">
+					<view style="padding-right: 5px;">{{user.id}}</view>
 					<image src="@/static/invite/copy.png" style="width: 18px;height: 18px;"></image>
 				</view>
 			</view>
 			<view class="btns d-flex">
-				<view class="btn btn1 flex1 d-flex-center" @tap="copy(params.inviteUrl+'?invite_code='+user.username)">复制链接</view>
+				<view class="btn btn1 flex1 d-flex-center" @tap="copy(params.inviteUrl+'?invite_code='+user.id)">复制链接</view>
 				<view class="btn btn2 flex1 d-flex-center" @tap="toPage('/pages/me/team')">我的团队</view>
 			</view>
 			<view class="header d-flex between">
