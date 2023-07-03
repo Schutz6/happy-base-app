@@ -87,7 +87,7 @@
 							</view>
 							<view class="flex1 d-flex flex-column" @tap="toPageLogin('/pages/me/agent')">
 								<image src="@/static/me/icon-11.png"></image>
-								<view class="label">代理奖金</view>
+								<view class="label">代理收益</view>
 							</view>
 						</view>
 					</view>

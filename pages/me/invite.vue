@@ -1,8 +1,8 @@
 <template>
 	<view class="page overflow-hidden">
-		<view class="container">
+		<view class="content">
 			<view class="invite-box">
-				<image src="@/static/invite/box.png"></image>
+				<image src="@/static/me/invite-box.png"></image>
 				<view class="qrcode-box-content d-flex-center">
 					<view class="qrcode-box">
 						<module-qrcode :qrPath.sync="qrPath" :text="params.inviteUrl+'?invite_code='+user.id" :size="size" :quality="quality" :colorDark="colorDark" :colorLight="colorLight"></module-qrcode>
@@ -10,9 +10,9 @@
 				</view>
 			</view>
 			<view class="">
-				<view class="btn btn0 flex1 d-flex-center" @tap="copy(user.id)">
+				<view class="btn btn0 flex1 d-flex-center" @tap="copy(user.id+'')">
 					<view style="padding-right: 5px;">{{user.id}}</view>
-					<image src="@/static/invite/copy.png" style="width: 18px;height: 18px;"></image>
+					<image src="@/static/me/copy.png" style="width: 18px;height: 18px;"></image>
 				</view>
 			</view>
 			<view class="btns d-flex">
@@ -22,7 +22,6 @@
 			<view class="header d-flex between">
 				<view class="d-flex">
 					<view class="title">邀请记录</view>
-					<image src="@/static/index/group.png" style="width: 78px;height: 4px;"></image>
 				</view>
 			</view>
 			<view class="box" style="margin-top: 20px;">
@@ -36,7 +35,7 @@
 						<view class="time flex1 d-flex-center">
 							<uni-dateformat :date="item.add_time | formatDate" format="yyyy-MM-dd"></uni-dateformat>
 						</view>
-						<view class="flex1 d-flex-center">{{item.mobile}}</view>
+						<view class="flex1 d-flex-center">{{item.uid}}</view>
 						<view class="money flex1 d-flex-center">{{item.balance.toFixed(2)}}</view>
 					</view>
 				</view>
@@ -48,7 +47,7 @@
 
 <script>
 	import { mapGetters } from 'vuex'
-	import { navigateBack, formatDateUtc } from '@/utils/util'
+	import { formatDateUtc } from '@/utils/util'
 	export default {
 		data() {
 			return {
@@ -90,9 +89,6 @@
 			this.getList(true)
 		},
 		methods: {
-			back(){
-				navigateBack()
-			},
 			toPage(page){
 				uni.redirectTo({
 					url: page
@@ -118,7 +114,7 @@
 			},
 			//获取列表
 			getList(isRefresh){
-				this.$api.post("/user/inviteList/", this.listQuery).then(res => {
+				this.$api.post("/agent/inviteList/", this.listQuery).then(res => {
 					if(res.code == 20000){
 						this.moreStatus = res.data.results.length == 10 ? 'more' : 'noMore';
 						this.total = res.data.total
@@ -136,7 +132,7 @@
 </script>
 
 <style scoped lang="scss">
-	.container{
+	.content{
 		padding: 16px;
 		
 		.invite-box{
@@ -145,6 +141,8 @@
 			image{
 				width: 100%;
 				height: 380px;
+				border: 1px solid #00E0FF;
+				border-radius: 10px;
 			}
 			
 			.qrcode-box-content{

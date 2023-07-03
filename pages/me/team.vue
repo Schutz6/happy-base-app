@@ -1,15 +1,10 @@
 <template>
-	<view class="width-max height-max">
-		<uni-nav-bar backgroundColor="transparent" title="我的团队" dark status-bar fixed :border="false" height="44px" :leftWidth="60" :rightWidth="60">
-			<block slot="left">
-				<image @tap="back()" src="@/static/index/icon-left.png" style="height: 16px;width: 16px;"></image>
-			</block>
-		</uni-nav-bar>
+	<view class="page overflow-hidden">
 		<view class="container">
 			<view class="box">
 				<view class="header d-flex between">
 					<view class="title d-flex">
-						<image src="@/static/team/wallet.png"></image>
+						<image src="@/static/me/wallet.png"></image>
 						<view>累计奖金</view>
 					</view>
 					<view class="num">{{info.one_income+info.two_income+info.three_income}}</view>
@@ -32,7 +27,7 @@
 			<view class="box">
 				<view class="header d-flex between">
 					<view class="title d-flex">
-						<image src="@/static/team/team.png"></image>
+						<image src="@/static/me/team.png"></image>
 						<view>团队人数</view>
 					</view>
 					<view class="num">{{info.one_list.length+info.two_list.length+info.three_list.length}}</view>
@@ -58,21 +53,21 @@
 					<view class="header d-flex">
 						<view class="flex1 d-flex-center">会员账号</view>
 						<view class="flex1 d-flex-center">层级</view>
-						<view class="flex1 d-flex-center">已投资</view>
+						<view class="flex1 d-flex-center">已充值</view>
 					</view>
 					<view class="line"></view>
 					<view class="item d-flex" v-for="(item, index) in info.one_list" :key="10000+index">
-						<view class="flex1 d-flex-center">{{item.mobile}}</view>
+						<view class="flex1 d-flex-center">{{item.uid}}</view>
 						<view class="flex1 d-flex-center">{{item.level}}代</view>
 						<view class="flex1 d-flex-center">{{item.total_recharge}}</view>
 					</view>
 					<view class="item d-flex" v-for="(item, index) in info.two_list" :key="20000+index">
-						<view class="flex1 d-flex-center">{{item.mobile}}</view>
+						<view class="flex1 d-flex-center">{{item.uid}}</view>
 						<view class="flex1 d-flex-center">{{item.level}}代</view>
 						<view class="flex1 d-flex-center">{{item.total_recharge}}</view>
 					</view>
 					<view class="item d-flex" v-for="(item, index) in info.three_list" :key="30000+index">
-						<view class="flex1 d-flex-center">{{item.mobile}}</view>
+						<view class="flex1 d-flex-center">{{item.uid}}</view>
 						<view class="flex1 d-flex-center">{{item.level}}代</view>
 						<view class="flex1 d-flex-center">{{item.total_recharge}}</view>
 					</view>
@@ -117,7 +112,7 @@
 		padding: 16px;
 		
 		.box{
-			background-image: url(../../static/team/box-bg.png);
+			background-image: url(../../static/me/team-box.png);
 			background-size: 100% 100%;
 			border-radius: 6px;
 			height: 150px;

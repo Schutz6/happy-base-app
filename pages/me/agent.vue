@@ -1,15 +1,10 @@
 <template>
-	<view class="width-max height-max">
-		<uni-nav-bar backgroundColor="transparent" title="代理奖金" dark status-bar fixed :border="false" height="44px" :leftWidth="60" :rightWidth="60">
-			<block slot="left">
-				<image @tap="back()" src="@/static/index/icon-left.png" style="height: 16px;width: 16px;"></image>
-			</block>
-		</uni-nav-bar>
-		<view class="container">
+	<view class="page overflow-hidden">
+		<view class="content">
 			<view class="box d-flex">
 				<view class="flex1 d-flex-center flex-column">
 					<view class="num">{{info.one_income+info.two_income+info.three_income}}</view>
-					<view class="label">累计奖金</view>
+					<view class="label">累计收益</view>
 				</view>
 				<view class="line"></view>
 				<view class="flex1 d-flex-center flex-column">
@@ -19,27 +14,27 @@
 			</view>
 			<view class="tabs d-flex">
 				<view @tap="changeTab(1)" class="d-flex-center flex1 tab-left" :class="tabIndex==1?'tab-left-active':''">伞下好友</view>
-				<view @tap="changeTab(2)" class="d-flex-center flex1 tab-right" :class="tabIndex==2?'tab-right-active':''">奖金明细</view>
+				<view @tap="changeTab(2)" class="d-flex-center flex1 tab-right" :class="tabIndex==2?'tab-right-active':''">收益明细</view>
 			</view>
 			<view v-if="tabIndex==1" class="list list1">
 				<view class="header d-flex">
 					<view class="flex1 d-flex-center">会员账号</view>
 					<view class="flex1 d-flex-center">层级</view>
-					<view class="flex1 d-flex-center">已投资</view>
+					<view class="flex1 d-flex-center">已充值</view>
 				</view>
 				<view class="line"></view>
 				<view class="item d-flex" v-for="(item, index) in info.one_list" :key="10000+index">
-					<view class="flex1 d-flex-center">{{item.mobile}}</view>
+					<view class="flex1 d-flex-center">{{item.uid}}</view>
 					<view class="flex1 d-flex-center">{{item.level}}代</view>
 					<view class="flex1 d-flex-center">{{item.total_recharge}}</view>
 				</view>
 				<view class="item d-flex" v-for="(item, index) in info.two_list" :key="20000+index">
-					<view class="flex1 d-flex-center">{{item.mobile}}</view>
+					<view class="flex1 d-flex-center">{{item.uid}}</view>
 					<view class="flex1 d-flex-center">{{item.level}}代</view>
 					<view class="flex1 d-flex-center">{{item.total_recharge}}</view>
 				</view>
 				<view class="item d-flex" v-for="(item, index) in info.three_list" :key="30000+index">
-					<view class="flex1 d-flex-center">{{item.mobile}}</view>
+					<view class="flex1 d-flex-center">{{item.uid}}</view>
 					<view class="flex1 d-flex-center">{{item.level}}代</view>
 					<view class="flex1 d-flex-center">{{item.total_recharge}}</view>
 				</view>
@@ -52,10 +47,9 @@
 					</view>
 				</view>
 				<uni-load-more v-if="list.length > 0" :status="moreStatus"></uni-load-more>
-				<view class="no-data" v-if="list.length == 0">
+				<view class="no-data" v-if="list.length==0">
 					<view class="d-flex-center flex-column">
-						<image src="@/static/me/logo.png" style="width: 66px;height: 40px;padding: 20px 0;"></image>
-						<view>目前尚无数据</view>
+						<view class="fs14">暂无数据</view>
 					</view>
 				</view>
 			</view>
@@ -131,9 +125,9 @@
 </script>
 
 <style scoped lang="scss">
-	.container{
+	.content{
 		.box{
-			background-image: url(../../static/bank/box-bg.png);
+			background-image: url(../../static/login/box-bg.png);
 			background-size: 100% 100%;
 			border-radius: 6px;
 			height: 100px;
@@ -173,21 +167,21 @@
 			
 			.tab-left{
 				height: 40px;
-				background-image: url(../../static/build/tab-left.png);
+				background-image: url(../../static/me/tab-left.png);
 				background-size: 100% 100%;
 			}
 			.tab-left-active{
-				background-image: url(../../static/build/tab-left-select.png);
+				background-image: url(../../static/me/tab-left-select.png);
 				background-size: 100% 100%;
 				color: #fff;
 			}
 			.tab-right{
 				height: 40px;
-				background-image: url(../../static/build/tab-right.png);
+				background-image: url(../../static/me/tab-right.png);
 				background-size: 100% 100%;
 			}
 			.tab-right-active{
-				background-image: url(../../static/build/tab-right-select.png);
+				background-image: url(../../static/me/tab-right-select.png);
 				background-size: 100% 100%;
 				color: #fff;
 			}

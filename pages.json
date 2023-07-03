@@ -198,6 +198,27 @@
                 "navigationBarTitleText": "充值记录",
                 "enablePullDownRefresh": false
             }
+        },{
+            "path" : "pages/me/invite",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "邀请记录",
+                "enablePullDownRefresh": false
+            }
+        },{
+            "path" : "pages/me/team",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的团队",
+                "enablePullDownRefresh": false
+            }
+        },{
+            "path" : "pages/me/agent",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "代理收益",
+                "enablePullDownRefresh": false
+            }
         }
     ],
 	"globalStyle": {

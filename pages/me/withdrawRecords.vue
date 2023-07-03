@@ -29,7 +29,7 @@
 			<uni-load-more v-if="list.length > 0" :status="moreStatus"></uni-load-more>
 			<view class="no-data" v-if="list.length==0">
 				<view class="d-flex-center flex-column">
-					<view class="fs14">暂无记录</view>
+					<view class="fs14">暂无数据</view>
 				</view>
 			</view>
 		</view>
