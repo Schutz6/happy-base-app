@@ -49,6 +49,11 @@
 	
 </style>
 <style lang="scss">
+	.no-data{
+		padding: 20px;
+		color: #777777;
+	}
+	
 	.dialog-box{
 		width: 260px;
 		background: #1B2241;

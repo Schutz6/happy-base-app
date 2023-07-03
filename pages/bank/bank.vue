@@ -154,10 +154,6 @@
 
 <style scoped lang="scss">
 	.content{
-		.no-data{
-			padding: 20px;
-			color: #777777;
-		}
 		
 		.list{
 			.item{

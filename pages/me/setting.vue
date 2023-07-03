@@ -10,7 +10,6 @@
 						<view class="avatar">
 							<image :src="user.avatar"></image>
 						</view>
-						<uni-icons type="right" size="20" color="#ffffffb3"></uni-icons>
 					</view>
 				</view>
 				<view class="line"></view>

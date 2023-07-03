@@ -1,20 +1,11 @@
 <template>
-	<view class="width-max height-max">
-		<uni-nav-bar backgroundColor="transparent" title="提现记录" dark status-bar fixed :border="false" height="44px" :leftWidth="60" :rightWidth="60">
-			<block slot="left">
-				<image @tap="back()" src="@/static/index/icon-left.png" style="height: 16px;width: 16px;"></image>
-			</block>
-		</uni-nav-bar>
-		<view class="container">
-			<view class="time-query d-flex">
-				<uni-datetime-picker v-model="range" type="daterange" :clear-icon="false" />
-				<image @tap="search()" src="@/static/me/search.png" style="width: 35px;height: 35px;margin-left: 16px;"></image>
-			</view>
+	<view class="page overflow-hidden">
+		<view class="content">
 			<view class="box" v-if="list.length > 0">
 				<view class="list">
 					<view class="item d-flex between" v-for="(item, index) in list" :key="index">
 						<view class="left d-flex">
-							<image src="../../static/me/withdrawal.png"></image>
+							<image src="@/static/me/withdrawal.png"></image>
 							<view class="d-flex flex-column" style="align-items: start;padding-left: 10px;">
 								<view class="title">
 									<text v-if="item.status == 0">正在审核</text>
@@ -27,7 +18,7 @@
 							</view>
 						</view>
 						<view class="right d-flex flex-column" style="align-items: end;">
-							<view class="title">{{item.real_money}}<text>元</text></view>
+							<view class="title">{{item.money}}<text>元</text></view>
 							<view class="label">
 								<text v-if="item.status == 1">已到账</text>
 							</view>
@@ -36,10 +27,9 @@
 				</view>
 			</view>
 			<uni-load-more v-if="list.length > 0" :status="moreStatus"></uni-load-more>
-			<view class="no-data" v-if="list.length == 0">
+			<view class="no-data" v-if="list.length==0">
 				<view class="d-flex-center flex-column">
-					<image src="@/static/me/logo.png" style="width: 66px;height: 40px;padding: 20px 0;"></image>
-					<view>目前尚无数据</view>
+					<view class="fs14">暂无记录</view>
 				</view>
 			</view>
 		</view>
@@ -47,7 +37,8 @@
 </template>
 
 <script>
-	import { navigateBack, formatDateUtc } from '@/utils/util'
+	import { mapGetters } from 'vuex'
+	import { formatDateUtc } from '@/utils/util'
 	export default {
 		data() {
 			return {
@@ -56,8 +47,7 @@
 				listQuery: {
 					currentPage: 1,
 					pageSize: 20,
-					start_time: null,
-					end_time: null
+					uid: null
 				},
 				list: []
 			}
@@ -67,6 +57,9 @@
 		    formatDate(time){
 		    	return formatDateUtc(time)
 		    }
+		},
+		computed: {
+			...mapGetters(['user'])
 		},
 		onLoad() {
 			this.init()
@@ -82,29 +75,14 @@
 			this.getList(true)
 		},
 		methods: {
-			back(){
-				navigateBack()
-			},
-			//搜索
-			search(){
-				if(this.range.length > 0){
-					this.listQuery.start_time = this.range[0]
-					this.listQuery.end_time = this.range[1]
-				}else{
-					this.listQuery.start_time = null
-					this.listQuery.end_time = null
-				}
-				this.listQuery.currentPage = 1
-				this.list = []
-				this.getList(false)
-			},
 			init() {
 				//获取列表
 				this.getList(false)
 			},
 			//获取列表
 			getList(isRefresh){
-				this.$api.post("/withdrawal/list/", this.listQuery).then(res => {
+				this.listQuery.uid = this.user.id
+				this.$api.post("/core/list/", this.listQuery, {"Mid": "Withdraw"}).then(res => {
 					if(res.code == 20000){
 						this.moreStatus = res.data.results.length == 10 ? 'more' : 'noMore';
 						if(res.data.results.length > 0){
@@ -121,12 +99,8 @@
 </script>
 
 <style scoped lang="scss">
-	.container{
+	.content{
 		padding: 16px;
-		
-		.time-query{
-			
-		}
 		
 		.box{
 			width: 100%;

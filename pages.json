@@ -168,6 +168,13 @@
                 "navigationBarTitleText": "提现",
                 "enablePullDownRefresh": false
             }
+        },{
+            "path" : "pages/me/withdrawRecords",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "提现记录",
+                "enablePullDownRefresh": false
+            }
         }
         ,{
             "path" : "pages/me/recharge",
@@ -182,6 +189,13 @@
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "USDT充值",
+                "enablePullDownRefresh": false
+            }
+        },{
+            "path" : "pages/me/rechargeRecords",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "充值记录",
                 "enablePullDownRefresh": false
             }
         }

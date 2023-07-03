@@ -1,16 +1,11 @@
 <template>
-	<view class="width-max height-max">
-		<uni-nav-bar backgroundColor="transparent" title="充值记录" dark status-bar fixed :border="false" height="44px" :leftWidth="60" :rightWidth="60">
-			<block slot="left">
-				<image @tap="back()" src="@/static/index/icon-left.png" style="height: 16px;width: 16px;"></image>
-			</block>
-		</uni-nav-bar>
-		<view class="container">
-			<view class="box" v-if="list.length > 0">
+	<view class="page overflow-hidden">
+		<view class="content">
+			<view class="box" v-if="list.length>0">
 				<view class="list">
 					<view class="item d-flex between" v-for="(item, index) in list" :key="index">
 						<view class="left d-flex">
-							<image src="../../static/me/recharge.png"></image>
+							<image src="@/static/me/recharge.png"></image>
 							<view class="d-flex flex-column" style="align-items: start;padding-left: 10px;">
 								<view class="title">充值成功</view>
 								<view class="label">
@@ -26,10 +21,9 @@
 				</view>
 			</view>
 			<uni-load-more v-if="list.length > 0" :status="moreStatus"></uni-load-more>
-			<view class="no-data" v-if="list.length == 0">
+			<view class="no-data" v-if="list.length==0">
 				<view class="d-flex-center flex-column">
-					<image src="@/static/me/logo.png" style="width: 66px;height: 40px;padding: 20px 0;"></image>
-					<view>目前尚无数据</view>
+					<view class="fs14">暂无记录</view>
 				</view>
 			</view>
 		</view>
@@ -37,14 +31,16 @@
 </template>
 
 <script>
-	import { navigateBack, formatDateUtc } from '@/utils/util'
+	import { mapGetters } from 'vuex'
+	import { formatDateUtc } from '@/utils/util'
 	export default {
 		data() {
 			return {
 				moreStatus: "more",
 				listQuery: {
 					currentPage: 1,
-					pageSize: 20
+					pageSize: 20,
+					uid: null
 				},
 				list: []
 			}
@@ -54,6 +50,9 @@
 		    formatDate(time){
 		    	return formatDateUtc(time)
 		    }
+		},
+		computed: {
+			...mapGetters(['user'])
 		},
 		onLoad() {
 			this.init()
@@ -69,16 +68,14 @@
 			this.getList(true)
 		},
 		methods: {
-			back(){
-				navigateBack()
-			},
 			init() {
 				//获取列表
 				this.getList(false)
 			},
 			//获取列表
 			getList(isRefresh){
-				this.$api.post("/recharge/list/", this.listQuery).then(res => {
+				this.listQuery.uid = this.user.id
+				this.$api.post("/core/list/", this.listQuery, {"Mid": "Recharge"}).then(res => {
 					if(res.code == 20000){
 						this.moreStatus = res.data.results.length == 10 ? 'more' : 'noMore';
 						if(res.data.results.length > 0){
@@ -95,7 +92,7 @@
 </script>
 
 <style scoped lang="scss">
-	.container{
+	.content{
 		padding: 16px;
 		
 		.box{
