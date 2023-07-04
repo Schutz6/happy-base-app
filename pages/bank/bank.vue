@@ -24,7 +24,7 @@
 			</view>
 			<view class="no-data" v-if="list.length==0">
 				<view class="d-flex-center flex-column">
-					<view class="fs14">尚无任何银行卡</view>
+					<view class="fs14">暂无数据</view>
 				</view>
 			</view>
 		</view>

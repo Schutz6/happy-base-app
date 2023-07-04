@@ -140,7 +140,7 @@
 							title: '正在注册',
 							mask: true
 						})
-						this.$api.post("/register/", this.loginForm).then(res => {
+						this.$api.post("/user/register/", this.loginForm).then(res => {
 							this.loading = false
 							uni.hideLoading()
 							if (res.code == 20000) {
@@ -161,24 +161,19 @@
 										}, 1000)
 									}
 								})
-							} else if (res.code == 10005) {
+							}else if (res.code == 10004) {
 								uni.showToast({
-									title: "账号错误",
+									title: "账号已存在",
 									icon: 'error'
 								})
-							} else if (res.code == 10006) {
+							}else if (res.code == 10031) {
 								uni.showToast({
-									title: "密码错误",
-									icon: 'error'
-								})
-							} else if (res.code == 100061) {
-								uni.showToast({
-									title: "账号已锁定",
+									title: "注册已达上限",
 									icon: 'error'
 								})
 							} else {
 								uni.showToast({
-									title: "登录失败",
+									title: "注册失败",
 									icon: 'error'
 								})
 							}
