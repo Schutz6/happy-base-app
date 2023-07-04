@@ -30,6 +30,7 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
 	export default {
 		data() {
 			return {
@@ -51,6 +52,9 @@
 				count: null,
 				timer: null,
 			}
+		},
+		computed: {
+			...mapGetters(['user'])
 		},
 		onLoad() {
 			//监听更新区号数据
@@ -89,12 +93,8 @@
 							this.timer = null;
 						}
 					}, 1000)
-					uni.showToast({
-						title: "未开通",
-						icon: 'error'
-					});
 					//调用发送接口
-					this.$api.post('/mobilecode/', {"type": 3, "area": this.formData.area, "mobile": this.formData.mobile}).then(res => {
+					this.$api.post('/user/sendMobile/', {"type": 3, "area": this.formData.area, "mobile": this.formData.mobile}).then(res => {
 					  if(res.code == 20000){
 						  uni.showToast({
 							title: "发送成功",
@@ -110,11 +110,6 @@
 				}
 			},
 			submit(){
-				uni.showToast({
-					title: "未开通",
-					icon: 'error'
-				});
-				return
 				this.$refs.form.validate().then(res=>{
 					if(!this.loading){
 						uni.showLoading({
@@ -128,9 +123,12 @@
 								title: "修改成功",
 								icon: 'success'
 							  })
+							  this.user.area = this.formData.area
+							  this.user.mobile = this.formData.mobile
+							  this.$store.commit('setUser', this.user)
 							  setTimeout(()=>{
-								  this.back()
-							  },1000)
+							  	uni.navigateBack()
+							  }, 500)
 						  }else if(res.code == 10003){
 							  uni.showToast({
 								title: "验证码错误",

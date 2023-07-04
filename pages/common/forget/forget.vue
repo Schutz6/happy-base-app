@@ -48,7 +48,6 @@
 </template>
 
 <script>
-	import { navigateBack } from '@/utils/util'
 	export default {
 		data() {
 			return {
@@ -127,8 +126,8 @@
 									icon: 'success'
 								});
 								setTimeout(()=>{
-									this.back()
-								},1000)
+									uni.navigateBack()
+								}, 500)
 							}else if(res.code == 10003){
 								uni.showToast({
 									title: "验证码错误",
@@ -171,7 +170,7 @@
 							}
 						}, 1000)
 						//调用发送接口
-						this.$api.post('/mobilecode/', {"type": 3, "area": this.formData.area, "mobile": this.formData.mobile}).then(res => {
+						this.$api.post('/user/sendMobile/', {"type": 3, "area": this.formData.area, "mobile": this.formData.mobile}).then(res => {
 						  if(res.code == 20000){
 							  uni.showToast({
 								title: "发送成功",
@@ -203,7 +202,7 @@
 							}
 						}, 1000)
 						//调用发送接口
-						this.$api.post('/emailcode/', {"email": this.formData.email}).then(res => {
+						this.$api.post('/user/sendEmail/', {"email": this.formData.email}).then(res => {
 						  if(res.code == 20000){
 							  uni.showToast({
 								title: "发送成功",

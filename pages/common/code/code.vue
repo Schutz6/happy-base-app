@@ -19,24 +19,7 @@
 		data() {
 			return {
 				searchWord: "",//搜索词
-				list: [
-					{
-						"value": "86",
-						"text": "中国大陆"
-					},
-					{
-						"value": "852",
-						"text": "中国香港"
-					},
-					{
-						"value": "853",
-						"text": "中国澳门"
-					},
-					{
-						"value": "886",
-						"text": "中国台湾"
-					}
-				],
+				list: [],
 				styles: {
 					color: '#fff',
 					backgroundColor: 'transparent'
@@ -44,10 +27,12 @@
 			}
 		},
 		onLoad() {
-			//获取国家列表，后续自己加
+			//获取国家列表
+			this.$api.post("/dict/getList/", {"name": "AreaCode"}).then(res=>{
+				this.list = res.data
+			})
 		},
 		methods: {
-			search(){},
 			//选择区号
 			change(value){
 				uni.$emit('updateAreaData', {"area": value})

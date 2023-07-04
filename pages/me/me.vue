@@ -116,6 +116,9 @@
 		    	return formatDateUtc(time)
 		    }
 		},
+		onShow() {
+			this.$store.dispatch('getUserInfo')
+		},
 		onLoad() {
 			const res = uni.getSystemInfoSync()
 			this.width = res.windowWidth

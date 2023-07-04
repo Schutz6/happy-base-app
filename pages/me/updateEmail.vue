@@ -24,6 +24,7 @@
 </template>
 
 <script>
+	import { mapGetters } from 'vuex'
 	export default {
 		data() {
 			return {
@@ -45,6 +46,9 @@
 				timer: null,
 			}
 		},
+		computed: {
+			...mapGetters(['user'])
+		},
 		methods: {
 			//获取验证码
 			getCode(){
@@ -64,13 +68,8 @@
 							this.timer = null;
 						}
 					}, 1000)
-					uni.showToast({
-						title: "未开通",
-						icon: 'error'
-					});
-					return
 					//调用发送接口
-					this.$api.post('/emailcode/', {"email": this.formData.email}).then(res => {
+					this.$api.post('/user/sendEmail/', {"email": this.formData.email}).then(res => {
 					  if(res.code == 20000){
 						  uni.showToast({
 							title: "发送成功",
@@ -86,11 +85,6 @@
 				}
 			},
 			submit(){
-				uni.showToast({
-					title: "未开通",
-					icon: 'error'
-				});
-				return
 				this.$refs.form.validate().then(res=>{
 					if(!this.loading){
 						uni.showLoading({
@@ -104,9 +98,11 @@
 								title: "修改成功",
 								icon: 'success'
 							  })
+							  this.user.email = this.formData.email
+							  this.$store.commit('setUser', this.user)
 							  setTimeout(()=>{
-								  this.back()
-							  },1000)
+							  	uni.navigateBack()
+							  }, 500)
 						  }else if(res.code == 10003){
 							  uni.showToast({
 								title: "验证码错误",

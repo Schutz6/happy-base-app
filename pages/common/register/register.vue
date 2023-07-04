@@ -7,13 +7,13 @@
 				</view>
 				<view class="title">欢迎来到{{params.appName}}</view>
 				<uni-forms ref="form" label-position="top" :border="false" :modelValue="loginForm" :rules="loginRules">
-					<uni-forms-item name="mobile">
+					<uni-forms-item name="username">
 						<template v-slot:label>
 							<view class="label">账号</view>
 						</template>
 						<view class="item d-flex">
 							<uni-easyinput type="text" trim="both" prefixIcon="a" :styles="styles" :placeholderStyle="placeholderStyle"
-								v-model="loginForm.mobile" :inputBorder="false" placeholder="请输入账号" />
+								v-model="loginForm.username" :inputBorder="false" placeholder="请输入账号" />
 						</view>
 					</uni-forms-item>
 					<view class="divider"></view>
