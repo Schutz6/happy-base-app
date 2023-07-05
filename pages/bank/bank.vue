@@ -130,7 +130,7 @@
 			deleteItem(){
 				if(!this.loading){
 					this.loading = true
-					this.$api.post("/bankcard/delete/", {"id": this.selectId}).then(res => {
+					this.$api.post("/core/delete/", {"id": this.selectId}, {"Mid": "Bankcard"}).then(res => {
 						this.loading = false
 						this.hideDialog("deleteDialog")
 						if(res.code == 20000){
