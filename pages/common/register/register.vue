@@ -52,7 +52,7 @@
 				</uni-forms>
 				<view class="btns">
 					<view class="d-flex-center btn btn1" @click="handleLogin">注册</view>
-					<navigator url="/pages/common/login/login" open-type="redirect">
+					<navigator url="/pages/common/login/login" open-type="navigateBack">
 						<view class="d-flex-center btn btn2">登录</view>
 					</navigator>
 				</view>

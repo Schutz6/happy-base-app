@@ -203,7 +203,7 @@
 			logout(){
 				this.$store.dispatch('logout').then(res => {
 					uni.reLaunch({
-						url: '/pages/common/login/login'
+						url: '/'
 					})
 				})
 			},

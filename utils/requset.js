@@ -44,7 +44,7 @@ export default class Request {
 		//判断令牌是否失效
 		if(res.data.code == 10010){
 			uni.reLaunch({
-				url: '/pages/common/login/login'
+				url: '/'
 			})
 		}else{
 			return res.data
@@ -96,31 +96,8 @@ export default class Request {
 					header: uplaodHeader,
 					success: (uploadFileRes) => {
 						let res = JSON.parse(uploadFileRes.data)
-						//判断令牌是否失效
-						if(res.code == 10010){
-							// #ifdef H5
-							setTimeout(()=>{
-								//刷新网站
-								if (window.parent == window) {
-									//在主界面
-									uni.reLaunch({
-										url: '/pages/common/login/login'
-									})
-								}else{
-									//在iframe页面
-									parent.location.reload()
-								}
-							}, 600)
-							// #endif
-							// #ifdef APP-PLUS
-							uni.reLaunch({
-								url: '/pages/common/login/login'
-							})
-							// #endif
-						}else{
-							// 将结果抛出
-							resolve(res)
-						}
+						// 将结果抛出
+						resolve(res)
 					},
 					fail: () => {
 						uni.showToast({
@@ -147,7 +124,7 @@ export default class Request {
 								if (window.parent == window) {
 									//在主界面
 									uni.reLaunch({
-										url: '/pages/common/login/login'
+										url: '/'
 									})
 								}else{
 									//在iframe页面
@@ -157,7 +134,7 @@ export default class Request {
 							// #endif
 							// #ifdef APP-PLUS
 							uni.reLaunch({
-								url: '/pages/common/login/login'
+								url: '/'
 							})
 							// #endif
 						}else{
