@@ -1,5 +1,5 @@
 <template>
-	<view class="overflow-hidden width-max height-max">
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" style="background-color: #151A2F;">
 		<view class="height-max">
 			<view class="login-box">
 				<view class="logo">
@@ -67,6 +67,8 @@
 	export default {
 		data() {
 			return {
+				width: 0,//屏幕宽度
+				height: 0,//屏幕高度
 				loading: false,
 				loginForm: {
 					username: '',
@@ -122,6 +124,10 @@
 			...mapGetters(['params'])
 		},
 		async onLoad() {
+			const res = uni.getSystemInfoSync()
+			this.width = res.windowWidth
+			this.height = res.windowHeight
+			
 			let username = uni.getStorageSync("UserName")
 			if (username) {
 				//初始化账号

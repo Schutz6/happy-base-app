@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden">
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" style="background-color: #151A2F;">
 		<view class="content">
 			<view class="nav">
 				<view class="item" :class="type==1?'active':''" @click="changeType(1)">手机</view>
@@ -51,6 +51,8 @@
 	export default {
 		data() {
 			return {
+				width: 0,//屏幕宽度
+				height: 0,//屏幕高度
 				loading: false,
 				showPassword: false,
 				type: 1,
@@ -87,6 +89,10 @@
 			}
 		},
 		onLoad() {
+			const res = uni.getSystemInfoSync()
+			this.width = res.windowWidth
+			this.height = res.windowHeight
+			
 			//监听更新区号数据
 			uni.$on('updateAreaData', this.updateAreaData)
 		},
