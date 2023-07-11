@@ -1,6 +1,6 @@
 <template>
 	<view class="page overflow-hidden" style="background-color: #151A2F;">
-		<view class="content">
+		<view class="content" v-if="user">
 			<view class="list">
 				<view class="item">
 					<view class="icon-box">
