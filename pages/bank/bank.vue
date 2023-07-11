@@ -103,7 +103,7 @@
 				this.listQuery.uid = this.user.id
 				this.$api.post("/core/list/", this.listQuery, {"Mid": "Bankcard"}).then(res => {
 					if(res.code == 20000){
-						this.moreStatus = res.data.results.length == 10 ? 'more' : 'noMore';
+						this.moreStatus = res.data.results.length == 20 ? 'more' : 'noMore';
 						if(res.data.results.length > 0){
 							this.list = this.list.concat(res.data.results)
 						}

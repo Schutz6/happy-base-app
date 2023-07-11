@@ -110,7 +110,7 @@
 			getList(isRefresh){
 				this.$api.post("/agent/incomeList/", this.listQuery).then(res => {
 					if(res.code == 20000){
-						this.moreStatus = res.data.results.length == 10 ? 'more' : 'noMore';
+						this.moreStatus = res.data.results.length == 20 ? 'more' : 'noMore';
 						if(res.data.results.length > 0){
 							this.list = this.list.concat(res.data.results)
 						}
