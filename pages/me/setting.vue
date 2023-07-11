@@ -159,6 +159,7 @@
 
 <script>
 	import { mapGetters } from 'vuex'
+	import { removeToken } from '@/utils/auth'
 	export default {
 		data() {
 			return {
@@ -200,7 +201,7 @@
 		methods: {
 			//退出登录
 			logout(){
-				this.$api.get("/logout/").then(res => {
+				this.$store.dispatch('logout').then(res => {
 					uni.reLaunch({
 						url: '/pages/common/login/login'
 					})

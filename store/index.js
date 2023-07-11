@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import Api from '@/api/index'
 
-import { setUser, setParams } from '@/utils/auth'
+import { setUser, removeUser, setParams, removeToken } from '@/utils/auth'
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -33,6 +33,12 @@ export default new Vuex.Store({
 				state.user = user
 				//保存用户信息
 				setUser(user)
+			}else{
+				state.isLogin = false
+				state.user = null
+				//删除用户信息
+				removeToken()
+				removeUser()
 			}
         },
 		//设置参数信息
@@ -65,6 +71,16 @@ export default new Vuex.Store({
 					resolve(res)
 				})
 			})
-		}
+		},
+		//退出用户
+		logout({ commit }){
+			return new Promise((resolve, reject) => {
+				Api.get("/logout/").then(res => {
+					commit('setUser', null)
+					//返回数据
+					resolve(res)
+				})
+			})
+		},
     },
 });

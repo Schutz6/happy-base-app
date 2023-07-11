@@ -41,7 +41,7 @@
 </template>
 
 <script>
-	import { setToken, removeToken } from '@/utils/auth'
+	import { setToken } from '@/utils/auth'
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
