@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden">
+	<view class="page overflow-hidden" style="background-color: #151A2F;">
 		<view class="content">
 			<view class="invite-box">
 				<image src="@/static/me/invite-box.png"></image>

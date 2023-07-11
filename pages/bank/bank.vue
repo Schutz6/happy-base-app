@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden">
+	<view class="page overflow-hidden" style="background-color: #151A2F;">
 		<view class="content">
 			<view class="list" v-if="list.length>0">
 				<view class="item d-flex-center" v-for="(item, index) in list" :key="index">

@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden">
+	<view class="page overflow-hidden" style="background-color: #151A2F;">
 		<view class="container">
 			<view class="box">
 				<view class="header d-flex between">

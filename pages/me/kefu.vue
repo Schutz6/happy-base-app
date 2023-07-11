@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" style="background-color: #151A2F;" @touchmove.stop.prevent>
 		<iframe v-if="params.kefuUrl" :src="params.kefuUrl + `?uid=u${this.user.id}&name=${this.user.name}`" frameborder="0"></iframe>
 	</view>
 </template>
