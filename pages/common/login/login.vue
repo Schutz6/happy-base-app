@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" style="background-color: #151A2F;">
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}">
 		<view class="height-max">
 			<view class="login-box">
 				<view class="logo">
@@ -68,7 +68,7 @@
 					}
 				},
 				styles: {
-					color: '#fff',
+					color: '#000',
 					backgroundColor: 'transparent'
 				},
 				placeholderStyle: "font-size:16px;color: #999;",
@@ -119,12 +119,10 @@
 								this.$store.dispatch('getUserInfo').then(res => {
 									//判断是否有权限
 									if(res.code == 20000){
-										//跳转首页
+										//返回
 										setTimeout(()=>{
-											uni.reLaunch({
-												url: '/pages/index/index'
-											});
-										}, 1000)
+											uni.navigateBack()
+										}, 500)
 									}
 								})
 							} else if (res.code == 10005) {
@@ -168,7 +166,7 @@
 		}
 		
 		.title{
-			color: #fff;
+			color: #000;
 			font-size: 24px;
 			padding-top: 8px;
 			padding-bottom: 48px;
@@ -177,7 +175,7 @@
 		.divider{
 			width: 100%;
 			height: 1px;
-			background: rgba(255,255,255,0.2);
+			background: rgba(0,0,0,0.2);
 		}
 		
 		.forget{
@@ -188,13 +186,13 @@
 		.label{
 			font-size: 20px;
 			font-weight: 600;
-			color: #FFFFFF;
+			color: #000;
 			padding: 20px 0 10px 0;
 		}
 		
 		.item{
 			.area-code{
-				color: #fff;
+				color: #000;
 				font-size: 16px;
 				
 				image{
@@ -218,7 +216,7 @@
 				background: linear-gradient(256deg, #007FFF 0%, #00E0FF 100%);
 			}
 			.btn2{
-				background: rgba(255,255,255,0.2);
+				background: rgba(0,0,0,0.2);
 			}
 		}
 	}

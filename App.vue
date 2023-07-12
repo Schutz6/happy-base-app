@@ -56,13 +56,13 @@
 	
 	.dialog-box{
 		width: 260px;
-		background: #1B2241;
+		background: #fff;
 		box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.14);
 		border-radius: 10px;
 		border: 1px solid #888;
 		
 		.head{
-			color: #fff;
+			color: #000;
 			text-align: center;
 			font-weight: 400;
 			font-size: 16px;
@@ -70,7 +70,7 @@
 		}
 		
 		.content{
-			color: #FFFFFF;
+			color: #000;
 			font-weight: 400;
 			font-size: 14px;
 			text-align: center;
@@ -80,7 +80,7 @@
 		.line{
 			width: 260px;
 			height: 1px;
-			background: rgba(255,255,255,0.2);
+			background: rgba(0,0,0,0.2);
 		}
 		
 		.footer{
@@ -90,16 +90,16 @@
 			.line{
 				width: 1px;
 				height: 26px;
-				background: rgba(255,255,255,0.2);
+				background: rgba(0,0,0,0.2);
 			}
 			.cancel{
 				font-weight: 400;
-				color: rgba(255,255,255,0.7);
+				color: rgba(0,0,0,0.7);
 				font-size: 14px;
 			}
 			.confirm{
 				font-weight: 400;
-				color: #00E0FF;
+				color: #007aff;
 				font-size: 14px;
 			}
 		}

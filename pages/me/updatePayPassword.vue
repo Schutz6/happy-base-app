@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" style="background-color: #151A2F;">
+	<view class="page overflow-hidden">
 		<view class="content">
 			<view class="form">
 				<uni-forms ref="form" :modelValue="formData" :rules="rules" label-position="top" label-width="210">
@@ -71,10 +71,10 @@
 				},
 				styles: {
 					padding: '10px',
-					color: '#fff',
+					color: '#000',
 					backgroundColor: 'transparent'
 				},
-				placeholderStyle: "color:rgba(255, 255, 255, 0.7);font-size:14px;",
+				placeholderStyle: "color:rgba(0, 0, 0, 0.7);font-size:14px;",
 			}
 		},
 		computed: {
@@ -129,7 +129,7 @@
 		.form{
 			.label{
 				font-size: 14px;
-				color: #fff;
+				color: #000;
 				padding: 20px 0 10px 0;
 			}
 		}

@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" style="background-color: #151A2F;">
+	<view class="page overflow-hidden">
 		<view class="content">
 			<view class="form">
 				<uni-forms ref="form" :modelValue="formData" :rules="rules" label-width="0">
@@ -9,13 +9,13 @@
 								<view class="label">+{{formData.area}}</view>
 								<uni-icons type="bottom" size="16" color="#A2AEC8"></uni-icons>
 							</view>
-							<input type="text" v-model="formData.mobile" style="color: #fff;padding: 10px;" placeholder-style="color:rgba(255, 255, 255, 0.7);font-size:14px;" placeholder="请输入手机号" />
+							<input type="text" v-model="formData.mobile" style="color: #000;padding: 10px;" placeholder-style="color:rgba(0, 0, 0, 0.7);font-size:14px;" placeholder="请输入手机号" />
 						</view>
 						<view class="line"></view>
 					</uni-forms-item>
 					<uni-forms-item name="code">
 						<view class="item">
-							<input type="text" v-model="formData.code" style="color: #fff;padding: 10px;" placeholder-style="color:rgba(255, 255, 255, 0.7);font-size:14px;" placeholder="请输入验证码" />
+							<input type="text" v-model="formData.code" style="color: #000;padding: 10px;" placeholder-style="color:rgba(0, 0, 0, 0.7);font-size:14px;" placeholder="请输入验证码" />
 							<view class="get-code" @click="getCode()">{{showCode?count+"s后重新获取":"获取验证码"}}</view>
 						</view>
 						<view class="line"></view>
@@ -165,7 +165,7 @@
 				.item-code{
 					display: flex;
 					align-items: center;
-					color: #fff;
+					color: #000;
 					
 					.label{
 						padding-left: 10px;
@@ -181,7 +181,7 @@
 				padding-top: 10px;
 				
 				.get-code{
-					color: #fff;
+					color: #000;
 					font-size: 12px;
 					border: 1px solid #ddd;
 					padding: 5px 10px;

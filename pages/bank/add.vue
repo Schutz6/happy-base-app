@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" style="background-color: #151A2F;">
+	<view class="page overflow-hidden">
 		<view class="content">
 			<view class="form">
 				<uni-forms ref="form" :modelValue="formData" :rules="rules" label-position="top" label-width="210">
@@ -11,7 +11,7 @@
 							<picker v-if="arrayType.length>0" @change="changeType" :value="indexType" :range="arrayType" range-key="text">
 								<view class="d-flex between">
 									<view>{{arrayType[indexType].text}}</view>
-									<image src="@/static/login/icon-down.png"></image>
+									<image src="@/static/icons/icon-down-black.png"></image>
 								</view>
 							</picker>
 						</view>
@@ -99,10 +99,10 @@
 				},
 				styles: {
 					padding: '10px',
-					color: '#fff',
+					color: '#000',
 					backgroundColor: 'transparent'
 				},
-				placeholderStyle: "color:rgba(255, 255, 255, 0.7);font-size:14px;",
+				placeholderStyle: "color:rgba(0, 0, 0, 0.7);font-size:14px;",
 			}
 		},
 		methods: {
@@ -163,26 +163,26 @@
 		.form{
 			.label{
 				font-size: 14px;
-				color: #fff;
+				color: #000;
 				padding: 20px 0 10px 0;
 			}
 			
 			.tips{
 				font-size: 12px;
-				color: #fff;
+				color: #000;
 				padding: 5px 0 0 0;
 			}
 			
 			.input-box{
-				color: #fff;
+				color: #000;
 				font-size: 14px;
 				border: 1px solid #ddd;
 				border-radius: 5px;
-				padding: 5px 10px;
+				padding: 7px 10px;
 				
 				image{
-					width: 24px;
-					height: 24px;
+					width: 20px;
+					height: 20px;
 				}
 			}
 		}

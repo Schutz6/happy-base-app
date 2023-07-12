@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" style="background-color: #151A2F;">
+	<view class="page overflow-hidden">
 		<view class="content">
 			<view class="box">
 				<view>余额</view>
@@ -52,7 +52,7 @@
 						<image src="@/static/recharge/usdt.png"></image>
 						<view class="label">USDT</view>
 					</view>
-					<uni-icons type="right" size="20" color="#ffffffb3"></uni-icons>
+					<uni-icons type="right" size="20" color="#00000066"></uni-icons>
 				</view>
 			</view>
 			<view class="btns">
@@ -138,8 +138,8 @@
 			padding: 20px 10px;
 			
 			.item{
-				color: #ffffff;
-				border: 1px solid #294D6B;
+				color: #000;
+				border: 1px solid #66666661;
 				border-radius: 5px;
 				text-align: center;
 				padding: 15px 0;
@@ -147,7 +147,7 @@
 			}
 			
 			.active{
-				border: 1px solid #00E0FF;
+				border: 1px solid #007aff;
 			}
 		}
 		
@@ -177,7 +177,7 @@
 				}
 				
 				.icon-item{
-					color: #fff;
+					color: #000;
 					display: flex;
 					align-items: center;
 					

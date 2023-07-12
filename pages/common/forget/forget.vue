@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" style="background-color: #151A2F;">
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}">
 		<view class="content">
 			<view class="nav">
 				<view class="item" :class="type==1?'active':''" @click="changeType(1)">手机</view>
@@ -82,10 +82,10 @@
 				timer: null,
 				styles: {
 					padding: '10px',
-					color: '#fff',
+					color: '#000',
 					backgroundColor: 'transparent'
 				},
-				placeholderStyle: "color:rgba(255, 255, 255, 0.7);font-size:14px;",
+				placeholderStyle: "color:rgba(0, 0, 0, 0.7);font-size:14px;",
 			}
 		},
 		onLoad() {
@@ -237,7 +237,7 @@
 			margin: 0 auto;
 			
 			.item{
-				color: rgba(255,255,255,0.7);
+				color: rgba(0,0,0,0.7);
 				text-align: center;
 				flex: 1
 			}
@@ -247,7 +247,7 @@
 		}
 		
 		.box{
-			border: 1px solid #294D6B;
+			border: 1px solid #007FFF;
 			border-top-left-radius: 15px;
 			border-top-right-radius: 15px;
 			border-bottom-width: 0px;
@@ -266,7 +266,7 @@
 				.item-code{
 					display: flex;
 					align-items: center;
-					color: #fff;
+					color: #000;
 					
 					.label{
 						padding-left: 10px;
@@ -282,7 +282,7 @@
 				padding-top: 10px;
 				
 				.get-code{
-					color: #fff;
+					color: #000;
 					font-size: 12px;
 					border: 1px solid #ddd;
 					padding: 5px 10px;

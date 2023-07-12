@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" style="background-color: #151A2F;">
+	<view class="page overflow-hidden">
 		<view class="content">
 			<view class="box d-flex">
 				<view class="flex1 d-flex-center flex-column">
@@ -58,7 +58,6 @@
 </template>
 
 <script>
-	import { navigateBack } from '@/utils/util'
 	export default {
 		data() {
 			return {
@@ -87,9 +86,6 @@
 			this.getList(false)
 		},
 		methods: {
-			back(){
-				navigateBack()
-			},
 			//切换Tab
 			changeTab(tabIndex){
 				if(this.tabIndex != tabIndex){
@@ -146,7 +142,7 @@
 			}
 			.label{
 				font-weight: 400;
-				color: #FFFFFF;
+				color: #fff;
 				font-size: 12px;
 				padding-top: 10px;
 			}
@@ -191,7 +187,7 @@
 			
 			.header{
 				font-weight: 400;
-				color: #FFFFFF;
+				color: #000;
 				font-size: 14px;
 				padding: 15px 0;
 			}
@@ -199,19 +195,19 @@
 			.line{
 				width: 100%;
 				height: 1px;
-				background: #24415B;
+				background: #66666661;
 			}
 			
 			.item{
 				font-weight: 400;
-				color: rgba(255,255,255,0.7);
+				color: rgba(0,0,0,0.7);
 				font-size: 14px;
 				padding: 10px 0;
 				
 				.item-box{
 					padding: 5px 0;
 					margin: 0 16px;
-					border-bottom: 1px solid rgba(255,255,255,0.1);
+					border-bottom: 1px solid rgba(0,0,0,0.1);
 					
 					.title{
 						font-size: 16px;

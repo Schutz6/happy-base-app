@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" style="background-color: #151A2F;">
+	<view class="page overflow-hidden">
 		<view class="content">
 			<view class="box">
 				<uni-row :gutter="20">
@@ -43,7 +43,7 @@
 							file-mediatype="image"
 							@select="selectImg"
 							@delete="deleteImg">
-							<text style="color: #fff;font-size: 30px;">+</text>
+							<text style="color: #66666661;font-size: 30px;">+</text>
 						</uni-file-picker>
 					</uni-forms-item>
 				</uni-forms>
@@ -102,10 +102,10 @@
 				},
 				styles: {
 					padding: '10px',
-					color: '#fff',
+					color: '#000',
 					backgroundColor: 'transparent'
 				},
-				placeholderStyle: "color:rgba(255, 255, 255, 0.7);font-size:14px;",
+				placeholderStyle: "color:rgba(0, 0, 0, 0.7);font-size:14px;",
 			}
 		},
 		computed: {
@@ -206,15 +206,15 @@
 		.form{
 			.label{
 				font-size: 14px;
-				color: #fff;
+				color: #000;
 				padding: 20px 0 10px 0;
 			}
 		}
 		
 		.box{
 			.item{
-				color: #ffffff;
-				border: 1px solid #294D6B;
+				color: #000;
+				border: 1px solid #66666661;
 				border-radius: 5px;
 				text-align: center;
 				padding: 7px 0;
@@ -222,11 +222,11 @@
 			}
 			
 			.active{
-				border: 1px solid #00E0FF;
+				border: 1px solid #007aff;
 			}
 		}
 		.tips{
-			color: #fff;
+			color: #000;
 			font-size: 12px;
 			padding: 0 10px 10px 10px;
 		}
@@ -238,9 +238,9 @@
 			border-radius: 10px;
 		}
 		.address{
-			color: #fff;
+			color: #000;
 			font-size: 12px;
-			background: rgba(255,255,255,0.1);
+			background: rgba(0,0,0,0.1);
 			border-radius: 10px;
 			padding: 10px;
 			text-align: center;

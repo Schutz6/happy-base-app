@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" style="background-color: #151A2F;">
+	<view class="page overflow-hidden">
 		<view class="content">
 			<view class="form">
 				<uni-forms ref="form" :modelValue="formData" :rules="rules">
@@ -35,7 +35,7 @@
 					},
 				},
 				styles: {
-					color: '#fff',
+					color: '#000',
 					backgroundColor: 'transparent'
 				},
 			}

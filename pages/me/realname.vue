@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" style="background-color: #151A2F;">
+	<view class="page overflow-hidden">
 		<view class="content">
 			<view class="d-flex-center flex-column" style="background-color: #353535;border-radius: 10px;padding: 10px;">
 				<view class="color-white fs14">
@@ -56,10 +56,10 @@
 				},
 				styles: {
 					padding: '10px',
-					color: '#fff',
+					color: '#000',
 					backgroundColor: 'transparent'
 				},
-				placeholderStyle: "color:rgba(255, 255, 255, 0.7);font-size:14px;",
+				placeholderStyle: "color:rgba(0, 0, 0, 0.7);font-size:14px;",
 			}
 		},
 		computed: {
@@ -113,7 +113,7 @@
 		.form{
 			.label{
 				font-size: 14px;
-				color: #fff;
+				color: #000;
 				padding: 20px 0 10px 0;
 			}
 		}

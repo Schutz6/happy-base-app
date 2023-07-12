@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" style="background-color: #151A2F;">
+	<view class="page overflow-hidden">
 		<view class="content" v-if="user">
 			<view class="list">
 				<view class="item">
@@ -37,7 +37,7 @@
 					</view>
 					<view class="right">
 						<view class="label">{{user.name}}</view>
-						<uni-icons type="right" size="20" color="#ffffffb3"></uni-icons>
+						<uni-icons type="right" size="20" color="#00000066"></uni-icons>
 					</view>
 				</view>
 				<view class="line"></view>
@@ -50,7 +50,7 @@
 							<text v-if="user.mobile">+{{user.area}} {{user.mobile}}</text>
 							<text v-else>--</text>
 						</view>
-						<uni-icons type="right" size="20" color="#ffffffb3"></uni-icons>
+						<uni-icons type="right" size="20" color="#00000066"></uni-icons>
 					</view>
 				</view>
 				<view class="line"></view>
@@ -60,7 +60,7 @@
 					</view>
 					<view class="right">
 						<view class="label">{{user.email || "--"}}</view>
-						<uni-icons type="right" size="20" color="#ffffffb3"></uni-icons>
+						<uni-icons type="right" size="20" color="#00000066"></uni-icons>
 					</view>
 				</view>
 				<view class="line"></view>
@@ -70,7 +70,7 @@
 					</view>
 					<view class="right">
 						<view class="label">{{user.pid || "绑定送福利"}}</view>
-						<uni-icons type="right" size="20" color="#ffffffb3"></uni-icons>
+						<uni-icons type="right" size="20" color="#00000066"></uni-icons>
 					</view>
 				</view>
 				<view class="line"></view>
@@ -81,7 +81,7 @@
 					</view>
 					<view class="right">
 						<view class="label">{{cacheSize}}</view>
-						<uni-icons type="right" size="20" color="#ffffffb3"></uni-icons>
+						<uni-icons type="right" size="20" color="#00000066"></uni-icons>
 					</view>
 				</view>
 				<view class="line"></view>
@@ -91,7 +91,7 @@
 					</view>
 					<view class="right">
 						<view class="label"><view v-if="isUpgrade" class="dot"></view>V{{versionName}}</view>
-						<uni-icons type="right" size="20" color="#ffffffb3"></uni-icons>
+						<uni-icons type="right" size="20" color="#00000066"></uni-icons>
 					</view>
 				</view>
 				<view class="line"></view>
@@ -281,7 +281,7 @@
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			color: #ffffff;
+			color: #000;
 			font-size: 14px;
 			padding: 15px 20px;
 			
@@ -304,7 +304,7 @@
 					image{
 						width: 40px;
 						height: 40px;
-						border: 1px solid #fff;
+						border: 1px solid #ddd;
 						border-radius: 50%;
 					}
 				}
@@ -313,7 +313,7 @@
 					display: flex;
 					align-items: center;
 					font-size: 14px;
-					color: rgba(255,255,255,0.4);
+					color: rgba(0,0,0,0.4);
 					padding-right: 10px;
 					
 					.dot{

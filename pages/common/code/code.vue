@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" style="background-color: #151A2F;">
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}">
 		<view class="content">
 			<view class="search-box">
 				<uni-easyinput trim="both" v-model="searchWord" :styles="styles" placeholder="搜索"></uni-easyinput>
@@ -23,7 +23,7 @@
 				searchWord: "",//搜索词
 				list: [],
 				styles: {
-					color: '#fff',
+					color: '#000',
 					backgroundColor: 'transparent'
 				},
 			}
@@ -59,7 +59,7 @@
 		.list{
 			
 			.item{
-				color: #fff;
+				color: #000;
 				display: flex;
 				align-items: center;
 				justify-content: space-between;

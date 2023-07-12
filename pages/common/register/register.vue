@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" style="background-color: #151A2F;">
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}">
 		<view class="height-max">
 			<view class="login-box">
 				<view class="logo">
@@ -112,7 +112,7 @@
 					}
 				},
 				styles: {
-					color: '#fff',
+					color: '#000',
 					backgroundColor: 'transparent'
 				},
 				placeholderStyle: "font-size:16px;color: #999;",
@@ -203,7 +203,7 @@
 		}
 
 		.title {
-			color: #fff;
+			color: #000;
 			font-size: 24px;
 			padding-top: 8px;
 			padding-bottom: 48px;
@@ -212,19 +212,19 @@
 		.divider {
 			width: 100%;
 			height: 1px;
-			background: rgba(255, 255, 255, 0.2);
+			background: rgba(0, 0, 0, 0.2);
 		}
 
 		.label {
 			font-size: 20px;
 			font-weight: 600;
-			color: #FFFFFF;
+			color: #000;
 			padding: 20px 0 10px 0;
 		}
 
 		.item {
 			.area-code {
-				color: #fff;
+				color: #000;
 				font-size: 16px;
 
 				image {
@@ -250,7 +250,7 @@
 			}
 
 			.btn2 {
-				background: rgba(255, 255, 255, 0.2);
+				background: rgba(0, 0, 0, 0.2);
 			}
 		}
 	}

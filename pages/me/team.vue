@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" style="background-color: #151A2F;">
+	<view class="page overflow-hidden">
 		<view class="container">
 			<view class="box">
 				<view class="header d-flex between">
@@ -47,7 +47,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="d-flex-center" style="font-weight: 500;color: #fff;font-size: 16px;padding-bottom: 10px;">团队成员</view>
+			<view class="d-flex-center" style="font-weight: 500;font-size: 16px;padding-bottom: 10px;">团队成员</view>
 			<view class="table-box">
 				<view class="list">
 					<view class="header d-flex">

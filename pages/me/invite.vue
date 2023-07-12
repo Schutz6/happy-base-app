@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" style="background-color: #151A2F;">
+	<view class="page overflow-hidden">
 		<view class="content">
 			<view class="invite-box">
 				<image src="@/static/me/invite-box.png"></image>
@@ -177,7 +177,7 @@
 			
 			.btn1{
 				margin-right: 5px;
-				background: rgba(255,255,255,0.2);
+				background: rgba(0,0,0,0.2);
 			}
 			.btn2{
 				margin-left: 5px;
@@ -188,7 +188,7 @@
 		.header{
 			.title{
 				font-weight: 500;
-				color: #fff;
+				color: #000;
 				font-size: 18px;
 				padding-right: 10px;
 			}

@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" style="background-color: #151A2F;" @touchmove.stop.prevent>
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" style="background-color: #000;" @touchmove.stop.prevent>
 		<uni-nav-bar backgroundColor="transparent" dark status-bar :border="false" height="0px"></uni-nav-bar>
 		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height+'px'}">
 			<view class="container" v-if="user">

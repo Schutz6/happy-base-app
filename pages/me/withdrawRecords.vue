@@ -1,5 +1,5 @@
 <template>
-	<view class="page overflow-hidden" style="background-color: #151A2F;">
+	<view class="page overflow-hidden">
 		<view class="content">
 			<view class="box" v-if="list.length > 0">
 				<view class="list">
@@ -108,7 +108,6 @@
 			box-shadow: 0px 4px 16px 0px rgba(0,0,0,0.24);
 			border-radius: 10px;
 			border: 1px solid #294D6B;
-			margin: 20px 0;
 			
 			.list{
 				padding: 10px 15px;

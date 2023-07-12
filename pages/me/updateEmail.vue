@@ -1,15 +1,15 @@
 <template>
-	<view class="page overflow-hidden" style="background-color: #151A2F;">
+	<view class="page overflow-hidden">
 		<view class="content">
 			<view class="form">
 				<uni-forms ref="form" :modelValue="formData" :rules="rules" label-width="0">
 					<uni-forms-item name="email">
-						<input type="text" v-model="formData.email" style="color: #fff;padding: 10px;" placeholder="请输入邮箱" placeholder-style="color:rgba(255, 255, 255, 0.7);font-size:14px;" />
+						<input type="text" v-model="formData.email" style="color: #000;padding: 10px;" placeholder="请输入邮箱" placeholder-style="color:rgba(0, 0, 0, 0.7);font-size:14px;" />
 						<view class="line"></view>
 					</uni-forms-item>
 					<uni-forms-item name="code">
 						<view class="item">
-							<input type="text" v-model="formData.code" style="color: #fff;padding: 10px;" placeholder="请输入验证码" placeholder-style="color:rgba(255, 255, 255, 0.7);font-size:14px;" />
+							<input type="text" v-model="formData.code" style="color: #000;padding: 10px;" placeholder="请输入验证码" placeholder-style="color:rgba(0, 0, 0, 0.7);font-size:14px;" />
 							<view class="get-code" @click="getCode()">{{showCode?count+"s后重新获取":"获取验证码"}}</view>
 						</view>
 						<view class="line"></view>
@@ -139,7 +139,7 @@
 				.item-code{
 					display: flex;
 					align-items: center;
-					color: #fff;
+					color: #000;
 					
 					.label{
 						padding-left: 10px;
@@ -155,7 +155,7 @@
 				padding-top: 10px;
 				
 				.get-code{
-					color: #fff;
+					color: #000;
 					font-size: 12px;
 					border: 1px solid #ddd;
 					padding: 5px 10px;
