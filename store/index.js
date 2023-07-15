@@ -64,8 +64,11 @@ export default new Vuex.Store({
 		getUserInfo({ commit }){
 			return new Promise((resolve, reject) => {
 				Api.get("/user/").then(res => {
+					console.log(res)
 					if(res.code == 20000){
 						commit('setUser', res.data)
+					}else{
+						commit('setUser', null)
 					}
 					//返回数据
 					resolve(res)

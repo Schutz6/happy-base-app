@@ -116,31 +116,8 @@ export default class Request {
 					header: header,
 					sslVerify: false,
 					success: (res) => {
-						//判断令牌是否失效
-						if(res.data.code == 10010){
-							// #ifdef H5
-							setTimeout(()=>{
-								//刷新网站
-								if (window.parent == window) {
-									//在主界面
-									uni.reLaunch({
-										url: '/'
-									})
-								}else{
-									//在iframe页面
-									parent.location.reload()
-								}
-							}, 600)
-							// #endif
-							// #ifdef APP-PLUS
-							uni.reLaunch({
-								url: '/'
-							})
-							// #endif
-						}else{
-							// 将结果抛出
-							resolve(res.data)
-						}
+						// 将结果抛出
+						resolve(res.data)
 					},
 					//请求失败
 					fail: (e) => {
