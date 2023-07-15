@@ -1,6 +1,11 @@
 <template>
-	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}">
-		<view class="height-max">
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
+		<uni-nav-bar title="注册" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+			<block slot="left">
+				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+			</block>
+		</uni-nav-bar>
+		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}">
 			<view class="login-box">
 				<view class="logo">
 					<image :src="params.logo"></image>
@@ -57,12 +62,13 @@
 					</navigator>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
 	import { setToken, removeToken } from '@/utils/auth'
+	import { navigateBack } from '@/utils/util'
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
@@ -135,6 +141,10 @@
 			}
 		},
 		methods: {
+			//返回
+			back(){
+				navigateBack()
+			},
 			//注册
 			handleLogin() {
 				this.$refs.form.validate().then(res => {
@@ -162,7 +172,7 @@
 										//跳转首页
 										setTimeout(()=>{
 											uni.reLaunch({
-												url: '/pages/index/index'
+												url: '/'
 											});
 										}, 1000)
 									}

@@ -46,6 +46,9 @@
 	page {
 		background-color: #151A2F;
 	}
+	.uni-nav-bar-text{
+		font-size: 16px !important;
+	}
 	
 </style>
 <style lang="scss">

@@ -1,6 +1,12 @@
 <template>
-	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}">
-		<view class="height-max">
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
+		<!-- <uni-nav-bar title="登录" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+			<block slot="left">
+				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+			</block>
+		</uni-nav-bar> -->
+		<!-- <scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}"> -->
+		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height+'px'}">
 			<view class="login-box">
 				<view class="logo">
 					<image :src="params.logo"></image>
@@ -26,7 +32,7 @@
 					</uni-forms-item>
 					<view class="divider"></view>
 					<view class="d-flex end">
-						<navigator url="/pages/common/forget/forget"><text class="forget">忘记秘密?</text></navigator>
+						<navigator url="/pages/common/forget/forget"><text class="forget">忘记密码?</text></navigator>
 					</view>
 				</uni-forms>
 				<view class="btns">
@@ -36,12 +42,13 @@
 					</navigator>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
 	import { setToken } from '@/utils/auth'
+	import { navigateBack } from '@/utils/util'
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
@@ -94,6 +101,10 @@
 			}
 		},
 		methods: {
+			//返回
+			back(){
+				navigateBack()
+			},
 			//登录
 			handleLogin() {
 				this.$refs.form.validate().then(res => {
@@ -121,7 +132,7 @@
 									if(res.code == 20000){
 										//返回
 										setTimeout(()=>{
-											uni.navigateBack()
+											this.back()
 										}, 500)
 									}
 								})

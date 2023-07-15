@@ -1,20 +1,28 @@
 <template>
-	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}">
-		<view class="content">
-			<view class="search-box">
-				<uni-easyinput trim="both" v-model="searchWord" :styles="styles" placeholder="搜索"></uni-easyinput>
-			</view>
-			<view class="list">
-				<view class="item" v-for="(item, index) in list.filter(data => !searchWord || data.text.includes(searchWord) || data.value.includes(searchWord))" :key="index" @click="change(item.value)">
-					<view>{{item.text}}</view>
-					<view>+{{item.value}}</view>
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
+		<uni-nav-bar title="选择区号" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+			<block slot="left">
+				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+			</block>
+		</uni-nav-bar>
+		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}">
+			<view class="content">
+				<view class="search-box">
+					<uni-easyinput trim="both" v-model="searchWord" :styles="styles" placeholder="搜索"></uni-easyinput>
+				</view>
+				<view class="list">
+					<view class="item" v-for="(item, index) in list.filter(data => !searchWord || data.text.includes(searchWord) || data.value.includes(searchWord))" :key="index" @click="change(item.value)">
+						<view>{{item.text}}</view>
+						<view>+{{item.value}}</view>
+					</view>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
+	import { navigateBack } from '@/utils/util'
 	export default {
 		data() {
 			return {
@@ -39,10 +47,14 @@
 			})
 		},
 		methods: {
+			//返回
+			back(){
+				navigateBack()
+			},
 			//选择区号
 			change(value){
 				uni.$emit('updateAreaData', {"area": value})
-				uni.navigateBack()
+				this.back()
 			}
 		}
 	}

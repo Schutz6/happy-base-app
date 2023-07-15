@@ -85,12 +85,6 @@
 			this.listQuery.currentPage += 1;
 			this.getList(false)
 		},
-		onPullDownRefresh(){
-			//监听下拉刷新
-			this.listQuery.currentPage = 1
-			this.list = []
-			this.getList(true)
-		},
 		methods: {
 			init(){
 				//初始化列表
