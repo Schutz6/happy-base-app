@@ -1,27 +1,37 @@
 <template>
-	<view class="page overflow-hidden">
-		<view class="content">
-			<view class="form">
-				<uni-forms ref="form" :modelValue="formData" :rules="rules">
-					<uni-forms-item name="invite_code">
-						<view class="item">
-							<uni-easyinput trim="both" v-model="formData.invite_code" :styles="styles" placeholder="请输入邀请码"></uni-easyinput>
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
+		<uni-nav-bar title="绑定邀请码" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+			<block slot="left">
+				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+			</block>
+		</uni-nav-bar>
+		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}">
+			<view class="content">
+				<view class="form">
+					<uni-forms ref="form" :modelValue="formData" :rules="rules">
+						<uni-forms-item name="invite_code">
+							<view class="item">
+								<uni-easyinput trim="both" v-model="formData.invite_code" :styles="styles" placeholder="请输入邀请码"></uni-easyinput>
+							</view>
+						</uni-forms-item>
+						<view class="btns">
+							<view class="d-flex-center btn btn1" @click="submit()">绑定</view>
 						</view>
-					</uni-forms-item>
-					<view class="btns">
-						<view class="d-flex-center btn btn1" @click="submit()">绑定</view>
-					</view>
-				</uni-forms>
+					</uni-forms>
+				</view>
 			</view>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
+	import { navigateBack } from '@/utils/util'
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
 			return {
+				width: 0,//屏幕宽度
+				height: 0,//屏幕高度
 				loading: false,
 				formData: {
 					invite_code: null
@@ -43,7 +53,16 @@
 		computed: {
 			...mapGetters(['user'])
 		},
+		onLoad() {
+			const res = uni.getSystemInfoSync()
+			this.width = res.windowWidth
+			this.height = res.windowHeight
+		},
 		methods: {
+			//返回
+			back(){
+				navigateBack()
+			},
 			submit(){
 				this.$refs.form.validate().then(res=>{
 					if(!this.loading){
@@ -62,7 +81,7 @@
 								this.user.pid = parseInt(this.formData.invite_code)
 								this.$store.commit('setUser', this.user)
 								setTimeout(()=>{
-									uni.navigateBack()
+									this.back()
 								}, 500)
 							}else{
 								uni.showToast({

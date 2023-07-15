@@ -1,40 +1,50 @@
 <template>
-	<view class="page overflow-hidden">
-		<view class="content">
-			<view class="form">
-				<uni-forms ref="form" :modelValue="formData" :rules="rules" label-position="top" label-width="210">
-					<uni-forms-item name="oldPassword" v-if="user.has_pay_password==1">
-						<template v-slot:label>
-							<view class="label">原支付密码</view>
-						</template>
-						<uni-easyinput type="password" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.oldPassword" placeholder="请输入原密码" />
-					</uni-forms-item>
-					<uni-forms-item name="newPassword">
-						<template v-slot:label>
-							<view class="label">支付密码</view>
-						</template>
-						<uni-easyinput type="password" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.newPassword" placeholder="请输入新密码" />
-					</uni-forms-item>
-					<uni-forms-item name="okpassword">
-						<template v-slot:label>
-							<view class="label">确认支付密码</view>
-						</template>
-						<uni-easyinput type="password" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.okpassword" placeholder="请再次确认密码" />
-					</uni-forms-item>
-				</uni-forms>
-				<view class="btns">
-					<view class="d-flex-center btn btn1" @click="submitForm()">修改</view>
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
+		<uni-nav-bar title="修改支付密码" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+			<block slot="left">
+				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+			</block>
+		</uni-nav-bar>
+		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}">
+			<view class="content">
+				<view class="form">
+					<uni-forms ref="form" :modelValue="formData" :rules="rules" label-position="top" label-width="210">
+						<uni-forms-item name="oldPassword" v-if="user.has_pay_password==1">
+							<template v-slot:label>
+								<view class="label">原支付密码</view>
+							</template>
+							<uni-easyinput type="password" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.oldPassword" placeholder="请输入原密码" />
+						</uni-forms-item>
+						<uni-forms-item name="newPassword">
+							<template v-slot:label>
+								<view class="label">支付密码</view>
+							</template>
+							<uni-easyinput type="password" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.newPassword" placeholder="请输入新密码" />
+						</uni-forms-item>
+						<uni-forms-item name="okpassword">
+							<template v-slot:label>
+								<view class="label">确认支付密码</view>
+							</template>
+							<uni-easyinput type="password" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.okpassword" placeholder="请再次确认密码" />
+						</uni-forms-item>
+					</uni-forms>
+					<view class="btns">
+						<view class="d-flex-center btn btn1" @click="submitForm()">修改</view>
+					</view>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
+	import { navigateBack } from '@/utils/util'
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
 			return {
+				width: 0,//屏幕宽度
+				height: 0,//屏幕高度
 				loading: false,
 				formData: {
 					type: 2,//修改支付密码
@@ -80,7 +90,16 @@
 		computed: {
 		    ...mapGetters(['user'])
 		},
+		onLoad() {
+			const res = uni.getSystemInfoSync()
+			this.width = res.windowWidth
+			this.height = res.windowHeight
+		},
 		methods: {
+			//返回
+			back(){
+				navigateBack()
+			},
 			//提交
 			submitForm(){
 				this.$refs.form.validate().then(res=>{
@@ -96,7 +115,7 @@
 								this.user.has_pay_password = 1
 								this.$store.commit('setUser', this.user)
 								setTimeout(()=>{
-									uni.navigateBack()
+									this.back()
 								}, 1500)
 							}else if(res.code == 10005){
 								uni.showToast({

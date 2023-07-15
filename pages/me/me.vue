@@ -1,6 +1,12 @@
 <template>
-	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" style="background-color: #000;" @touchmove.stop.prevent>
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
 		<uni-nav-bar backgroundColor="transparent" dark status-bar :border="false" height="0px"></uni-nav-bar>
+		<!-- <uni-nav-bar title="我的" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+			<block slot="left">
+				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+			</block>
+		</uni-nav-bar> -->
+		<!-- <scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}"> -->
 		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height+'px'}">
 			<view class="container" v-if="user">
 				<view class="user-box d-flex flex-column">
@@ -99,7 +105,7 @@
 
 <script>
 	import { mapGetters } from 'vuex'
-	import { formatDateUtc } from '@/utils/util'
+	import { navigateBack, formatDateUtc } from '@/utils/util'
 	export default {
 		data() {
 			return {
@@ -125,6 +131,10 @@
 			this.height = res.windowHeight
 		},
 		methods: {
+			//返回
+			back(){
+				navigateBack()
+			},
 			//跳转（需登录）
 			toPageLogin(page){
 				if(this.isLogin){
@@ -143,6 +153,8 @@
 
 <style scoped lang="scss">
 	.container{
+		background-color: #000;
+		
 		.user-box{
 			width: 100%;
 			height: 170px;

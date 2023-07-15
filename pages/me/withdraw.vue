@@ -1,63 +1,73 @@
 <template>
-	<view class="page overflow-hidden">
-		<view class="content">
-			<view class="form">
-				<view class="box">
-					<view>可提现余额</view>
-					<view class="balance">{{user.balance || "0.00"}}</view>
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
+		<uni-nav-bar title="提现" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+			<block slot="left">
+				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+			</block>
+		</uni-nav-bar>
+		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}">
+			<view class="content">
+				<view class="form">
+					<view class="box">
+						<view>可提现余额</view>
+						<view class="balance">{{user.balance || "0.00"}}</view>
+					</view>
+					<uni-forms ref="form" :modelValue="formData" :rules="rules" label-position="top" label-width="210">
+						<uni-forms-item name="type">
+							<template v-slot:label>
+								<view class="label">提现卡</view>
+							</template>
+							<view class="input-box">
+								<picker v-if="arrayBank.length>0" @change="changeBank" :value="indexBank" :range="arrayBank" range-key="text">
+									<view class="d-flex between">
+										<view class="address">{{arrayBank[indexBank].text}}</view>
+										<image src="@/static/icons/icon-down-black.png"></image>
+									</view>
+								</picker>
+							</view>
+						</uni-forms-item>
+						<uni-forms-item name="money">
+							<template v-slot:label>
+								<view class="label">提现金额</view>
+							</template>
+							<uni-easyinput type="text" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.money" @input="inputMoney" placeholder="请输入提现金额" />
+						</uni-forms-item>
+						<uni-forms-item name="real_money">
+							<template v-slot:label>
+								<view class="label">实际提现</view>
+							</template>
+							<uni-easyinput type="text" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.real_money" disabled placeholder="实际提现金额" />
+						</uni-forms-item>
+						<uni-forms-item name="pay_password">
+							<template v-slot:label>
+								<view class="label">交易密码</view>
+							</template>
+							<uni-easyinput type="password" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.pay_password" placeholder="请输入支付密码" />
+						</uni-forms-item>
+					</uni-forms>
+					<view style="color: rgba(0,0,0,0.7);font-size: 14px;padding: 20px 0;">
+						<view>提现规则：</view>
+						<view>1、提现手续费率{{params.withdrawalFee}}</view>
+						<view>2、每次提现金额需是整数，不可带小数点</view>
+						<view>3、最少提现为100元，最多提现为500000元</view>
+					</view>
 				</view>
-				<uni-forms ref="form" :modelValue="formData" :rules="rules" label-position="top" label-width="210">
-					<uni-forms-item name="type">
-						<template v-slot:label>
-							<view class="label">提现卡</view>
-						</template>
-						<view class="input-box">
-							<picker v-if="arrayBank.length>0" @change="changeBank" :value="indexBank" :range="arrayBank" range-key="text">
-								<view class="d-flex between">
-									<view class="address">{{arrayBank[indexBank].text}}</view>
-									<image src="@/static/icons/icon-down-black.png"></image>
-								</view>
-							</picker>
-						</view>
-					</uni-forms-item>
-					<uni-forms-item name="money">
-						<template v-slot:label>
-							<view class="label">提现金额</view>
-						</template>
-						<uni-easyinput type="text" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.money" @input="inputMoney" placeholder="请输入提现金额" />
-					</uni-forms-item>
-					<uni-forms-item name="real_money">
-						<template v-slot:label>
-							<view class="label">实际提现</view>
-						</template>
-						<uni-easyinput type="text" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.real_money" disabled placeholder="实际提现金额" />
-					</uni-forms-item>
-					<uni-forms-item name="pay_password">
-						<template v-slot:label>
-							<view class="label">交易密码</view>
-						</template>
-						<uni-easyinput type="password" :styles="styles" :placeholderStyle="placeholderStyle" v-model="formData.pay_password" placeholder="请输入支付密码" />
-					</uni-forms-item>
-				</uni-forms>
-				<view style="color: rgba(0,0,0,0.7);font-size: 14px;padding: 20px 0;">
-					<view>提现规则：</view>
-					<view>1、提现手续费率{{params.withdrawalFee}}</view>
-					<view>2、每次提现金额需是整数，不可带小数点</view>
-					<view>3、最少提现为100元，最多提现为500000元</view>
+				<view class="btns">
+					<view class="d-flex-center btn btn1" @click="submitForm()">提现</view>
 				</view>
 			</view>
-			<view class="btns">
-				<view class="d-flex-center btn btn1" @click="submitForm()">提现</view>
-			</view>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
+	import { navigateBack } from '@/utils/util'
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
 			return {
+				width: 0,//屏幕宽度
+				height: 0,//屏幕高度
 				loading: false,
 				bankList: [],//银行列表
 				indexBank: 0,
@@ -118,6 +128,10 @@
 			this.$store.dispatch('getUserInfo')
 		},
 		onLoad() {
+			const res = uni.getSystemInfoSync()
+			this.width = res.windowWidth
+			this.height = res.windowHeight
+			
 			//获取银行卡列表
 			this.$api.post("/core/getList/", {"uid": this.user.id}, {"Mid": "Bankcard"}).then(res => {
 				let list = []
@@ -146,6 +160,10 @@
 			})
 		},
 		methods: {
+			//返回
+			back(){
+				navigateBack()
+			},
 			//格式化银行卡
 			formatCardnumber(card_number){
 				if(card_number.length>8){

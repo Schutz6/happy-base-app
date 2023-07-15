@@ -1,33 +1,43 @@
 <template>
-	<view class="page overflow-hidden">
-		<view class="content">
-			<view class="list" v-if="list.length>0">
-				<view class="item d-flex-center" v-for="(item, index) in list" :key="index">
-					<view class="box" v-if="item.type=='1'">
-						<view class="d-flex between">
-							<view class="title">{{item.bank_name}}</view>
-							<uni-icons type="trash" size="24" color="white" @tap="showDelete(item.id)"></uni-icons>
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
+		<uni-nav-bar title="绑定提现卡" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+			<block slot="left">
+				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+			</block>
+			<block slot="right">
+				<uni-icons @tap="add()" type="plus" color="#fff" size="22" />
+			</block>
+		</uni-nav-bar>
+		<scroll-view @scrolltolower="lower" :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}">
+			<view class="content">
+				<view class="list" v-if="list.length>0">
+					<view class="item d-flex-center" v-for="(item, index) in list" :key="index">
+						<view class="box" v-if="item.type=='1'">
+							<view class="d-flex between">
+								<view class="title">{{item.bank_name}}</view>
+								<uni-icons type="trash" size="24" color="white" @tap="showDelete(item.id)"></uni-icons>
+							</view>
+							<view class="sub-title">储蓄卡</view>
+							<view class="card_number d-flex-center">{{item.card_number | formatCardnumber}}</view>
 						</view>
-						<view class="sub-title">储蓄卡</view>
-						<view class="card_number d-flex-center">{{item.card_number | formatCardnumber}}</view>
+						<view class="box" v-if="item.type=='2'">
+							<view class="d-flex between">
+								<view class="title">USDT-Trc20</view>
+								<uni-icons type="trash" size="24" color="white" @tap="showDelete(item.id)"></uni-icons>
+							</view>
+							<view class="sub-title">区块链地址</view>
+							<view class="card_number d-flex-center">{{item.address_usdt | formatCardnumber}}</view>
+						</view>
 					</view>
-					<view class="box" v-if="item.type=='2'">
-						<view class="d-flex between">
-							<view class="title">USDT-Trc20</view>
-							<uni-icons type="trash" size="24" color="white" @tap="showDelete(item.id)"></uni-icons>
-						</view>
-						<view class="sub-title">区块链地址</view>
-						<view class="card_number d-flex-center">{{item.address_usdt | formatCardnumber}}</view>
+					<uni-load-more :status="moreStatus"></uni-load-more>
+				</view>
+				<view class="no-data" v-if="list.length==0">
+					<view class="d-flex-center flex-column">
+						<view class="fs14">暂无数据</view>
 					</view>
 				</view>
-				<uni-load-more :status="moreStatus"></uni-load-more>
 			</view>
-			<view class="no-data" v-if="list.length==0">
-				<view class="d-flex-center flex-column">
-					<view class="fs14">暂无数据</view>
-				</view>
-			</view>
-		</view>
+		</scroll-view>
 		
 		<uni-popup ref="deleteDialog" type="center">
 			<view class="dialog-box">
@@ -45,10 +55,13 @@
 </template>
 
 <script>
+	import { navigateBack } from '@/utils/util'
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
 			return {
+				width: 0,//屏幕宽度
+				height: 0,//屏幕高度
 				loading: false,
 				moreStatus: "more",
 				listQuery: {
@@ -72,37 +85,45 @@
 		    	return ".... .... .... "+card_number 
 		    }
 		},
+		onLoad() {
+			const res = uni.getSystemInfoSync()
+			this.width = res.windowWidth
+			this.height = res.windowHeight
+		},
 		onShow() {
 			this.init()
 		},
-		onNavigationBarButtonTap(e){
-			//点击了新增
-			uni.navigateTo({
-				url: "/pages/bank/add"
-			})
-		},
-		onReachBottom() {
-			this.listQuery.currentPage += 1;
-			this.getList(false)
-		},
 		methods: {
+			//返回
+			back(){
+				navigateBack()
+			},
+			//滚动到底部
+			lower(e){
+				this.listQuery.currentPage += 1;
+				this.getList()
+			},
+			//新增
+			add(){
+				//点击了新增
+				uni.navigateTo({
+					url: "/pages/bank/add"
+				})
+			},
 			init(){
 				//初始化列表
 				this.listQuery.currentPage = 1
 				this.list = []
-				this.getList(false)
+				this.getList()
 			},
 			//获取列表
-			getList(isRefresh){
+			getList(){
 				this.listQuery.uid = this.user.id
 				this.$api.post("/core/list/", this.listQuery, {"Mid": "Bankcard"}).then(res => {
 					if(res.code == 20000){
 						this.moreStatus = res.data.results.length == 20 ? 'more' : 'noMore';
 						if(res.data.results.length > 0){
 							this.list = this.list.concat(res.data.results)
-						}
-						if(isRefresh){
-							uni.stopPullDownRefresh();
 						}
 					}
 				})

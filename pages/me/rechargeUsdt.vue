@@ -1,65 +1,75 @@
 <template>
-	<view class="page overflow-hidden">
-		<view class="content">
-			<view class="box">
-				<uni-row :gutter="20">
-					<uni-col :span="8">
-						<view class="item" :class="formData.currency=='TRC20'?'active':''" @click="changeCurrency('TRC20')">TRC20</view>
-					</uni-col>
-					<uni-col :span="8">
-						<view class="item" :class="formData.currency=='ERC20'?'active':''" @click="changeCurrency('ERC20')">ERC20</view>
-					</uni-col>
-					<uni-col :span="8">
-						<view class="item" :class="formData.currency=='OMNI'?'active':''" @click="changeCurrency('OMNI')">OMNI</view>
-					</uni-col>
-				</uni-row>
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
+		<uni-nav-bar title="USDT充值" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+			<block slot="left">
+				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+			</block>
+		</uni-nav-bar>
+		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}">
+			<view class="content">
+				<view class="box">
+					<uni-row :gutter="20">
+						<uni-col :span="8">
+							<view class="item" :class="formData.currency=='TRC20'?'active':''" @click="changeCurrency('TRC20')">TRC20</view>
+						</uni-col>
+						<uni-col :span="8">
+							<view class="item" :class="formData.currency=='ERC20'?'active':''" @click="changeCurrency('ERC20')">ERC20</view>
+						</uni-col>
+						<uni-col :span="8">
+							<view class="item" :class="formData.currency=='OMNI'?'active':''" @click="changeCurrency('OMNI')">OMNI</view>
+						</uni-col>
+					</uni-row>
+				</view>
+				<view class="tips">*该地址只能接收{{formData.currency}}_USDT的资产，充错将无法找回！</view>
+				<view class="qrcode-box">
+					<module-qrcode :qrPath.sync="qrPath" :text="text" :size="size" :quality="quality" :colorDark="colorDark" :colorLight="colorLight"></module-qrcode>
+				</view>
+				<view class="address">{{text}}</view>
+				<view class="btns">
+					<view class="d-flex-center btn btn1" @click="copy()">复制地址</view>
+				</view>
+				<view class="form">
+					<uni-forms ref="form" :modelValue="formData" :rules="rules" label-position="top" label-width="210">
+						<uni-forms-item required name="money">
+							<template v-slot:label>
+								<view class="label">充值数量 USDT汇率：{{params.usdtRate}}</view>
+							</template>
+							<uni-easyinput type="text" v-model="formData.money" :styles="styles" :placeholderStyle="placeholderStyle" placeholder="请输入充值数量" />
+						</uni-forms-item>
+						<uni-forms-item label-width="110" required name="pic">
+							<template v-slot:label>
+								<view class="label">充值凭证</view>
+							</template>
+							<uni-file-picker 
+								:disable-preview="false"
+								:del-icon="true"
+								:imageStyles="imageStyles"
+								:limit="1"
+								return-type="object"
+								file-mediatype="image"
+								@select="selectImg"
+								@delete="deleteImg">
+								<text style="color: #66666661;font-size: 30px;">+</text>
+							</uni-file-picker>
+						</uni-forms-item>
+					</uni-forms>
+				</view>
+				<view class="btns">
+					<view class="d-flex-center btn btn1" @click="submitForm()">立即提交</view>
+				</view>
 			</view>
-			<view class="tips">*该地址只能接收{{formData.currency}}_USDT的资产，充错将无法找回！</view>
-			<view class="qrcode-box">
-				<module-qrcode :qrPath.sync="qrPath" :text="text" :size="size" :quality="quality" :colorDark="colorDark" :colorLight="colorLight"></module-qrcode>
-			</view>
-			<view class="address">{{text}}</view>
-			<view class="btns">
-				<view class="d-flex-center btn btn1" @click="copy()">复制地址</view>
-			</view>
-			<view class="form">
-				<uni-forms ref="form" :modelValue="formData" :rules="rules" label-position="top" label-width="210">
-					<uni-forms-item required name="money">
-						<template v-slot:label>
-							<view class="label">充值数量 USDT汇率：{{params.usdtRate}}</view>
-						</template>
-						<uni-easyinput type="text" v-model="formData.money" :styles="styles" :placeholderStyle="placeholderStyle" placeholder="请输入充值数量" />
-					</uni-forms-item>
-					<uni-forms-item label-width="110" required name="pic">
-						<template v-slot:label>
-							<view class="label">充值凭证</view>
-						</template>
-						<uni-file-picker 
-							:disable-preview="false"
-							:del-icon="true"
-							:imageStyles="imageStyles"
-							:limit="1"
-							return-type="object"
-							file-mediatype="image"
-							@select="selectImg"
-							@delete="deleteImg">
-							<text style="color: #66666661;font-size: 30px;">+</text>
-						</uni-file-picker>
-					</uni-forms-item>
-				</uni-forms>
-			</view>
-			<view class="btns">
-				<view class="d-flex-center btn btn1" @click="submitForm()">立即提交</view>
-			</view>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
+	import { navigateBack } from '@/utils/util'
 	import { mapGetters } from 'vuex'
 	export default {
 		data() {
 			return {
+				width: 0,//屏幕宽度
+				height: 0,//屏幕高度
 				loading: false,
 				qrPath: '',
 				text: '',
@@ -111,10 +121,19 @@
 		computed: {
 			...mapGetters(['params'])
 		},
+		onLoad() {
+			const res = uni.getSystemInfoSync()
+			this.width = res.windowWidth
+			this.height = res.windowHeight
+		},
 		onReady() {
 			this.text = this.params.trc20Address
 		},
 		methods: {
+			//返回
+			back(){
+				navigateBack()
+			},
 			//选择币种
 			changeCurrency(currency){
 				this.formData.currency = currency
@@ -158,7 +177,7 @@
 									icon: 'success'
 								});
 								setTimeout(()=>{
-									uni.navigateBack()
+									this.back()
 								}, 500)
 							}else{
 								uni.showToast({

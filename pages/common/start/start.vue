@@ -13,7 +13,7 @@
 			this.$store.dispatch('getUserInfo').then(res => {
 				if (res.code == 20000) {
 					uni.reLaunch({
-						url: '/pages/index/index'
+						url: '/'
 					})
 				}else{
 					uni.reLaunch({

@@ -1,56 +1,65 @@
 <template>
-	<view class="page overflow-hidden">
-		<view class="content">
-			<view class="invite-box">
-				<image src="@/static/me/invite-box.png"></image>
-				<view class="qrcode-box-content d-flex-center">
-					<view class="qrcode-box">
-						<module-qrcode :qrPath.sync="qrPath" :text="params.inviteUrl+'?invite_code='+user.id" :size="size" :quality="quality" :colorDark="colorDark" :colorLight="colorLight"></module-qrcode>
-					</view>
-				</view>
-			</view>
-			<view class="">
-				<view class="btn btn0 flex1 d-flex-center" @tap="copy(user.id+'')">
-					<view style="padding-right: 5px;">{{user.id}}</view>
-					<image src="@/static/me/copy.png" style="width: 18px;height: 18px;"></image>
-				</view>
-			</view>
-			<view class="btns d-flex">
-				<view class="btn btn1 flex1 d-flex-center" @tap="copy(params.inviteUrl+'?invite_code='+user.id)">复制链接</view>
-				<view class="btn btn2 flex1 d-flex-center" @tap="toPage('/pages/me/team')">我的团队</view>
-			</view>
-			<view class="header d-flex between">
-				<view class="d-flex">
-					<view class="title">邀请记录</view>
-				</view>
-			</view>
-			<view class="box" style="margin-top: 20px;">
-				<view class="d-flex between">
-					<view>邀请人数</view>
-					<view>{{total}}人</view>
-				</view>
-				<view class="line"></view>
-				<view class="list">
-					<view class="item d-flex" v-for="(item, index) in list" :key="index">
-						<view class="time flex1 d-flex-center">
-							<uni-dateformat :date="item.add_time | formatDate" format="yyyy-MM-dd"></uni-dateformat>
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
+		<uni-nav-bar title="邀请记录" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+			<block slot="left">
+				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+			</block>
+		</uni-nav-bar>
+		<scroll-view @scrolltolower="lower" :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}">
+			<view class="content">
+				<view class="invite-box">
+					<image src="@/static/me/invite-box.png"></image>
+					<view class="qrcode-box-content d-flex-center">
+						<view class="qrcode-box">
+							<module-qrcode :qrPath.sync="qrPath" :text="params.inviteUrl+'?invite_code='+user.id" :size="size" :quality="quality" :colorDark="colorDark" :colorLight="colorLight"></module-qrcode>
 						</view>
-						<view class="flex1 d-flex-center">{{item.uid}}</view>
-						<view class="money flex1 d-flex-center">{{item.balance.toFixed(2)}}</view>
 					</view>
 				</view>
+				<view class="">
+					<view class="btn btn0 flex1 d-flex-center" @tap="copy(user.id+'')">
+						<view style="padding-right: 5px;">{{user.id}}</view>
+						<image src="@/static/me/copy.png" style="width: 18px;height: 18px;"></image>
+					</view>
+				</view>
+				<view class="btns d-flex">
+					<view class="btn btn1 flex1 d-flex-center" @tap="copy(params.inviteUrl+'?invite_code='+user.id)">复制链接</view>
+					<view class="btn btn2 flex1 d-flex-center" @tap="toPage('/pages/me/team')">我的团队</view>
+				</view>
+				<view class="header d-flex between">
+					<view class="d-flex">
+						<view class="title">邀请记录</view>
+					</view>
+				</view>
+				<view class="box" style="margin-top: 20px;">
+					<view class="d-flex between">
+						<view>邀请人数</view>
+						<view>{{total}}人</view>
+					</view>
+					<view class="line"></view>
+					<view class="list">
+						<view class="item d-flex" v-for="(item, index) in list" :key="index">
+							<view class="time flex1 d-flex-center">
+								<uni-dateformat :date="item.add_time | formatDate" format="yyyy-MM-dd"></uni-dateformat>
+							</view>
+							<view class="flex1 d-flex-center">{{item.uid}}</view>
+							<view class="money flex1 d-flex-center">{{item.balance.toFixed(2)}}</view>
+						</view>
+					</view>
+				</view>
+				<uni-load-more :status="moreStatus"></uni-load-more>
 			</view>
-			<uni-load-more :status="moreStatus"></uni-load-more>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
 <script>
 	import { mapGetters } from 'vuex'
-	import { formatDateUtc } from '@/utils/util'
+	import { navigateBack, formatDateUtc } from '@/utils/util'
 	export default {
 		data() {
 			return {
+				width: 0,//屏幕宽度
+				height: 0,//屏幕高度
 				qrPath: '',
 				size: 75,
 				quality:'L',
@@ -75,20 +84,24 @@
 		    }
 		},
 		onLoad() {
+			const res = uni.getSystemInfoSync()
+			this.width = res.windowWidth
+			this.height = res.windowHeight
+			
 			//获取列表
-			this.getList(false)
-		},
-		onReachBottom() {
-			this.listQuery.currentPage += 1;
-			this.getList(false)
-		},
-		onPullDownRefresh(){
-			//监听下拉刷新
-			this.listQuery.currentPage = 1
-			this.list = []
-			this.getList(true)
+			this.getList()
 		},
 		methods: {
+			//返回
+			back(){
+				navigateBack()
+			},
+			//滚动到底部
+			lower(e){
+				this.listQuery.currentPage += 1;
+				this.getList()
+			},
+			//跳转页面
 			toPage(page){
 				uni.redirectTo({
 					url: page
@@ -113,16 +126,13 @@
 				});
 			},
 			//获取列表
-			getList(isRefresh){
+			getList(){
 				this.$api.post("/agent/inviteList/", this.listQuery).then(res => {
 					if(res.code == 20000){
 						this.moreStatus = res.data.results.length == 10 ? 'more' : 'noMore';
 						this.total = res.data.total
 						if(res.data.results.length > 0){
 							this.list = this.list.concat(res.data.results)
-						}
-						if(isRefresh){
-							uni.stopPullDownRefresh();
 						}
 					}
 				})

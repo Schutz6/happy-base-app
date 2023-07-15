@@ -1,79 +1,86 @@
 <template>
-	<view class="page overflow-hidden">
-		<view class="container">
-			<view class="box">
-				<view class="header d-flex between">
-					<view class="title d-flex">
-						<image src="@/static/me/wallet.png"></image>
-						<view>累计奖金</view>
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
+		<uni-nav-bar title="我的团队" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+			<block slot="left">
+				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+			</block>
+		</uni-nav-bar>
+		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}">
+			<view class="container">
+				<view class="box">
+					<view class="header d-flex between">
+						<view class="title d-flex">
+							<image src="@/static/me/wallet.png"></image>
+							<view>累计奖金</view>
+						</view>
+						<view class="num">{{info.one_income+info.two_income+info.three_income}}</view>
 					</view>
-					<view class="num">{{info.one_income+info.two_income+info.three_income}}</view>
+					<view class="content d-flex-center">
+						<view class="flex1 d-flex-center flex-column">
+							<view class="num">{{info.one_income}}</view>
+							<view class="label">一级奖金</view>
+						</view>
+						<view class="flex1 d-flex-center flex-column">
+							<view class="num">{{info.two_income}}</view>
+							<view class="label">二级奖金</view>
+						</view>
+						<view class="flex1 d-flex-center flex-column">
+							<view class="num">{{info.three_income}}</view>
+							<view class="label">三级奖金</view>
+						</view>
+					</view>
 				</view>
-				<view class="content d-flex-center">
-					<view class="flex1 d-flex-center flex-column">
-						<view class="num">{{info.one_income}}</view>
-						<view class="label">一级奖金</view>
+				<view class="box">
+					<view class="header d-flex between">
+						<view class="title d-flex">
+							<image src="@/static/me/team.png"></image>
+							<view>团队人数</view>
+						</view>
+						<view class="num">{{info.one_list.length+info.two_list.length+info.three_list.length}}</view>
 					</view>
-					<view class="flex1 d-flex-center flex-column">
-						<view class="num">{{info.two_income}}</view>
-						<view class="label">二级奖金</view>
+					<view class="content d-flex-center">
+						<view class="flex1 d-flex-center flex-column">
+							<view class="num">{{info.one_list.length}}</view>
+							<view class="label">一级人数</view>
+						</view>
+						<view class="flex1 d-flex-center flex-column">
+							<view class="num">{{info.two_list.length}}</view>
+							<view class="label">二级人数</view>
+						</view>
+						<view class="flex1 d-flex-center flex-column">
+							<view class="num">{{info.three_list.length}}</view>
+							<view class="label">三级人数</view>
+						</view>
 					</view>
-					<view class="flex1 d-flex-center flex-column">
-						<view class="num">{{info.three_income}}</view>
-						<view class="label">三级奖金</view>
+				</view>
+				<view class="d-flex-center" style="font-weight: 500;font-size: 16px;padding-bottom: 10px;">团队成员</view>
+				<view class="table-box">
+					<view class="list">
+						<view class="header d-flex">
+							<view class="flex1 d-flex-center">会员账号</view>
+							<view class="flex1 d-flex-center">层级</view>
+							<view class="flex1 d-flex-center">已充值</view>
+						</view>
+						<view class="line"></view>
+						<view class="item d-flex" v-for="(item, index) in info.one_list" :key="10000+index">
+							<view class="flex1 d-flex-center">{{item.uid}}</view>
+							<view class="flex1 d-flex-center">{{item.level}}代</view>
+							<view class="flex1 d-flex-center">{{item.total_recharge}}</view>
+						</view>
+						<view class="item d-flex" v-for="(item, index) in info.two_list" :key="20000+index">
+							<view class="flex1 d-flex-center">{{item.uid}}</view>
+							<view class="flex1 d-flex-center">{{item.level}}代</view>
+							<view class="flex1 d-flex-center">{{item.total_recharge}}</view>
+						</view>
+						<view class="item d-flex" v-for="(item, index) in info.three_list" :key="30000+index">
+							<view class="flex1 d-flex-center">{{item.uid}}</view>
+							<view class="flex1 d-flex-center">{{item.level}}代</view>
+							<view class="flex1 d-flex-center">{{item.total_recharge}}</view>
+						</view>
 					</view>
 				</view>
 			</view>
-			<view class="box">
-				<view class="header d-flex between">
-					<view class="title d-flex">
-						<image src="@/static/me/team.png"></image>
-						<view>团队人数</view>
-					</view>
-					<view class="num">{{info.one_list.length+info.two_list.length+info.three_list.length}}</view>
-				</view>
-				<view class="content d-flex-center">
-					<view class="flex1 d-flex-center flex-column">
-						<view class="num">{{info.one_list.length}}</view>
-						<view class="label">一级人数</view>
-					</view>
-					<view class="flex1 d-flex-center flex-column">
-						<view class="num">{{info.two_list.length}}</view>
-						<view class="label">二级人数</view>
-					</view>
-					<view class="flex1 d-flex-center flex-column">
-						<view class="num">{{info.three_list.length}}</view>
-						<view class="label">三级人数</view>
-					</view>
-				</view>
-			</view>
-			<view class="d-flex-center" style="font-weight: 500;font-size: 16px;padding-bottom: 10px;">团队成员</view>
-			<view class="table-box">
-				<view class="list">
-					<view class="header d-flex">
-						<view class="flex1 d-flex-center">会员账号</view>
-						<view class="flex1 d-flex-center">层级</view>
-						<view class="flex1 d-flex-center">已充值</view>
-					</view>
-					<view class="line"></view>
-					<view class="item d-flex" v-for="(item, index) in info.one_list" :key="10000+index">
-						<view class="flex1 d-flex-center">{{item.uid}}</view>
-						<view class="flex1 d-flex-center">{{item.level}}代</view>
-						<view class="flex1 d-flex-center">{{item.total_recharge}}</view>
-					</view>
-					<view class="item d-flex" v-for="(item, index) in info.two_list" :key="20000+index">
-						<view class="flex1 d-flex-center">{{item.uid}}</view>
-						<view class="flex1 d-flex-center">{{item.level}}代</view>
-						<view class="flex1 d-flex-center">{{item.total_recharge}}</view>
-					</view>
-					<view class="item d-flex" v-for="(item, index) in info.three_list" :key="30000+index">
-						<view class="flex1 d-flex-center">{{item.uid}}</view>
-						<view class="flex1 d-flex-center">{{item.level}}代</view>
-						<view class="flex1 d-flex-center">{{item.total_recharge}}</view>
-					</view>
-				</view>
-			</view>
-		</view>
+		</scroll-view>
 	</view>
 </template>
 
@@ -82,6 +89,8 @@
 	export default {
 		data() {
 			return {
+				width: 0,//屏幕宽度
+				height: 0,//屏幕高度
 				info: {
 					"one_list": [],
 					"one_income": 0,
@@ -93,6 +102,10 @@
 			}
 		},
 		onLoad() {
+			const res = uni.getSystemInfoSync()
+			this.width = res.windowWidth
+			this.height = res.windowHeight
+			
 			this.$api.get("/agent/team/").then(res => {
 				if(res.code == 20000){
 					this.info = res.data

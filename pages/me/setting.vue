@@ -1,106 +1,113 @@
 <template>
-	<view class="page overflow-hidden">
-		<view class="content" v-if="user">
-			<view class="list">
-				<view class="item">
-					<view class="icon-box">
-						<view class="label">头像</view>
-					</view>
-					<view class="right">
-						<view class="avatar">
-							<image :src="user.avatar"></image>
+	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
+		<uni-nav-bar title="设置" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+			<block slot="left">
+				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+			</block>
+		</uni-nav-bar>
+		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}">
+			<view class="content" v-if="user">
+				<view class="list">
+					<view class="item">
+						<view class="icon-box">
+							<view class="label">头像</view>
+						</view>
+						<view class="right">
+							<view class="avatar">
+								<image :src="user.avatar"></image>
+							</view>
 						</view>
 					</view>
-				</view>
-				<view class="line"></view>
-				<view class="item">
-					<view class="icon-box">
-						<view class="label">UID</view>
-					</view>
-					<view class="right">
-						<view class="label">{{user.id}}</view>
-					</view>
-				</view>
-				<view class="line"></view>
-				<view class="item">
-					<view class="icon-box">
-						<view class="label">账号</view>
-					</view>
-					<view class="right">
-						<view class="label">{{user.username}}</view>
-					</view>
-				</view>
-				<view class="line"></view>
-				<view class="item" @click="goPage('/pages/me/nickname')">
-					<view class="icon-box">
-						<view class="label">昵称</view>
-					</view>
-					<view class="right">
-						<view class="label">{{user.name}}</view>
-						<uni-icons type="right" size="20" color="#00000066"></uni-icons>
-					</view>
-				</view>
-				<view class="line"></view>
-				<view class="item" @click="goPage('/pages/me/updateMobile')">
-					<view class="icon-box">
-						<view class="label">绑定手机</view>
-					</view>
-					<view class="right">
-						<view class="label">
-							<text v-if="user.mobile">+{{user.area}} {{user.mobile}}</text>
-							<text v-else>--</text>
+					<view class="line"></view>
+					<view class="item">
+						<view class="icon-box">
+							<view class="label">UID</view>
 						</view>
-						<uni-icons type="right" size="20" color="#00000066"></uni-icons>
+						<view class="right">
+							<view class="label">{{user.id}}</view>
+						</view>
 					</view>
-				</view>
-				<view class="line"></view>
-				<view class="item" @click="goPage('/pages/me/updateEmail')">
-					<view class="icon-box">
-						<view class="label">绑定邮箱</view>
+					<view class="line"></view>
+					<view class="item">
+						<view class="icon-box">
+							<view class="label">账号</view>
+						</view>
+						<view class="right">
+							<view class="label">{{user.username}}</view>
+						</view>
 					</view>
-					<view class="right">
-						<view class="label">{{user.email || "--"}}</view>
-						<uni-icons type="right" size="20" color="#00000066"></uni-icons>
+					<view class="line"></view>
+					<view class="item" @click="goPage('/pages/me/nickname')">
+						<view class="icon-box">
+							<view class="label">昵称</view>
+						</view>
+						<view class="right">
+							<view class="label">{{user.name}}</view>
+							<uni-icons type="right" size="20" color="#00000066"></uni-icons>
+						</view>
 					</view>
-				</view>
-				<view class="line"></view>
-				<view class="item" @click="goPage('/pages/me/bindInvite')">
-					<view class="icon-box">
-						<view class="label">绑定邀请码</view>
+					<view class="line"></view>
+					<view class="item" @click="goPage('/pages/me/updateMobile')">
+						<view class="icon-box">
+							<view class="label">绑定手机</view>
+						</view>
+						<view class="right">
+							<view class="label">
+								<text v-if="user.mobile">+{{user.area}} {{user.mobile}}</text>
+								<text v-else>--</text>
+							</view>
+							<uni-icons type="right" size="20" color="#00000066"></uni-icons>
+						</view>
 					</view>
-					<view class="right">
-						<view class="label">{{user.pid || "绑定送福利"}}</view>
-						<uni-icons type="right" size="20" color="#00000066"></uni-icons>
+					<view class="line"></view>
+					<view class="item" @click="goPage('/pages/me/updateEmail')">
+						<view class="icon-box">
+							<view class="label">绑定邮箱</view>
+						</view>
+						<view class="right">
+							<view class="label">{{user.email || "--"}}</view>
+							<uni-icons type="right" size="20" color="#00000066"></uni-icons>
+						</view>
 					</view>
-				</view>
-				<view class="line"></view>
-				<!-- #ifdef APP-PLUS -->
-				<view class="item" @click="showDialog('popupCacheSize')">
-					<view class="icon-box">
-						<view class="label">清除缓存</view>
+					<view class="line"></view>
+					<view class="item" @click="goPage('/pages/me/bindInvite')">
+						<view class="icon-box">
+							<view class="label">绑定邀请码</view>
+						</view>
+						<view class="right">
+							<view class="label">{{user.pid || "绑定送福利"}}</view>
+							<uni-icons type="right" size="20" color="#00000066"></uni-icons>
+						</view>
 					</view>
-					<view class="right">
-						<view class="label">{{cacheSize}}</view>
-						<uni-icons type="right" size="20" color="#00000066"></uni-icons>
+					<view class="line"></view>
+					<!-- #ifdef APP-PLUS -->
+					<view class="item" @click="showDialog('popupCacheSize')">
+						<view class="icon-box">
+							<view class="label">清除缓存</view>
+						</view>
+						<view class="right">
+							<view class="label">{{cacheSize}}</view>
+							<uni-icons type="right" size="20" color="#00000066"></uni-icons>
+						</view>
 					</view>
-				</view>
-				<view class="line"></view>
-				<view class="item" @click="showUpgrade()">
-					<view class="icon-box">
-						<view class="label">版本更新</view>
+					<view class="line"></view>
+					<view class="item" @click="showUpgrade()">
+						<view class="icon-box">
+							<view class="label">版本更新</view>
+						</view>
+						<view class="right">
+							<view class="label"><view v-if="isUpgrade" class="dot"></view>V{{versionName}}</view>
+							<uni-icons type="right" size="20" color="#00000066"></uni-icons>
+						</view>
 					</view>
-					<view class="right">
-						<view class="label"><view v-if="isUpgrade" class="dot"></view>V{{versionName}}</view>
-						<uni-icons type="right" size="20" color="#00000066"></uni-icons>
+					<view class="line"></view>
+					<!-- #endif -->
+					<view class="btns">
+						<view class="d-flex-center btn btn1" @click="showDialog('logoutDialog')">退出登录</view>
 					</view>
-				</view>
-				<view class="line"></view>
-				<!-- #endif -->
-				<view class="btns">
-					<view class="d-flex-center btn btn1" @click="showDialog('logoutDialog')">退出登录</view>
 				</view>
 			</view>
-		</view>
+		</scroll-view>
 		
 		<uni-popup ref="logoutDialog" type="center">
 			<view class="dialog-box">
@@ -158,11 +165,14 @@
 </template>
 
 <script>
+	import { navigateBack } from '@/utils/util'
 	import { mapGetters } from 'vuex'
 	import { removeToken } from '@/utils/auth'
 	export default {
 		data() {
 			return {
+				width: 0,//屏幕宽度
+				height: 0,//屏幕高度
 				platform: "",
 				versionName: "1.0.0",
 				cacheSize: "0B",
@@ -171,6 +181,11 @@
 		},
 		computed: {
 			...mapGetters(['user', 'params'])
+		},
+		onLoad() {
+			const res = uni.getSystemInfoSync()
+			this.width = res.windowWidth
+			this.height = res.windowHeight
 		},
 		onShow() {
 			this.$store.dispatch('getUserInfo')
@@ -199,6 +214,10 @@
 			// #endif
 		},
 		methods: {
+			//返回
+			back(){
+				navigateBack()
+			},
 			//退出登录
 			logout(){
 				this.$store.dispatch('logout').then(res => {
