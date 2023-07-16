@@ -274,6 +274,7 @@
 			.item-left{
 				display: flex;
 				align-items: center;
+				padding-top: 10px;
 				
 				.item-code{
 					display: flex;
