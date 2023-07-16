@@ -24,7 +24,7 @@
 							</view>
 						</view>
 						<view style="margin-right: 20px;">
-							<uni-icons type="gear" size="24" color="#fff" @click="toPageLogin('/pages/me/setting')"></uni-icons>
+							<uni-icons type="gear" size="28" color="#000" @click="toPageLogin('/pages/me/setting')"></uni-icons>
 						</view>
 					</view>
 					<view class="tools width-max d-flex">
@@ -153,17 +153,15 @@
 
 <style scoped lang="scss">
 	.container{
-		background-color: #000;
-		
 		.user-box{
 			width: 100%;
 			height: 170px;
 			align-items: baseline;
-			border-bottom: 1px solid #294D6B;
+			border-bottom: 1px solid #ddd;
 			
 			.mobile{
 				font-weight: 500;
-				color: #FFFFFF;
+				color: #000;
 				font-size: 20px;
 				
 				image{
@@ -174,7 +172,7 @@
 			}
 			.time{
 				font-weight: 400;
-				color: rgba(255,255,255,0.7);
+				color: rgba(0,0,0,0.7);
 				font-size: 12px;
 				padding-top: 5px;
 			}
@@ -184,12 +182,12 @@
 				.item{
 					.label{
 						font-weight: bold;
-						color: #FFFCFC;
+						color: #000;
 						font-size: 16px;
 					}
 					.label-sub{
 						font-weight: 400;
-						color: rgba(255,255,255,0.7);
+						color: rgba(0,0,0,0.7);
 						font-size: 12px;
 						padding-top: 4px;
 					}

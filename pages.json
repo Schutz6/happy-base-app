@@ -235,15 +235,14 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "",
-		"navigationBarBackgroundColor": "#000",
-		"backgroundColor": "#fff"
+		"navigationBarBackgroundColor": "#000000",
+		"backgroundColor": "#ffffff"
 	},
 	"uniIdRouter": {},
 	"tabBar": {
-		"color": "#266CAC",
-		"selectedColor": "#00E0FF",
-		"backgroundColor": "#161C33",
-		"borderStyle": "#294D6B",
+		"color": "#000000",
+		"selectedColor": "#0888FF",
+		"backgroundColor": "#ffffff",
 		"list": [
 			{
 				"pagePath": "pages/index/index",
