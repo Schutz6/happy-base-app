@@ -235,8 +235,8 @@
 	"globalStyle": {
 		"navigationBarTextStyle": "white",
 		"navigationBarTitleText": "",
-		"navigationBarBackgroundColor": "#000000",
-		"backgroundColor": "#ffffff"
+		"navigationBarBackgroundColor": "#EDF4FF",
+		"backgroundColor": "#EDF4FF"
 	},
 	"uniIdRouter": {},
 	"tabBar": {

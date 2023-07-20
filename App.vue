@@ -44,7 +44,7 @@
 	@import url('comm.css');
 
 	page {
-		background-color: #fff;
+		background-color: #EDF4FF;
 	}
 	.uni-nav-bar-text{
 		font-size: 16px !important;

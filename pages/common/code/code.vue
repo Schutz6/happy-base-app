@@ -1,13 +1,13 @@
 <template>
 	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
-		<uni-nav-bar title="选择区号" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+		<uni-nav-bar title="选择区号" backgroundColor="transparent" status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
 			<block slot="left">
-				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+				<uni-icons @tap="back()" type="back" color="#424357" size="22" />
 			</block>
 		</uni-nav-bar>
 		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}">
 			<view class="content">
-				<view class="search-box">
+				<view style="padding: 10px;">
 					<uni-easyinput trim="both" v-model="searchWord" :styles="styles" placeholder="搜索"></uni-easyinput>
 				</view>
 				<view class="list">

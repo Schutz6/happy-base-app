@@ -1,65 +1,64 @@
 <template>
 	<view class="page overflow-hidden" :style="{'width': width+'px', 'height': height+'px'}" @touchmove.stop.prevent>
-		<uni-nav-bar title="注册" backgroundColor="#000" dark status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
+		<uni-nav-bar title="注册" backgroundColor="transparent" status-bar :border="false" height="44px" leftWidth="60px" rightWidth="60px">
 			<block slot="left">
-				<uni-icons @tap="back()" type="back" color="#fff" size="22" />
+				<uni-icons @tap="back()" type="back" color="#424357" size="22" />
 			</block>
 		</uni-nav-bar>
 		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}">
 			<view class="login-box">
-				<view class="logo">
-					<image :src="params.logo"></image>
-				</view>
-				<view class="title">欢迎来到{{params.appName}}</view>
-				<uni-forms ref="form" label-position="top" :border="false" :modelValue="loginForm" :rules="loginRules">
-					<uni-forms-item name="username">
-						<template v-slot:label>
-							<view class="label">账号</view>
-						</template>
-						<view class="item d-flex">
-							<uni-easyinput type="text" trim="both" prefixIcon="a" :styles="styles" :placeholderStyle="placeholderStyle"
-								v-model="loginForm.username" :inputBorder="false" placeholder="请输入账号" />
-						</view>
-					</uni-forms-item>
-					<view class="divider"></view>
-					<uni-forms-item name="password">
-						<template v-slot:label>
-							<view class="label">密码</view>
-						</template>
-						<view class="item d-flex">
-							<uni-easyinput type="password" trim="both" prefixIcon="a" :styles="styles"
-								:placeholderStyle="placeholderStyle" v-model="loginForm.password" :inputBorder="false"
-								placeholder="请输入密码" />
-						</view>
-					</uni-forms-item>
-					<view class="divider"></view>
-					<uni-forms-item name="okpassword">
-						<template v-slot:label>
-							<view class="label">确认密码</view>
-						</template>
-						<view class="item d-flex">
-							<uni-easyinput type="password" trim="both" prefixIcon="a" :styles="styles"
-								:placeholderStyle="placeholderStyle" v-model="loginForm.okpassword" :inputBorder="false"
-								placeholder="请确认密码" />
-						</view>
-					</uni-forms-item>
-					<view class="divider"></view>
-					<uni-forms-item name="invite_code" v-if="params.isInviteCode==='1'">
-						<template v-slot:label>
-							<view class="label">邀请码</view>
-						</template>
-						<view class="item d-flex">
-							<uni-easyinput type="text" trim="both" prefixIcon="a" :styles="styles" :placeholderStyle="placeholderStyle"
-								v-model="loginForm.invite_code" :inputBorder="false" placeholder="请输入邀请码" />
-						</view>
-					</uni-forms-item>
-					<view class="divider" v-if="params.isInviteCode==='1'"></view>
-				</uni-forms>
-				<view class="btns">
-					<view class="d-flex-center btn btn1" @click="handleLogin">注册</view>
-					<navigator url="/pages/common/login/login" open-type="navigateBack">
-						<view class="d-flex-center btn btn2">登录</view>
-					</navigator>
+				<view style="background-color: #fff;padding: 20px;border-radius: 10px;">
+					<uni-forms ref="form" label-position="top" :border="false" :modelValue="loginForm" :rules="loginRules">
+						<uni-forms-item name="username">
+							<template v-slot:label>
+								<view class="label">账号</view>
+							</template>
+							<view class="item d-flex">
+								<uni-easyinput type="text" trim="both" prefixIcon="a" :styles="styles" :placeholderStyle="placeholderStyle"
+									v-model="loginForm.username" :inputBorder="false" placeholder="请输入账号" />
+							</view>
+						</uni-forms-item>
+						<view class="divider"></view>
+						<uni-forms-item name="password">
+							<template v-slot:label>
+								<view class="label">密码</view>
+							</template>
+							<view class="item d-flex">
+								<uni-easyinput type="password" trim="both" prefixIcon="a" :styles="styles"
+									:placeholderStyle="placeholderStyle" v-model="loginForm.password" :inputBorder="false"
+									placeholder="请输入密码" />
+							</view>
+						</uni-forms-item>
+						<view class="divider"></view>
+						<uni-forms-item name="okpassword">
+							<template v-slot:label>
+								<view class="label">确认密码</view>
+							</template>
+							<view class="item d-flex">
+								<uni-easyinput type="password" trim="both" prefixIcon="a" :styles="styles"
+									:placeholderStyle="placeholderStyle" v-model="loginForm.okpassword" :inputBorder="false"
+									placeholder="请确认密码" />
+							</view>
+						</uni-forms-item>
+						<view class="divider"></view>
+						<uni-forms-item name="invite_code" v-if="params.isInviteCode==='1'">
+							<template v-slot:label>
+								<view class="label">邀请码</view>
+							</template>
+							<view class="item d-flex">
+								<uni-easyinput type="text" trim="both" prefixIcon="a" :styles="styles" :placeholderStyle="placeholderStyle"
+									v-model="loginForm.invite_code" :inputBorder="false" placeholder="请输入邀请码" />
+							</view>
+						</uni-forms-item>
+						<view class="divider" v-if="params.isInviteCode==='1'"></view>
+					</uni-forms>
+					<view class="btns">
+						<view class="d-flex-center btn btn1" @click="handleLogin">立即注册</view>
+						<navigator url="/pages/common/login/login" open-type="navigateBack">
+							<!-- <view class="d-flex-center btn btn2">登录</view> -->
+							<view style="color: #666666;font-size: 12px;text-align: center;">已有账号？<text style="color: #0888FF;">立即登录</text></view>
+						</navigator>
+					</view>
 				</view>
 			</view>
 		</scroll-view>
@@ -129,10 +128,16 @@
 		computed: {
 			...mapGetters(['params'])
 		},
-		async onLoad() {
+		onLoad(options) {
 			const res = uni.getSystemInfoSync()
 			this.width = res.windowWidth
 			this.height = res.windowHeight
+			
+			//查询是否有邀请码
+			let invite_code = options.invite_code
+			if(invite_code){
+				this.loginForm.invite_code = invite_code
+			}
 			
 			let username = uni.getStorageSync("UserName")
 			if (username) {
@@ -213,10 +218,11 @@
 		}
 
 		.title {
-			color: #000;
-			font-size: 24px;
+			color: #333333;
+			font-size: 20px;
+			font-weight: bold;
 			padding-top: 8px;
-			padding-bottom: 48px;
+			padding-bottom: 30px;
 		}
 
 		.divider {
@@ -226,8 +232,7 @@
 		}
 
 		.label {
-			font-size: 20px;
-			font-weight: 600;
+			font-size: 16px;
 			color: #000;
 			padding: 20px 0 10px 0;
 		}
@@ -249,7 +254,7 @@
 
 			.btn {
 				height: 44px;
-				border-radius: 10px;
+				border-radius: 22px;
 				color: #fff;
 				font-size: 16px;
 				margin-bottom: 20px;
