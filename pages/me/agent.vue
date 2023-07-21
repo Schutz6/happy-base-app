@@ -138,6 +138,8 @@
 
 <style scoped lang="scss">
 	.content{
+		background-color: #fff;
+		
 		.box{
 			background-image: url(../../static/login/box-bg.png);
 			background-size: 100% 100%;

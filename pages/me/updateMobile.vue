@@ -173,12 +173,15 @@
 
 <style scoped lang="scss">
 	.content{
+		background-color: #fff;
+		
 		.form{
 			padding: 0 20px;
 			
 			.item-left{
 				display: flex;
 				align-items: center;
+				padding-top: 10px;
 				
 				.item-code{
 					display: flex;

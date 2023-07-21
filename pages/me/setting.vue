@@ -70,7 +70,16 @@
 						</view>
 					</view>
 					<view class="line"></view>
-					<view class="item" @click="goPage('/pages/me/bindInvite')">
+					<view class="item" @click="goPage('/pages/me/updatePassword')">
+						<view class="icon-box">
+							<view class="label">修改密码</view>
+						</view>
+						<view class="right">
+							<uni-icons type="right" size="20" color="#00000066"></uni-icons>
+						</view>
+					</view>
+					<view class="line"></view>
+					<!-- <view class="item" @click="goPage('/pages/me/bindInvite')">
 						<view class="icon-box">
 							<view class="label">绑定邀请码</view>
 						</view>
@@ -79,7 +88,7 @@
 							<uni-icons type="right" size="20" color="#00000066"></uni-icons>
 						</view>
 					</view>
-					<view class="line"></view>
+					<view class="line"></view> -->
 					<!-- #ifdef APP-PLUS -->
 					<view class="item" @click="showDialog('popupCacheSize')">
 						<view class="icon-box">
@@ -284,6 +293,9 @@
 </script>
 
 <style scoped lang="scss">
+	.content{
+		background-color: #fff;
+	}
 	.btns{
 		padding: 30px 20px;
 	}

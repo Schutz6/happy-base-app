@@ -123,6 +123,7 @@
 <style scoped lang="scss">
 	.container{
 		padding: 16px;
+		background-color: #fff;
 		
 		.box{
 			background-image: url(../../static/me/team-box.png);

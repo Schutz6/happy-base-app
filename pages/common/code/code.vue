@@ -62,6 +62,8 @@
 
 <style scoped lang="scss">
 	.content{
+		background-color: #fff;
+		
 		.search-box{
 			display: flex;
 			align-items: center;

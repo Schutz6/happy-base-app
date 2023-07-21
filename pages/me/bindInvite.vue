@@ -45,7 +45,7 @@
 					},
 				},
 				styles: {
-					color: '#fff',
+					color: '#000',
 					backgroundColor: 'transparent'
 				},
 			}
@@ -100,6 +100,7 @@
 <style scoped lang="scss">
 	.content{
 		padding: 16px;
+		background-color: #fff;
 		
 		.form{
 			.item{

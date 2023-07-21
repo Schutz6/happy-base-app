@@ -148,6 +148,8 @@
 
 <style scoped lang="scss">
 	.content{
+		background-color: #fff;
+		
 		.form{
 			padding: 16px;
 			

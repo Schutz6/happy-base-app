@@ -144,6 +144,7 @@
 <style scoped lang="scss">
 	.content{
 		padding: 16px;
+		background-color: #fff;
 		
 		.invite-box{
 			position: relative;
