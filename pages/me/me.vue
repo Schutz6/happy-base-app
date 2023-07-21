@@ -95,7 +95,7 @@
 							<image src="@/static/me/icon-left.png" style="width: 6px;height: 10px;"></image>
 						</view>
 						<view class="line"></view>
-						<view class="item d-flex between">
+						<view class="item d-flex between" @tap="toPageLogin('/pages/feedback/feedback')">
 							<view class="d-flex">
 								<image src="@/static/me/icon-feedback.png" style="width: 24px;height: 24px;"></image>
 								<view style="font-size: 14px;font-weight: 400;color: #666666;padding-left: 10px;">意见反馈</view>
