@@ -8,7 +8,7 @@
 		<scroll-view :scroll-y="true" :scroll-x="false" :style="{'height': height-44+'px'}">
 			<view class="login-box">
 				<view class="logo">
-					<image :src="params.logo"></image>
+					<image src="@/static/login/hi.png"></image>
 				</view>
 				<view class="title">欢迎来到{{params.appName}}</view>
 				<view style="background-color: #fff;padding: 20px;border-radius: 10px;">
@@ -169,12 +169,12 @@
 
 <style scoped lang="scss">
 	.login-box{
-		padding: 44px 48px 0 48px;
+		padding: 44px 20px 0 20px;
 		
 		.logo{
 			image{
-				width: 147px;
-				height: 28px;
+				width: 48px;
+				height: 48px;
 			}
 		}
 		

@@ -208,7 +208,7 @@
 
 <style scoped lang="scss">
 	.login-box {
-		padding: 44px 48px 0 48px;
+		padding: 44px 20px 0 20px;
 
 		.logo {
 			image {
